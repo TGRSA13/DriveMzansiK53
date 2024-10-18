@@ -1,4 +1,9 @@
-// Controls section
+// Sections: Controls, Signs, Rules
+let currentSection = "control"; // Default section
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Questions for the Control Section
 const controlQuestions = [
   {
     question: "Which control does a vehicle with automatic transmission not have?",
@@ -27,77 +32,87 @@ const controlQuestions = [
   },
   {
     question: "Which controls are used to make a sharp turn to the left or right?",
-    options: ["A-1,3,5,6&8 ", "B-3,4,5,9&10", "C-1,3,4,5,6,8,9&10", "D-3,4,5,6,10&11" ],
+    options: ["A-1,3,5,6&8", "B-3,4,5,9&10", "C-1,3,4,5,6,8,9&10", "D-3,4,5,6,10&11"],
     answer: "C-1,3,4,5,6,8,9&10",
   }
 ];
 
-// Signs section
+// Questions for the Signs Section
 const signsQuestions = [
- {
-  question: "What does this sign indicate?",
-  options: ["A-Turn right at the next intersection", "B-Turn right immediately", "C-A sharp bend in the road to the right", "D-The road comes to an end to the right"],
-  answer: A-Turn right at the next intersection
- },
- {question: "This sign indicates the:",
-  options:["A-Fastest speed you may drive ", "B-Slowest speed you may drive ", "C-Distance to the next offramp", "D-Minimum weight allowance"],
-  answer: D-Minimum weight allowance
- }
- {question: "This sign allows a driver to:",
-  options:["A-Turn right without stopping, if safe to do so.", "B-Turn left without stopping, if safe to do so.", "C-To come to a complete stop before turning left.", "D-Come to a stop immediately after turning left."],
-  answer: B-Turn left without stopping, if safe to do so
- } 
- {question: "What should you do at this sign?",
-  options: ["A-Stop when indicated to do so and only proceed when indicated to do so.", "B-Stop when indicated to do so and proceed when safe to do so.", "C-Slow down and pass the sign carefully.", "D-Stop and wait for the operator to leave before proceeding."],
-  answer: A-Stop when indicated to do so and only proceed when indicated to do so
- }
- {question: "What does this sign indicate?",
-  options:["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"],
-  answer: A-Dead end ahead
- }
- {question: "This sign indicates:",
-  options: ["A-Lane reserved for buses only", "B-Lane reserved for midi-buses only", "C-Parking reserved for buses only", "D-Start of a lane reserved for buses only"],
-  answer: D-Start of a lane reserved for buses only
- }
+  {
+    question: "What does this sign indicate?",
+    options: ["A-Turn right at the next intersection", "B-Turn right immediately", "C-A sharp bend in the road to the right", "D-The road comes to an end to the right"],
+    answer: "A-Turn right at the next intersection",
+  },
+  {
+    question: "This sign indicates the:",
+    options: ["A-Fastest speed you may drive", "B-Slowest speed you may drive", "C-Distance to the next offramp", "D-Minimum weight allowance"],
+    answer: "D-Minimum weight allowance",
+  },
+  {
+    question: "This sign allows a driver to:",
+    options: ["A-Turn right without stopping, if safe to do so.", "B-Turn left without stopping, if safe to do so.", "C-Come to a complete stop before turning left.", "D-Come to a stop immediately after turning left."],
+    answer: "B-Turn left without stopping, if safe to do so.",
+  },
+  {
+    question: "What should you do at this sign?",
+    options: ["A-Stop when indicated to do so and only proceed when indicated to do so.", "B-Stop when indicated to do so and proceed when safe to do so.", "C-Slow down and pass the sign carefully.", "D-Stop and wait for the operator to leave before proceeding."],
+    answer: "A-Stop when indicated to do so and only proceed when indicated to do so.",
+  },
+  {
+    question: "What does this sign indicate?",
+    options: ["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"],
+    answer: "A-Dead end ahead",
+  },
+  {
+    question: "This sign indicates:",
+    options: ["A-Lane reserved for buses only", "B-Lane reserved for midi-buses only", "C-Parking reserved for buses only", "D-Start of a lane reserved for buses only"],
+    answer: "D-Start of a lane reserved for buses only",
+  }
 ];
 
- // Rules Section
- const rulesQuestions = [
+// Questions for the Rules Section
+const rulesQuestions = [
   {
-    question: "Stop lights (breaking lights) must be visible in sunlight at a distance of at least",
+    question: "Stop lights (braking lights) must be visible in sunlight at a distance of at least:",
     options: ["A-30 Meters", "B-40 Meters", "C-50 Meters", "D-35 Meters"],
-    answer: A-30 Meters
+    answer: "A-30 Meters",
   },
-  {question: "When is it compulsory for a passenger to wear a seatbelt?",
-    options:["A-Old people sitting in the back of the vehicle", "B-Children or adults moving forward", "C-All of the Above", "D-None of the Above"],
-    answer: C-All of the Above
+  {
+    question: "When is it compulsory for a passenger to wear a seatbelt?",
+    options: ["A-Old people sitting in the back of the vehicle", "B-Children or adults moving forward", "C-All of the above", "D-None of the above"],
+    answer: "C-All of the above",
   },
-  {question: "A drivers license must always be kept:",
-    options:["A-Inside the Vehicle", "B-With the Driver", "C-All the Above", "D-None of the Above"],
-    answer: C-All the Above
+  {
+    question: "A driver's license must always be kept:",
+    options: ["A-Inside the vehicle", "B-With the driver", "C-All of the above", "D-None of the above"],
+    answer: "C-All of the above",
   },
-  {question: "Which vehicle(s) may not be driven on a public road without working rear lamps fitted:",
-    options: ["A-Motor Vehicles", "B-MotorCycles", "C-Heavy Vehicles", "D-All of the Above"],
-    answer: D-All of the Above
+  {
+    question: "Which vehicle(s) may not be driven on a public road without working rear lamps fitted:",
+    options: ["A-Motor vehicles", "B-Motorcycles", "C-Heavy vehicles", "D-All of the above"],
+    answer: "D-All of the above",
   },
-  {question: "Vehicle headlights must be switched on when persons or vehicles are not visible for at least:",
-    options:["A-100 Meters", "B-110 Meters", "C-130 Meters", "D-150 Meters"],
-    answer: D-150 Meters
+  {
+    question: "Vehicle headlights must be switched on when persons or vehicles are not visible for at least:",
+    options: ["A-100 Meters", "B-110 Meters", "C-130 Meters", "D-150 Meters"],
+    answer: "D-150 Meters",
   },
-  {question:"A vehicle hooter must be heard from a distance of:",
-    options:["A-100 meters", "B-90 meters", "C-80 meters", "D-70 meters"],
-    answer: B-90 meters
+  {
+    question: "A vehicle hooter must be heard from a distance of:",
+    options: ["A-100 meters", "B-90 meters", "C-80 meters", "D-70 meters"],
+    answer: "B-90 meters",
   }
- ];
+];
 
-// Track current question and score
-let currentQuestionIndex = 0;
-let score = 0;
- // Function to load a question
+// Load default section (Control Questions)
+let quizQuestions = controlQuestions;
+
+// Function to load a question
 function loadQuestion() {
   const questionElement = document.getElementById("question");
   const optionsElement = document.getElementById("options");
-  
+
   // Clear previous options
   optionsElement.innerHTML = "";
 
@@ -143,6 +158,20 @@ function showResults() {
 
 // Restart quiz
 function restartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  loadQuestion();
+}
+
+// Switch between quiz sections (Controls, Signs, Rules)
+function switchSection(section) {
+  if (section === "control") {
+    quizQuestions = controlQuestions;
+  } else if (section === "signs") {
+    quizQuestions = signsQuestions;
+  } else if (section === "rules") {
+    quizQuestions = rulesQuestions;
+  }
   currentQuestionIndex = 0;
   score = 0;
   loadQuestion();
