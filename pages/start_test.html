@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Test - Drive Mzansi</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="styles/style.css"> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mzansi Drive Quiz - Start Test</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="scripts/script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Start Your K53 Test</h1>
-        <!-- Add your quiz questions and functionality here -->
-        <button onclick="window.location.href='results.html'">Submit Test</button>
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="controls.html">Vehicle Controls</a>
+      <a href="rules.html">Rules of the Road</a>
+      <a href="signs.html">Road Signs</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Quiz Section -->
+  <div id="quiz-container">
+    <h1>K53 Driving Quiz</h1>
+    <div id="question-container">
+      <p id="question"></p>
+      <div id="options"></div>
     </div>
+  </div>
+
+  <!-- Footer (Optional) -->
+  <footer>
+    <p>&copy; 2024 Mzansi Drive</p>
+  </footer>
 </body>
 </html>
