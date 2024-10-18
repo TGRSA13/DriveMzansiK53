@@ -17,8 +17,3 @@ Drive Mzansi is an interactive quiz application designed to help users prepare f
 
 ## Author
 Thobeka Mchunu
-<<<<<<< HEAD
-git clone https://github.com/TGRSA13/DriveMzansiK53.git
-=======
-git clone https://github.com/TGRSA13/DriveMzansiK53.git
->>>>>>> 3e4ee814cea1056f8229c4ae14229d7f2242c5d9
