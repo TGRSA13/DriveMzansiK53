@@ -10,13 +10,19 @@
     <div class="container">
         <h1>Drive Mzansi App</h1>
         <div id="quiz-container">
-            <h2 id="question">Select any section to start your Test!</h2>
-            <div id="options"></div>
+            <h2>Select any section to start your Test!</h2>
         </div>
-        <button onclick="switchSection('control')">Controls</button>
-        <button onclick="switchSection('signs')">Signs</button>
-        <button onclick="switchSection('rules')">Rules</button>
+        <!-- Buttons for each section -->
+        <button onclick="goToSection('controls.html')">Controls</button>
+        <button onclick="goToSection('signs.html')">Signs</button>
+        <button onclick="goToSection('rules.html')">Rules</button>
     </div>
-    <script src="scripts/script.js"></script>
+    
+    <script>
+        // Function to navigate to the selected section page
+        function goToSection(page) {
+            window.location.href = page; // Redirect to the section page
+        }
+    </script>
 </body>
 </html>
