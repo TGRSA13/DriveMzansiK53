@@ -49,12 +49,46 @@ const signsQuestions = [
  } 
  {question: "What should you do at this sign?",
   options: ["A-Stop when indicated to do so and only proceed when indicated to do so.", "B-Stop when indicated to do so and proceed when safe to do so.", "C-Slow down and pass the sign carefully.", "D-Stop and wait for the operator to leave before proceeding."],
-  answer: A-Stop when indicated to do so and only proceed when indicated to do so.
+  answer: A-Stop when indicated to do so and only proceed when indicated to do so
  }
- {quetion:}
-"]
+ {question: "What does this sign indicate?",
+  options:["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"],
+  answer: A-Dead end ahead
  }
-]
+ {question: "This sign indicates:",
+  options: ["A-Lane reserved for buses only", "B-Lane reserved for midi-buses only", "C-Parking reserved for buses only", "D-Start of a lane reserved for buses only"],
+  answer: D-Start of a lane reserved for buses only
+ }
+];
+
+ // Rules Section
+ const rulesQuestions = [
+  {
+    question: "Stop lights (breaking lights) must be visible in sunlight at a distance of at least",
+    options: ["A-30 Meters", "B-40 Meters", "C-50 Meters", "D-35 Meters"],
+    answer: A-30 Meters
+  },
+  {question: "When is it compulsory for a passenger to wear a seatbelt?",
+    options:["A-Old people sitting in the back of the vehicle", "B-Children or adults moving forward", "C-All of the Above", "D-None of the Above"],
+    answer: C-All of the Above
+  },
+  {question: "A drivers license must always be kept:",
+    options:["A-Inside the Vehicle", "B-With the Driver", "C-All the Above", "D-None of the Above"],
+    answer: C-All the Above
+  },
+  {question: "Which vehicle(s) may not be driven on a public road without working rear lamps fitted:",
+    options: ["A-Motor Vehicles", "B-MotorCycles", "C-Heavy Vehicles", "D-All of the Above"],
+    answer: D-All of the Above
+  },
+  {question: "Vehicle headlights must be switched on when persons or vehicles are not visible for at least:",
+    options:["A-100 Meters", "B-110 Meters", "C-130 Meters", "D-150 Meters"],
+    answer: D-150 Meters
+  },
+  {question:"A vehicle hooter must be heard from a distance of:",
+    options:["A-100 meters", "B-90 meters", "C-80 meters", "D-70 meters"],
+    answer: B-90 meters
+  }
+ ];
 
 // Track current question and score
 let currentQuestionIndex = 0;
