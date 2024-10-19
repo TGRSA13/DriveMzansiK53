@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rules & Signs - Drive Mzansi</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="styles/style.css">
-    <script src="scripts/script.js" defer></script>
-    <img src="assets/controls.png" alt="Vehicle Control image">
+    <title>Controls Test - Drive Mzansi</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Vehicle Controls</h1>
-        <!-- Content for vehicle controls -->
+        <h1>Vehicle Controls Test</h1>
+        <div id="quiz-container">
+            <!-- The question will be dynamically inserted here -->
+            <h2 id="question">Question 1 of 6</h2>
+            <!-- Answer options will be added here -->
+            <div id="options"></div>
+        </div>
+        <!-- Restart Quiz Button -->
+        <button onclick="restartQuiz()">Restart Quiz</button>
     </div>
+    
+    <script src="scripts/script.js"></script>
+    <script>
+        // Set the current section to "control" and load the first question
+        switchSection('control');
+    </script>
 </body>
 </html>
