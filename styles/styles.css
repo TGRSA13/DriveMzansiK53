@@ -112,8 +112,8 @@ button:hover {
 
 /* Style individual option buttons (if you use them) */
 .option-button {
-    background-color: #4CAF50; /* Button background color */
-    color: white; /* Text color */
+    background-color: #ff0000; /* Button background color */
+    color: rgb(85, 179, 30); /* Text color */
     border: none; /* No border */
     padding: 10px; /* Padding */
     border-radius: 5px; /* Rounded corners */
