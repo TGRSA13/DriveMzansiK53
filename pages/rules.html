@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rules of the Road- Drive Mzansi</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="styles/style.css"> 
-    <script src="scripts/script.js" defer></script>
-    <img src="assets/rules.png" alt="Rules of the road image">
+    <title>Rules Test - Drive Mzansi</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Rules of the road</h1>
-        <!-- Content for Rules of the road -->
+        <h1>Rules of the Road Test</h1>
+        <div id="quiz-container">
+            <h2 id="question"></h2>
+            <div id="options"></div>
+        </div>
+        <button onclick="restartQuiz()">Restart Test</button>
     </div>
+
+    <script src="scripts/script.js"></script>
+    <script>
+        // Set the current section to "rules"
+        switchSection('rules');
+    </script>
 </body>
 </html>

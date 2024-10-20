@@ -89,6 +89,42 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Quiz container styles */
+#quiz-container {
+    background-color: white; /* Ensure the background contrasts */
+    padding: 20px; /* Add some padding */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+/* Styles for question */
+#question {
+    font-size: 24px; /* Make question text larger */
+    margin-bottom: 20px; /* Space below the question */
+}
+
+/* Styles for options */
+#options {
+    display: flex; /* Display options in a row or column */
+    flex-direction: column; /* Stack vertically */
+    gap: 10px; /* Space between options */
+}
+
+/* Style individual option buttons (if you use them) */
+.option-button {
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    padding: 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    font-size: 18px; /* Slightly larger font for options */
+}
+
+.option-button:hover {
+    background-color: #45a049; /* Darker shade on hover */
+}
+
 /* Footer */
 footer {
     background-color: #333;

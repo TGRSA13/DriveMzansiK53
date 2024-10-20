@@ -10,18 +10,15 @@
     <div class="container">
         <h1>Vehicle Controls Test</h1>
         <div id="quiz-container">
-            <!-- The question will be dynamically inserted here -->
-            <h2 id="question">Question 1 of 6</h2>
-            <!-- Answer options will be added here -->
+            <h2 id="question"></h2>
             <div id="options"></div>
         </div>
-        <!-- Restart Quiz Button -->
-        <button onclick="restartQuiz()">Restart Quiz</button>
+        <button onclick="restartQuiz()">Restart Test</button>
     </div>
-    
+
     <script src="scripts/script.js"></script>
     <script>
-        // Set the current section to "control" and load the first question
+        // Set the current section to "control"
         switchSection('control');
     </script>
 </body>
