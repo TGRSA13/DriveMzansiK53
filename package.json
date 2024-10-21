@@ -4,9 +4,10 @@
   "description": "Drive Mzansi is an interactive quiz application designed to help users prepare for the K53 driving license test in South Africa. The app includes sections on vehicle controls, rules of the road, and road signs, making it a comprehensive resource for learners.",
   "main": "scripts/app.js",
   "scripts": {
+    "start": "node scripts/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Thobeka",
   "license": "ISC"
 }
