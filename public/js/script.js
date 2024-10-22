@@ -1,5 +1,5 @@
 // Timer functionality
-let timeLeft = 15 * 60; // 15 minutes in seconds
+let timeLeft = 10 * 60; // 10 minutes in seconds
 let timerInterval;
 
 function startTimer() {
@@ -13,7 +13,7 @@ function startTimer() {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
-                window.location.href = '15.results.html'; // Redirect to results page when time is up
+                window.location.href = results.html'; // Redirect to results page when time is up
             }
             timeLeft--;
         }, 1000);

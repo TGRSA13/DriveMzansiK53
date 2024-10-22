@@ -1,4 +1,4 @@
-let timeRemaining = 15 * 60; // 15 minutes in seconds
+let timeRemaining = 10 * 60; // 10 minutes in seconds
 
 // Check if there's a saved time in localStorage
 if (localStorage.getItem('timeRemaining')) {
