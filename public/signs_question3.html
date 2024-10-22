@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signs - Question 3</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS file is in the same directory -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -14,25 +14,18 @@
         <h1>Road Signs</h1>
         <h3>Question 3 of 3</h3>
         <p>This sign indicates the:</p>
-
-        <!-- Image placeholder for the sign -->
-        <img src="path_to_sign_image.jpg" alt="Road Sign Image" style="width: 100px; height: 100px;"> <!-- Replace with the actual image source -->
-
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - Fastest speed you may drive</label><br>
-            <label><input type="radio" name="answer" value="B"> B - Slowest speed you may drive</label><br>
-            <label><input type="radio" name="answer" value="C"> C - Distance to the next offramp</label><br>
-            <label><input type="radio" name="answer" value="D"> D - Minimum weight allowance</label>
+        <form id="question-form">
+            <label><input type="radio" name="answer" value="A"> A-Fastest speed you may drive</label><br>
+            <label><input type="radio" name="answer" value="B"> B-Slowest speed you may drive</label><br>
+            <label><input type="radio" name="answer" value="C"> C-Distance to the next offramp</label><br>
+            <label><input type="radio" name="answer" value="D"> D-Minimum weight allowance</label><br>
         </form>
-        
         <div class="navigation-buttons">
             <a href="signs_question2.html" class="nav-btn">Back</a>
-            <a href="results.html" class="nav-btn">Next</a>
+            <button type="button" class="nav-btn" onclick="submitAnswer('signs_question3.html')">Finish Test</button>
         </div>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script> <!-- Script for the countdown timer -->
-    <script src="js/quiz.js"></script> <!-- Script for quiz functionality, if needed -->
+    <script src="js/quiz.js"></script>
 </body>
 </html>

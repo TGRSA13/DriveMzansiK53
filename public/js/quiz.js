@@ -1,38 +1,61 @@
-// quiz.js
+let userAnswers = []; // Store user answers
+const correctAnswers = {
+    "controls_question1.html": "C",
+    "controls_question2.html": "B",
+    "controls_question3.html": "A",
+    "rules_question1.html": "C",
+    "rules_question2.html": "C",
+    "rules_question3.html": "B",
+    "signs_question1.html": "C",
+    "signs_question2.html": "D",
+    "signs_question3.html": "A"
+};
 
-let currentQuestionIndex = 0;
-let correctAnswers = 0;
-const totalQuestions = 9; // Update this with the actual number of questions
-
-// Array of correct answers for the questions (example)
-const correctAnswersArray = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A']; // Update this with actual answers
-
-// Function to handle the answer submission
-function submitAnswer() {
-    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+function submitAnswer(currentPage) {
+    const form = document.getElementById('question-form');
+    const selectedAnswer = form.answer.value; // Get selected answer
+    
     if (selectedAnswer) {
-        if (selectedAnswer.value === correctAnswersArray[currentQuestionIndex]) {
-            correctAnswers++;
-        }
+        userAnswers.push(selectedAnswer); // Store answer
+    }
 
-        // Move to the next question or show results
-        currentQuestionIndex++;
-        if (currentQuestionIndex < totalQuestions) {
-            window.location.href = `controls_question${currentQuestionIndex + 1}.html`; // Link to next question
-        } else {
-            // Redirect to results page
-            localStorage.setItem('score', correctAnswers);
-            window.location.href = 'results.html'; // Change to your results page
-        }
+    // Navigate to the next question or calculate score
+    if (currentPage === "signs_question3.html") {
+        calculateScore();
     } else {
-        alert('Please select an answer before proceeding!');
+        navigateToNextQuestion(currentPage);
     }
 }
 
-// Attach event listener to buttons
-document.addEventListener('DOMContentLoaded', () => {
-    const nextButton = document.querySelector('.nav-btn'); // Update selector based on your HTML
-    if (nextButton) {
-        nextButton.addEventListener('click', submitAnswer);
+function navigateToNextQuestion(currentPage) {
+    // Move to the next question based on the current page
+    if (currentPage === "controls_question1.html") {
+        window.location.href = 'controls_question2.html';
+    } else if (currentPage === "controls_question2.html") {
+        window.location.href = 'controls_question3.html';
+    } else if (currentPage === "rules_question1.html") {
+        window.location.href = 'rules_question2.html';
+    } else if (currentPage === "rules_question2.html") {
+        window.location.href = 'rules_question3.html';
+    } else if (currentPage === "signs_question1.html") {
+        window.location.href = 'signs_question2.html';
+    } else if (currentPage === "signs_question2.html") {
+        window.location.href = 'signs_question3.html';
     }
-});
+}
+
+function calculateScore() {
+    let score = 0;
+
+    // Check answers against correct answers
+    userAnswers.forEach((answer, index) => {
+        const questionKey = Object.keys(correctAnswers)[index];
+        if (answer === correctAnswers[questionKey]) {
+            score++;
+        }
+    });
+
+    // Store score in localStorage and navigate to results page
+    localStorage.setItem('quizScore', score);
+    window.location.href = 'results.html';
+}
