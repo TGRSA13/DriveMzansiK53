@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rules - Question 3</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS file is in the same directory -->
 </head>
 <body>
     <header>
@@ -12,13 +12,13 @@
     </header>
     <main>
         <h1>Rules of the Road</h1>
-        <h3>Question 3 of 3</h3>
+        <h3>Question 3 of 3</h3> <!-- You can adjust this based on the number of total questions -->
         <p>A vehicle hooter must be heard from a distance of:</p>
-        <form>
-            <label><input type="radio" name="answer" value="A"> A-100 meters</label>
-            <label><input type="radio" name="answer" value="B"> B-90 meters</label>
-            <label><input type="radio" name="answer" value="C"> C-80 meters</label>
-            <label><input type="radio" name="answer" value="D"> D-70 meters</label>
+        <form id="quiz-form">
+            <label><input type="radio" name="answer" value="A"> A - 100 meters</label><br>
+            <label><input type="radio" name="answer" value="B"> B - 90 meters</label><br>
+            <label><input type="radio" name="answer" value="C"> C - 80 meters</label><br>
+            <label><input type="radio" name="answer" value="D"> D - 70 meters</label>
         </form>
         <div class="navigation-buttons">
             <a href="rules_question2.html" class="nav-btn">Back</a>
@@ -27,6 +27,7 @@
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
-    <script src="js/timer.js"></script>
+    <script src="js/timer.js"></script> <!-- Script for the countdown timer -->
+    <script src="js/quiz.js"></script> <!-- Script for quiz functionality, such as tracking answers -->
 </body>
 </html>

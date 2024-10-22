@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controls - Question 3</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Assuming your CSS is in the css folder -->
 </head>
 <body>
     <header>
@@ -12,21 +12,23 @@
     </header>
     <main>
         <h1>Vehicle Controls</h1>
-        <h3>Question 3 of 3</h3>
+        <h3>Question 3 of 9</h3> <!-- Adjusted question count -->
         <p>Which control is used to accelerate?</p>
-        <form>
-            <label><input type="radio" name="answer" value="A"> A-4</label>
-            <label><input type="radio" name="answer" value="B"> B-8</label>
-            <label><input type="radio" name="answer" value="C"> C-9</label>
-            <label><input type="radio" name="answer" value="D"> D-10</label>
+        <form id="quiz-form">
+            <label><input type="radio" name="answer" value="A"> A - Accelerator Pedal</label><br>
+            <label><input type="radio" name="answer" value="B"> B - Brake Pedal</label><br>
+            <label><input type="radio" name="answer" value="C"> C - Clutch Pedal</label><br>
+            <label><input type="radio" name="answer" value="D"> D - Handbrake</label><br>
         </form>
         <div class="navigation-buttons">
             <a href="controls_question2.html" class="nav-btn">Back</a>
-            <a href="rules_question1.html" class="nav-btn">Next</a>
+            <button type="button" class="nav-btn" onclick="submitAnswer()">Next</button> <!-- Next button triggers submitAnswer() -->
         </div>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
+    <!-- JavaScript Files -->
     <script src="js/timer.js"></script>
+    <script src="js/quiz.js"></script> <!-- Script handling answer submission and score calculation -->
 </body>
 </html>

@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rules - Question 1</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Assuming your CSS is in the css folder -->
 </head>
 <body>
     <header>
         <div id="timer">10:00</div> <!-- Countdown Timer -->
     </header>
     <main>
-        <h1>Question 1 of 3</h1>
+        <h1>Question 4 of 9</h1> <!-- Adjusted question count since it's the 4th question -->
         <h3>Rules of the Road</h3>
         <p>Stop lights (braking lights) must be visible in sunlight at a distance of at least:</p>
-        <form>
-            <label><input type="radio" name="answer" value="A"> A-30 Meters</label>
-            <label><input type="radio" name="answer" value="B"> B-40 Meters</label>
-            <label><input type="radio" name="answer" value="C"> C-50 Meters</label>
-            <label><input type="radio" name="answer" value="D"> D-35 Meters</label>
+        <form id="quiz-form">
+            <label><input type="radio" name="answer" value="A"> A - 30 Meters</label><br>
+            <label><input type="radio" name="answer" value="B"> B - 40 Meters</label><br>
+            <label><input type="radio" name="answer" value="C"> C - 50 Meters</label><br>
+            <label><input type="radio" name="answer" value="D"> D - 35 Meters</label><br>
         </form>
         <div class="navigation-buttons">
             <a href="controls_question3.html" class="nav-btn">Back</a>
-            <a href="rules_question2.html" class="nav-btn">Next</a>
+            <button type="button" class="nav-btn" onclick="submitAnswer()">Next</button> <!-- Calls submitAnswer() for tracking answers -->
         </div>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
+    <!-- JavaScript Files -->
     <script src="js/timer.js"></script>
+    <script src="js/quiz.js"></script> <!-- Handles answer submission and score calculation -->
 </body>
 </html>

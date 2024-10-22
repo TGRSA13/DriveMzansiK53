@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controls - Question 1</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- Assuming your CSS file is in the css folder -->
 </head>
 <body>
     <header>
@@ -14,19 +14,21 @@
         <h1>Vehicle Controls</h1>
         <h3>Question 1 of 9</h3>
         <p>Which control does a vehicle with automatic transmission not have?</p>
-        <form>
-            <label><input type="radio" name="answer" value="A"> A-1</label>
-            <label><input type="radio" name="answer" value="B"> B-6</label>
-            <label><input type="radio" name="answer" value="C"> C-8</label>
-            <label><input type="radio" name="answer" value="D"> D-11</label>
+        <form id="quiz-form">
+            <label><input type="radio" name="answer" value="A"> A - Clutch Pedal</label><br>
+            <label><input type="radio" name="answer" value="B"> B - Handbrake</label><br>
+            <label><input type="radio" name="answer" value="C"> C - Accelerator</label><br>
+            <label><input type="radio" name="answer" value="D"> D - Steering Wheel</label><br>
         </form>
         <div class="navigation-buttons">
             <a href="home.html" class="nav-btn">Back</a>
-            <a href="controls_question2.html" class="nav-btn">Next</a>
+            <button type="button" class="nav-btn" onclick="submitAnswer()">Next</button>
         </div>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
+    <!-- JavaScript Files -->
     <script src="js/timer.js"></script>
+    <script src="js/quiz.js"></script> <!-- This script will handle answer submission and navigation -->
 </body>
 </html>
