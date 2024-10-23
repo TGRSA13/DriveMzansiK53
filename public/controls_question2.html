@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controls - Question 2</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Assuming your CSS file is in the css folder -->
+    <title>Control Section - Question 2</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div id="timer">10:00</div> <!-- Countdown Timer -->
+        <div id="timer">15:00</div> <!-- Timer for the quiz -->
     </header>
     <main>
-        <h1>Vehicle Controls</h1>
-        <h3>Question 2 of 9</h3> <!-- Adjusted question number -->
-        <p>Which controls are used to select a gear?</p>
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - Gear Lever & Clutch Pedal</label><br>
-            <label><input type="radio" name="answer" value="B"> B - Brake Pedal & Accelerator</label><br>
-            <label><input type="radio" name="answer" value="C"> C - Steering Wheel & Indicator</label><br>
-            <label><input type="radio" name="answer" value="D"> D - Accelerator & Handbrake</label><br>
-        </form>
-        <div class="navigation-buttons">
-            <a href="controls_question1.html" class="nav-btn">Back</a>
-            <button type="button" class="nav-btn" onclick="submitAnswer()">Next</button>
-        </div>
+        <h1>Control Section</h1>
+        <h3>Which control prevents a parked vehicle from moving?</h3>
+        <ul>
+            <li><input type="radio" name="answer" value="A-10"> A: 10</li>
+            <li><input type="radio" name="answer" value="B-5"> B: 5</li>
+            <li><input type="radio" name="answer" value="C-7"> C: 7</li>
+            <li><input type="radio" name="answer" value="D-3"> D: 3</li>
+        </ul>
+        <button onclick="submitAnswer()">Submit Answer</button>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
-    <!-- JavaScript Files -->
     <script src="js/timer.js"></script>
-    <script src="js/quiz.js"></script> <!-- This script will handle answer submission and navigation -->
+    <script src="js/quiz.js"></script>
+    <script>
+        let currentSection = "control"; // Current section
+        let currentQuestionIndex = 1; // Start at the second question
+    </script>
 </body>
 </html>

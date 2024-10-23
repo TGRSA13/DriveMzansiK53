@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controls - Question 3</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Assuming your CSS is in the css folder -->
+    <title>Control Section - Question 3</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div id="timer">10:00</div> <!-- Countdown Timer -->
+        <div id="timer">15:00</div> <!-- Timer for the quiz -->
     </header>
     <main>
-        <h1>Vehicle Controls</h1>
-        <h3>Question 3 of 9</h3> <!-- Adjusted question count -->
-        <p>Which control is used to accelerate?</p>
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - Accelerator Pedal</label><br>
-            <label><input type="radio" name="answer" value="B"> B - Brake Pedal</label><br>
-            <label><input type="radio" name="answer" value="C"> C - Clutch Pedal</label><br>
-            <label><input type="radio" name="answer" value="D"> D - Handbrake</label><br>
-        </form>
-        <div class="navigation-buttons">
-            <a href="controls_question2.html" class="nav-btn">Back</a>
-            <button type="button" class="nav-btn" onclick="submitAnswer()">Next</button> <!-- Next button triggers submitAnswer() -->
-        </div>
+        <h1>Control Section</h1>
+        <h3>Which control is used to show that you intend turning?</h3>
+        <ul>
+            <li><input type="radio" name="answer" value="A-5"> A: 5</li>
+            <li><input type="radio" name="answer" value="B-4"> B: 4</li>
+            <li><input type="radio" name="answer" value="C-9"> C: 9</li>
+            <li><input type="radio" name="answer" value="D-11"> D: 11</li>
+        </ul>
+        <button onclick="submitAnswer()">Submit Answer</button>
     </main>
     <footer>&copy; 2024 Mzansi Drive</footer>
 
-    <!-- JavaScript Files -->
     <script src="js/timer.js"></script>
-    <script src="js/quiz.js"></script> <!-- Script handling answer submission and score calculation -->
+    <script src="js/quiz.js"></script>
+    <script>
+        let currentSection = "control"; // Current section
+        let currentQuestionIndex = 2; // Start at the third question
+    </script>
 </body>
 </html>

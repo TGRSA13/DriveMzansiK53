@@ -1,39 +1,95 @@
-let timeRemaining = 10 * 60; // 10 minutes in seconds
+let timer;
+let timeLeft = 600; // 10 minutes
+let currentQuestionIndex = 0;
+let score = 0;
 
-// Check if there's a saved time in localStorage
-if (localStorage.getItem('timeRemaining')) {
-    timeRemaining = parseInt(localStorage.getItem('timeRemaining'), 10);
-}
+// Sample questions
+const questions = [
+    { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: 1 },
+    { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], answer: 2 },
+    // Add more questions as needed
+];
 
-// Function to update the timer display
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-    document.getElementById('timer').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-
-// Timer countdown function
 function startTimer() {
-    const intervalId = setInterval(() => {
-        timeRemaining--;
-
-        // Update the timer display
-        updateTimerDisplay();
-
-        // Save the remaining time in localStorage
-        localStorage.setItem('timeRemaining', timeRemaining);
-
-        // Check if the time is up
-        if (timeRemaining <= 0) {
-            clearInterval(intervalId);
-            alert('Time is up! Redirecting to results page...');
-            window.location.href = 'results.html'; // Change this to your results page
+    timer = setInterval(function () {
+        timeLeft--;
+        document.getElementById('timerDisplay').innerText = formatTime(timeLeft);
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert('Time is up!'); // Handle end of quiz here
+            document.getElementById('restartButton').style.display = 'block'; // Show restart button
         }
     }, 1000);
 }
 
-// Start the timer when the page loads
-window.onload = () => {
-    updateTimerDisplay();
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; // Format time as mm:ss
+}
+
+function beginQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    timeLeft = 600; // Reset time to 10 minutes
     startTimer();
-};
+    loadQuestion();
+}
+
+function loadQuestion() {
+    const questionData = questions[currentQuestionIndex];
+    document.getElementById('questionDisplay').innerText = questionData.question;
+    const optionsContainer = document.getElementById('optionsContainer');
+    optionsContainer.innerHTML = ''; // Clear previous options
+
+    questionData.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.innerText = option;
+        button.classList.add('optionButton');
+        button.onclick = () => selectOption(index);
+        optionsContainer.appendChild(button);
+    });
+}
+
+function selectOption(selectedIndex) {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    if (selectedIndex === correctAnswer) {
+        score++;
+    }
+    nextQuestion();
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+    }
+}
+
+function finishQuiz() {
+    clearInterval(timer);
+    alert(`Quiz finished! Your score: ${score}`);
+    document.getElementById('restartButton').style.display = 'block'; // Show restart button
+}
+
+function restartQuiz() {
+    clearInterval(timer);
+    document.getElementById('restartButton').style.display = 'none'; // Hide restart button
+    beginQuiz(); // Restart the quiz
+}
+
+// Attach the restart function to the restart button
+document.getElementById('restartButton').onclick = restartQuiz;
+
+// Call beginQuiz to start the quiz
+beginQuiz();
+
