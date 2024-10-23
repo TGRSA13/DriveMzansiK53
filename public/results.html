@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Drive Mzansi</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Your Quiz Results</h1>
-    <div id="score-display"></div>
-    <script>
-        const score = localStorage.getItem('quizScore');
-        document.getElementById('score-display').textContent = `Your score: ${score} out of 9`;
-    </script>
+  <main>
+    <h2>Your Results</h2>
+    <p id="score"></p>
+    <p id="percentage"></p>
+    <button onclick="startTest()">Start Test</button> <!-- Button to restart test -->
+  </main>
+
+  <script>
+    // Function to display results
+    function displayResults() {
+      const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+      const latestResult = pastResults[pastResults.length - 1]; // Get the latest result
+
+      if (latestResult) {
+          document.getElementById('score').textContent = `You got ${latestResult.score} out of 9.`;
+          document.getElementById('percentage').textContent = `Your score is ${latestResult.percentage}%`;
+      } else {
+          document.getElementById('score').textContent = "No results available.";
+          document.getElementById('percentage').textContent = "";
+      }
+    }
+
+    // Function to redirect to the test starting point
+    function startTest() {
+      window.location.href = "index.html"; // Change to your starting point
+    }
+
+    // Call displayResults when the page loads
+    document.addEventListener('DOMContentLoaded', displayResults);
+  </script>
 </body>
 </html>
+
