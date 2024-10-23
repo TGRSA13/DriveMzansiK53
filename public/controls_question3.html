@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Section - Question 3</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Question 3</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div id="timer">15:00</div> <!-- Timer for the quiz -->
-    </header>
-    <main>
-        <h1>Control Section</h1>
-        <h3>Which control is used to show that you intend turning?</h3>
-        <ul>
-            <li><input type="radio" name="answer" value="A-5"> A: 5</li>
-            <li><input type="radio" name="answer" value="B-4"> B: 4</li>
-            <li><input type="radio" name="answer" value="C-9"> C: 9</li>
-            <li><input type="radio" name="answer" value="D-11"> D: 11</li>
-        </ul>
-        <button onclick="submitAnswer()">Submit Answer</button>
-    </main>
-    <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script>
-    <script src="js/quiz.js"></script>
-    <script>
-        let currentSection = "control"; // Current section
-        let currentQuestionIndex = 2; // Start at the third question
-    </script>
+  <header>
+    <p>Time left: <span id="timer">10:00</span></p>
+  </header>
+  <main>
+    <h2>Which controls are used to select a gear?</h2>
+    <form id="control-q3">
+      <input type="radio" name="q3" value="A-9&7"> A-9&7 <br>
+      <input type="radio" name="q3" value="B-6&8"> B-6&8 <br>
+      <input type="radio" name="q3" value="C-6&1"> C-6&1 <br>
+      <input type="radio" name="q3" value="D-8&9"> D-8&9 <br>
+      <button type="submit">Next</button>
+    </form>
+  </main>
+  <script src="timer.js"></script>
+  <script>
+    document.getElementById('control-q3').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'rules_question1.html'; // Go to next section (Rules)
+    });
+  </script>
 </body>
 </html>

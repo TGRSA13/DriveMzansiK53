@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rules - Question 3</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS file is in the same directory -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rules Question 3</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div id="timer">10:00</div> <!-- Countdown Timer -->
-    </header>
-    <main>
-        <h1>Rules of the Road</h1>
-        <h3>Question 3 of 3</h3> <!-- You can adjust this based on the number of total questions -->
-        <p>A vehicle hooter must be heard from a distance of:</p>
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - 100 meters</label><br>
-            <label><input type="radio" name="answer" value="B"> B - 90 meters</label><br>
-            <label><input type="radio" name="answer" value="C"> C - 80 meters</label><br>
-            <label><input type="radio" name="answer" value="D"> D - 70 meters</label><br>
-        </form>
-        <div class="navigation-buttons">
-            <a href="rules_question2.html" class="nav-btn">Back</a>
-            <a href="signs_question1.html" class="nav-btn">Next</a>
-        </div>
-    </main>
-    <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script> <!-- Script for the countdown timer -->
-    <script src="js/quiz.js"></script> <!-- Script for quiz functionality, such as tracking answers -->
+  <header>
+    <p>Time left: <span id="timer">10:00</span></p>
+  </header>
+  <main>
+    <h2>A driver's license must always be kept:</h2>
+    <form id="rules-q3">
+      <input type="radio" name="q3" value="A-Inside the vehicle"> A-Inside the vehicle <br>
+      <input type="radio" name="q3" value="B-With the driver"> B-With the driver <br>
+      <input type="radio" name="q3" value="C-All of the above"> C-All of the above <br>
+      <input type="radio" name="q3" value="D-None of the above"> D-None of the above <br>
+      <button type="submit">Next</button>
+    </form>
+  </main>
+  <script src="timer.js"></script>
+  <script>
+    document.getElementById('rules-q3').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'signs_question1.html'; // Go to next section (Signs)
+    });
+  </script>
 </body>
 </html>

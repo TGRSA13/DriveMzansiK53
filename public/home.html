@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Drive Mzansi - Home Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Drive Mzansi</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="sign-up.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+  <main>
+    <h1>Welcome, [User]!</h1>
+    <button id="start-test-btn">Start Test</button>
+  </main>
 
-    <section>
-        <h1>Welcome to the Quiz</h1>
-        <p>Select the topic you want to start with:</p>
-        <ul>
-            <li><a href="controls_question1.html">Vehicle Controls</a></li>
-            <li><a href="rules_question1.html">Rules of the Road</a></li>
-            <li><a href="signs_question1.html">Road Signs</a></li>
-        </ul>
-    </section>
+  <script>
+    document.getElementById('start-test-btn').addEventListener('click', function() {
+      window.location.href = 'controls_question1.html';
+    });
+  </script>
 </body>
 </html>

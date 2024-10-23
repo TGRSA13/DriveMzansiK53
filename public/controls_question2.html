@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Section - Question 2</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Question 2</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div id="timer">15:00</div> <!-- Timer for the quiz -->
-    </header>
-    <main>
-        <h1>Control Section</h1>
-        <h3>Which control prevents a parked vehicle from moving?</h3>
-        <ul>
-            <li><input type="radio" name="answer" value="A-10"> A: 10</li>
-            <li><input type="radio" name="answer" value="B-5"> B: 5</li>
-            <li><input type="radio" name="answer" value="C-7"> C: 7</li>
-            <li><input type="radio" name="answer" value="D-3"> D: 3</li>
-        </ul>
-        <button onclick="submitAnswer()">Submit Answer</button>
-    </main>
-    <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script>
-    <script src="js/quiz.js"></script>
-    <script>
-        let currentSection = "control"; // Current section
-        let currentQuestionIndex = 1; // Start at the second question
-    </script>
+  <header>
+    <p>Time left: <span id="timer">10:00</span></p>
+  </header>
+  <main>
+    <h2>Which control prevents a parked vehicle from moving?</h2>
+    <form id="control-q2">
+      <input type="radio" name="q2" value="A-10"> A-10 <br>
+      <input type="radio" name="q2" value="B-5"> B-5 <br>
+      <input type="radio" name="q2" value="C-7"> C-7 <br>
+      <input type="radio" name="q2" value="D-3"> D-3 <br>
+      <button type="submit">Next</button>
+    </form>
+  </main>
+  <script src="timer.js"></script>
+  <script>
+    document.getElementById('control-q2').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'controls_question3.html'; // Go to next question
+    });
+  </script>
 </body>
 </html>

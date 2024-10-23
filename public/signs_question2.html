@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signs - Question 2</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS file is in the same directory -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signs Question 2</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div id="timer">10:00</div> <!-- Countdown Timer -->
-    </header>
-    <main>
-        <h1>Road Signs</h1>
-        <h3>Question 2 of 3</h3>
-        <p>This sign indicates:</p>
-
-        <!-- Image placeholder for the sign -->
-        <img src="path_to_sign_image.jpg" alt="Road Sign Image" style="width: 100px; height: 100px;"> <!-- Replace with the actual image source -->
-
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - Lane reserved for buses only</label><br>
-            <label><input type="radio" name="answer" value="B"> B - Lane reserved for midi-buses only</label><br>
-            <label><input type="radio" name="answer" value="C"> C - Parking reserved for buses only</label><br>
-            <label><input type="radio" name="answer" value="D"> D - Start of a lane reserved for buses only</label>
-        </form>
-        
-        <div class="navigation-buttons">
-            <a href="signs_question1.html" class="nav-btn">Back</a>
-            <a href="signs_question3.html" class="nav-btn">Next</a>
-        </div>
-    </main>
-    <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script> <!-- Script for the countdown timer -->
-    <script src="js/quiz.js"></script> <!-- Script for quiz functionality -->
+  <header>
+    <p>Time left: <span id="timer">10:00</span></p>
+  </header>
+  <main>
+    <h2>This sign indicates the:</h2>
+    <form id="signs-q2">
+      <input type="radio" name="q2" value="A-Fastest speed you may drive"> A-Fastest speed you may drive <br>
+      <input type="radio" name="q2" value="B-Slowest speed you may drive"> B-Slowest speed you may drive <br>
+      <input type="radio" name="q2" value="C-Distance to the next offramp"> C-Distance to the next offramp <br>
+      <input type="radio" name="q2" value="D-Minimum weight allowance"> D-Minimum weight allowance <br>
+      <button type="submit">Next</button>
+    </form>
+  </main>
+  <script src="timer.js"></script>
+  <script>
+    document.getElementById('signs-q2').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'signs_question3.html'; // Go to next question
+    });
+  </script>
 </body>
 </html>

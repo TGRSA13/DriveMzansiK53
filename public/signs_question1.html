@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signs - Question 1</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS file is in the same directory -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signs Question 1</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div id="timer">10:00</div> <!-- Countdown Timer -->
-    </header>
-    <main>
-        <h1>Road Signs</h1>
-        <h3>Question 1 of 3</h3>
-        <p>What does this sign indicate?</p>
-        
-        <!-- Image placeholder for the sign -->
-        <img src="path_to_sign_image.jpg" alt="Road Sign Image" style="width: 100px; height: 100px;"> <!-- Replace with the actual image source -->
-
-        <form id="quiz-form">
-            <label><input type="radio" name="answer" value="A"> A - Dead end ahead</label><br>
-            <label><input type="radio" name="answer" value="B"> B - Turn only left or right</label><br>
-            <label><input type="radio" name="answer" value="C"> C - Do not enter</label><br>
-            <label><input type="radio" name="answer" value="D"> D - Line on the road</label>
-        </form>
-        
-        <div class="navigation-buttons">
-            <a href="rules_question3.html" class="nav-btn">Back</a>
-            <a href="signs_question2.html" class="nav-btn">Next</a>
-        </div>
-    </main>
-    <footer>&copy; 2024 Mzansi Drive</footer>
-
-    <script src="js/timer.js"></script> <!-- Script for the countdown timer -->
-    <script src="js/quiz.js"></script> <!-- Script for quiz functionality -->
+  <header>
+    <p>Time left: <span id="timer">10:00</span></p>
+  </header>
+  <main>
+    <h2>What does this sign indicate?</h2>
+    <form id="signs-q1">
+      <input type="radio" name="q1" value="A-Turn right at the next intersection"> A-Turn right at the next intersection <br>
+      <input type="radio" name="q1" value="B-Turn right immediately"> B-Turn right immediately <br>
+      <input type="radio" name="q1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right <br>
+      <input type="radio" name="q1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right <br>
+      <button type="submit">Next</button>
+    </form>
+  </main>
+  <script src="timer.js"></script>
+  <script>
+    document.getElementById('signs-q1').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'signs_question2.html'; // Go to next question
+    });
+  </script>
 </body>
 </html>
