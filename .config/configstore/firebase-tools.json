@@ -1,0 +1,38 @@
+{
+	"usage": true,
+	"motd": {
+		"cloudBuildErrorAfter": 1594252800000,
+		"cloudBuildWarnAfter": 1590019200000,
+		"defaultNode10After": 1594252800000,
+		"minVersion": "3.0.5",
+		"node8DeploysDisabledAfter": 1613390400000,
+		"node8RuntimeDisabledAfter": 1615809600000,
+		"node8WarnAfter": 1600128000000,
+		"fetched": 1729858025335
+	},
+	"analytics-uuid": "73cc6a46-6496-47da-834a-45242df32148",
+	"user": {
+		"iss": "accounts.google.com",
+		"azp": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"aud": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"sub": "108456021898767193349",
+		"email": "tgmchunu@gmail.com",
+		"email_verified": true,
+		"at_hash": "2G1-eKZ_xckjCqfwH7cqlg",
+		"iat": 1729858104,
+		"exp": 1729861704
+	},
+	"tokens": {
+		"expires_at": 1729933656249,
+		"refresh_token": "1//09ku0q1RMbZNWCgYIARAAGAkSNwF-L9IriQICejqw1H21KvGpjF_YsZtz0pg6JKqNwN9GqcfJaI178yVl3AadyKAuQSs_wM8pMMY",
+		"scopes": [],
+		"access_token": "ya29.a0AeDClZCdqKTTJUY_dkIvuIF1EikR9xZjk0I_nQA4EtuNuVu0DVBCjs0fRyZRYbNoSGRcd6xq2YNYToIsSyzADCaQv064rtJWjytk0Tf2eH3hPoR84AJNOdCMYg5u8ArysAjuVvGaU928dbR0kSkMHlSll7ytXI6OxFPow2-I5fei-Y0aCgYKAeUSARISFQHGX2MiBy0QUQCEW69XtX-UsqPxNw0182",
+		"expires_in": 3599,
+		"scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase https://www.googleapis.com/auth/userinfo.email openid",
+		"token_type": "Bearer",
+		"id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImM4OGQ4MDlmNGRiOTQzZGY1M2RhN2FjY2ZkNDc3NjRkMDViYTM5MWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA4NDU2MDIxODk4NzY3MTkzMzQ5IiwiZW1haWwiOiJ0Z21jaHVudUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IkxpLUYyTDFOcXlSaldtSTBWdS1xc1EiLCJpYXQiOjE3Mjk5MzAwNTgsImV4cCI6MTcyOTkzMzY1OH0.53n3efioJqDdS2xpY9p4TdvOd_KoD4U5r1DEuahegZKaYmI_o_tZduxD3q7B049v_4VcsuMwWBs4v25ceYsi6YuaLZAh3vyaPH-UECRVMjKDvZCOX8s-8TJF9gPHrhL6lRhthMESA97Sd2Bx63Wc3Vr-aNqUzdJMYlXhm6MxBp3G9ABIzC_LvRSabvN6mt0PojqtFmZMcyu5Jy--raRWL9ltVzXEshu0WO8DvY2p36opypIVC8KGiTHluNYJ8lojIJoHOx0tLZVNJGE0b0E8-vFoLmeGWKuAyUxbf2oZrA1FcMpX37-8MKWtKEz1CN3N8KbyPyzbPN-zBa9lXiIs8w"
+	},
+	"activeProjects": {
+		"C:\\Users\\Thobeka\\.vscode\\DriveMzansiK53": "drive-mzansi-app"
+	}
+}
