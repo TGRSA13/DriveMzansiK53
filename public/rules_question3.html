@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rules Question 3</title>
+  <title>Signs Question 1</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,28 +11,28 @@
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
   <main>
-    <h1>Road Rules</h1>
-    <h2>Question 3 of 3</h2>
+    <h1>Road Signs</h1>
+    <h2>Question 1 of 3</h2>
 
     <!-- Centered div for image and question -->
     <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
-      <img src="images/rules.jpg" alt="Rules Image" style="width: 250px; height: auto; margin: 10px 0;">
-      <p>A driver's license must always be kept:</p>
+      <img src="images/sign1.png" alt="Sign 1 Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>What does this sign indicate?</p>
     </div>
 
-    <form id="rules-q3" style="text-align: center;">
-      <input type="radio" name="q3" value="A-Inside the vehicle"> A-Inside the vehicle <br>
-      <input type="radio" name="q3" value="B-With the driver"> B-With the driver <br>
-      <input type="radio" name="q3" value="C-All of the above"> C-All of the above <br>
-      <input type="radio" name="q3" value="D-None of the above"> D-None of the above <br>
+    <form id="signs-q1" style="text-align: center;">
+      <input type="radio" name="q1" value="A-Turn right at the next intersection"> A-Turn right at the next intersection <br>
+      <input type="radio" name="q1" value="B-Turn right immediately"> B-Turn right immediately <br>
+      <input type="radio" name="q1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right <br>
+      <input type="radio" name="q1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right <br>
       <button type="submit">Next</button>
     </form>
   </main>
   <script src="timer.js"></script>
   <script>
-    document.getElementById('rules-q3').addEventListener('submit', function(e) {
+    document.getElementById('signs-q1').addEventListener('submit', function(e) {
       e.preventDefault();
-      window.location.href = 'signs_question1.html'; // Go to next section (Signs)
+      window.location.href = 'signs_question2.html'; // Go to next question
     });
   </script>
 </body>
