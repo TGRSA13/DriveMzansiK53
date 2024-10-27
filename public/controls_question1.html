@@ -4,15 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control Question 1</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
   <header>
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
-  <main><h1>Vehicle Controls</h1>
+  <main>
+    <h1>Vehicle Controls</h1>
     <h2>Question 1 of 3</h2>
-    <p>Which control does a vehicle with automatic transmission not have?</p>
+    
+    <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <!-- Image right above the question -->
+      <img src="public/images/controlstest.png" alt="Controls Test Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>Which control does a vehicle with automatic transmission not have?</p>
+    </div>
+
     <form id="control-q1">
       <input type="radio" name="q1" value="A-1"> A-1 <br>
       <input type="radio" name="q1" value="B-6"> B-6 <br>
@@ -21,12 +28,7 @@
       <button type="submit">Next</button>
     </form>
   </main>
-  <script src="timer.js"></script>
+  <script src="public/js/timer.js"></script>
   <script>
-    document.getElementById('control-q1').addEventListener('submit', function(e) {
-      e.preventDefault();
-      window.location.href = 'controls_question2.html'; // Go to next question
-    });
-  </script>
-</body>
-</html>
+    document.getElementById('control-q1').addEventListener('submit', function
+
