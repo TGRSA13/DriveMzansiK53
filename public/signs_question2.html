@@ -10,10 +10,17 @@
   <header>
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
-  <main><h1>Road Signs</h1>
+  <main>
+    <h1>Road Signs</h1>
     <h2>Question 2 of 3</h2>
-    <p>This sign indicates the:</p>
-    <form id="signs-q2">
+
+    <!-- Centered div for image and question -->
+    <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <img src="images/sign2.png" alt="Sign 2 Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>This sign indicates the:</p>
+    </div>
+
+    <form id="signs-q2" style="text-align: center;">
       <input type="radio" name="q2" value="A-Fastest speed you may drive"> A-Fastest speed you may drive <br>
       <input type="radio" name="q2" value="B-Slowest speed you may drive"> B-Slowest speed you may drive <br>
       <input type="radio" name="q2" value="C-Distance to the next offramp"> C-Distance to the next offramp <br>
