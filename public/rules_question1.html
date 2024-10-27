@@ -10,10 +10,17 @@
   <header>
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
-  <main><h1>Road Rules</h1>
+  <main>
+    <h1>Road Rules</h1>
     <h2>Question 1 of 3</h2>
-    <p>Stop lights (braking lights) must be visible in sunlight at a distance of at least:</p>
-    <form id="rules-q1">
+
+    <!-- Centered div for image and question -->
+    <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <img src="images/rules.png" alt="Rules Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>Stop lights (braking lights) must be visible in sunlight at a distance of at least:</p>
+    </div>
+
+    <form id="rules-q1" style="text-align: center;">
       <input type="radio" name="q1" value="A-30 Meters"> A-30 Meters <br>
       <input type="radio" name="q1" value="B-40 Meters"> B-40 Meters <br>
       <input type="radio" name="q1" value="C-50 Meters"> C-50 Meters <br>
