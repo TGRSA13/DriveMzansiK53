@@ -1,28 +1,75 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0; /* Adjusted padding for body */
     background-color: #f4f4f4;
 }
 
+header {
+    text-align: center; /* Center text in header */
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #333; /* Dark background for the menu bar */
+    padding: 10px 0; /* Space around the navigation */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Align items in a row */
+    justify-content: center; /* Center items horizontally */
+}
+
+nav ul li {
+    margin: 0 15px; /* Space between menu items */
+}
+
+nav ul li a {
+    color: white; /* White text color for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px; /* Space around text */
+}
+
+nav ul li a:hover {
+    background-color: #555; /* Change background on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+/* Heading and Main Content Styles */
 h1 {
     color: #333;
+    margin: 20px 0; /* Margin around heading */
+}
+
+main {
+    text-align: center; /* Center main content */
 }
 
 ul {
     list-style-type: none;
-    padding: 0;
+    padding: 0; /* Remove default padding */
 }
 
 li {
-    margin: 10px 0;
+    margin: 10px 0; /* Vertical spacing for list items */
 }
 
 a {
-    text-decoration: none;
-    color: #007BFF;
+    text-decoration: none; /* Remove underline from links */
+    color: #007BFF; /* Link color */
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center; /* Center footer content */
+    padding: 10px 0; /* Space around footer */
+    margin-top: 20px; /* Space above footer */
+    background-color: #f4f4f4; /* Match footer background with body */
 }
