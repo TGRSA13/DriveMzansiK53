@@ -4,15 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control Question 2</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
   <header>
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
-  <main><h1>Vehicle Controls</h1>
+  <main>
+    <h1>Vehicle Controls</h1>
     <h2>Question 2 of 3</h2>
-    <p>Which control prevents a parked vehicle from moving?</p>
+    
+    <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <!-- Image right above the question -->
+      <img src="images/controlstest.png" alt="Control Test Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>Which control prevents a parked vehicle from moving?</p>
+    </div>
+
     <form id="control-q2">
       <input type="radio" name="q2" value="A-10"> A-10 <br>
       <input type="radio" name="q2" value="B-5"> B-5 <br>
@@ -21,7 +28,7 @@
       <button type="submit">Next</button>
     </form>
   </main>
-  <script src="timer.js"></script>
+  <script src="public/js/timer.js"></script>
   <script>
     document.getElementById('control-q2').addEventListener('submit', function(e) {
       e.preventDefault();
