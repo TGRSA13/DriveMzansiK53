@@ -3,22 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mzansi Drive</title>
-    <link rel="stylesheet" href="style.css"> <!-- Make sure this is consistent with the index page CSS file -->
+    <title>Login - Drive Mzansi</title>
+    <link rel="stylesheet" href="public/css/styles.css"> <!-- Link to your main CSS file -->
+    <style>
+        /* Ensure the menu bar and layout match the index page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #333; /* Black background for menu */
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            padding: 14px 20px;
+        }
+
+        nav a {
+            color: white; /* White text color for links */
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd; /* Light gray hover effect */
+            color: black; /* Black text on hover */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #f8f8f8;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <!-- Add logo and center content like the index page -->
-        <nav style="display: flex; flex-direction: column; align-items: center;">
-            <img src="images/logo.png" alt="Mzansi Drive Logo" width="200" height="200">
-            <ul style="display: flex; gap: 20px; list-style: none; padding: 0;">
+        <nav>
+            <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="sign-up.html">Sign Up</a></li>
             </ul>
         </nav>
+        <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
     </header>
     
-    <main style="text-align: center;">
+    <main>
         <h1>Login</h1>
         <form action="home.html" style="display: flex; flex-direction: column; align-items: center;">
             <label for="username">Username</label>
@@ -30,6 +79,8 @@
         <p>Don't have an account? <a href="sign-up.html">Sign up here</a></p>
     </main>
     
-    <footer style="text-align: center;">&copy; 2024 Mzansi Drive</footer>
+    <footer>
+        <p>&copy; 2024 Drive Mzansi</p>
+    </footer>
 </body>
 </html>
