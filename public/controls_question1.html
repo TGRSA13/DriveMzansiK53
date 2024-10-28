@@ -3,31 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Control Question 1</title>
+  <title>Control Question 1 - Drive Mzansi</title>
   <link rel="stylesheet" href="public/css/styles.css">
+  <style>
+    /* Page styling for consistency */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+
+    nav {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav li {
+      padding: 14px 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #f8f8f8;
+      padding: 10px;
+    }
+
+    #timer {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
     <p>Time left: <span id="timer">10:00</span></p>
   </header>
+
   <main>
     <h1>Vehicle Controls</h1>
     <h2>Question 1 of 3</h2>
-    
+
     <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
-      <!-- Image right above the question -->
+      <!-- Image above the question -->
       <img src="images/controlstest.png" alt="Controls Test Image" style="width: 250px; height: auto; margin: 10px 0;">
       <p>Which control does a vehicle with automatic transmission not have?</p>
     </div>
 
     <form id="control-q1" style="text-align: center;">
-      <input type="radio" name="q1" value="A-1"> A-1 <br>
+      <input type="radio" name="q1" value="A-1" required> A-1 <br>
       <input type="radio" name="q1" value="B-6"> B-6 <br>
       <input type="radio" name="q1" value="C-8"> C-8 <br>
       <input type="radio" name="q1" value="D-11"> D-11 <br>
       <button type="submit">Next</button>
     </form>
   </main>
+
+  <footer>
+    <p>&copy; 2024 Drive Mzansi</p>
+  </footer>
+
   <script src="public/js/timer.js"></script>
   <script>
     document.getElementById('control-q1').addEventListener('submit', function(e) {
