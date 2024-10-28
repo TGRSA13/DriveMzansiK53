@@ -4,13 +4,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Drive Mzansi</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="public/css/styles.css"> <!-- Link to main CSS file -->
+  <style>
+      /* Inline styles to match the other pages */
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+      }
+
+      header {
+          background-color: #f8f8f8;
+          padding: 20px;
+      }
+
+      nav {
+          background-color: #333; /* Black background for menu */
+          overflow: hidden;
+      }
+
+      nav ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+      }
+
+      nav li {
+          padding: 14px 20px;
+      }
+
+      nav a {
+          color: white; /* White text color for links */
+          text-decoration: none;
+      }
+
+      nav a:hover {
+          background-color: #ddd; /* Light gray hover effect */
+          color: black; /* Black text on hover */
+      }
+
+      main {
+          padding: 20px;
+      }
+
+      footer {
+          background-color: #f8f8f8;
+          padding: 10px;
+      }
+  </style>
 </head>
 <body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
+  </header>
+
   <main>
     <h1>Welcome, [User]!</h1>
-    <button id="start-test-btn">Start Test</button>
+    <button id="start-test-btn" style="padding: 10px 20px; font-size: 16px;">Start Test</button>
   </main>
+
+  <footer>
+    <p>&copy; 2024 Drive Mzansi</p>
+  </footer>
 
   <script>
     document.getElementById('start-test-btn').addEventListener('click', function() {
