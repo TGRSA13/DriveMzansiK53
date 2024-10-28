@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Control Question 1 - Drive Mzansi</title>
+  <title>Signs Question 3 - Drive Mzansi</title>
   <link rel="stylesheet" href="public/css/styles.css">
   <style>
     /* Page styling for consistency */
@@ -58,6 +58,35 @@
     #timer {
       font-weight: bold;
     }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 10px 15px;
+      background-color: #4CAF50; /* Green background for next button */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px; /* Add space between buttons */
+      text-decoration: none; /* Ensure no underline */
+    }
+
+    .button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+
+    .back-button {
+      background-color: #f44336; /* Red background for back button */
+    }
+
+    .back-button:hover {
+      background-color: #d32f2f; /* Darker red on hover */
+    }
   </style>
 </head>
 <body>
@@ -71,21 +100,24 @@
   </header>
 
   <main>
-    <h1>Vehicle Controls</h1>
-    <h2>Question 1 of 3</h2>
+    <h1>Road Signs</h1>
+    <h2>Question 3 of 3</h2>
 
     <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
-      <!-- Image above the question -->
-      <img src="images/controlstest.png" alt="Controls Test Image" style="width: 250px; height: auto; margin: 10px 0;">
-      <p>Which control does a vehicle with automatic transmission not have?</p>
+      <img src="images/sign3.png" alt="Sign 3 Image" style="width: 250px; height: auto; margin: 10px 0;">
+      <p>What does this sign indicate?</p>
     </div>
 
-    <form id="control-q1" style="text-align: center;">
-      <input type="radio" name="q1" value="A-1" required> A-1 <br>
-      <input type="radio" name="q1" value="B-6"> B-6 <br>
-      <input type="radio" name="q1" value="C-8"> C-8 <br>
-      <input type="radio" name="q1" value="D-11"> D-11 <br>
-      <button type="submit">Next</button>
+    <form id="signs-q3" style="text-align: center;">
+      <input type="radio" name="q3" value="A-Dead end ahead" required> A-Dead end ahead <br>
+      <input type="radio" name="q3" value="B-Turn only left or right"> B-Turn only left or right <br>
+      <input type="radio" name="q3" value="C-Do not enter"> C-Do not enter <br>
+      <input type="radio" name="q3" value="D-Line on the road"> D-Line on the road <br>
+
+      <div class="button-container">
+        <a href="signs_question2.html" class="button back-button">Back</a> <!-- Back button -->
+        <button type="submit" class="button">Submit Test</button> <!-- Submit button -->
+      </div>
     </form>
   </main>
 
@@ -95,9 +127,9 @@
 
   <script src="public/js/timer.js"></script>
   <script>
-    document.getElementById('control-q1').addEventListener('submit', function(e) {
+    document.getElementById('signs-q3').addEventListener('submit', function(e) {
       e.preventDefault();
-      window.location.href = 'controls_question2.html'; // Go to the next question page
+      window.location.href = 'results.html'; // Redirect to results page
     });
   </script>
 </body>
