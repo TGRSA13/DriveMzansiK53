@@ -1,6 +1,7 @@
 // public/js/signup.js
 
-// Initialize Firebase
+// This is the line where you initialize Firebase
+// (Ensure this is only in one file)
 const firebaseConfig = {
     apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
     authDomain: "drive-mzansi-app.firebaseapp.com",
@@ -10,8 +11,10 @@ const firebaseConfig = {
     appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase (only if it's not already initialized)
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 document.getElementById('signup-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent form submission
@@ -51,5 +54,3 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
             alert(errorMessage); // Show error message to the user
         });
 });
-
-  
