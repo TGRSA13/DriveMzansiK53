@@ -21,11 +21,26 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
       return;
   }
 
-  // Store user data (for local testing; switch to Firebase or a backend in production)
-  const userData = { name, surname, email, password };
-  localStorage.setItem(email, JSON.stringify(userData));
+  // Firebase authentication
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
 
-  alert('Sign-Up successful! Redirecting to login page...');
-  window.location.href = 'login.html'; // Redirect to login page
+      // Store additional user info in Firestore
+      return firebase.firestore().collection('users').doc(user.uid).set({
+        name: name,
+        surname: surname,
+        email: email
+      });
+    })
+    .then(() => {
+      alert('Sign-Up successful! Redirecting to login page...');
+      window.location.href = 'login.html'; // Redirect to login page
+    })
+    .catch((error) => {
+      console.error('Error during sign-up:', error);
+      alert('Error during sign-up: ' + error.message);
+    });
 });
+
   
