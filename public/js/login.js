@@ -22,7 +22,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent the default form submission
 
     // Hardcoded test credentials for debugging
-    const email = "tgmchunu@gmail.com"; // Replace with a valid email
+    const email = "tgmchunu2@gmail.com"; // Replace with a valid email
     const password = "Alx@2024"; // Replace with the corresponding password
 
     // Sign in with email and password
@@ -30,7 +30,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
         .then((userCredential) => {
             // Signed in
             alert("Login successful!");
-            window.location.href = "profile.html"; // Redirect to profile page
+            window.location.href = "home.html"; // Redirect to Start Test page
         })
         .catch((error) => {
             const errorCode = error.code;
