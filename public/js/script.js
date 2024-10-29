@@ -13,7 +13,7 @@ function startTimer() {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
-                window.location.href = results.html'; // Redirect to results page when time is up
+                window.location.href = results.html';' // Redirect to results page when time is up
             }
             timeLeft--;
         }, 1000);
