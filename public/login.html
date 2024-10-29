@@ -70,8 +70,8 @@
     <main>
         <h1>Login</h1>
         <form id="login-form" style="display: flex; flex-direction: column; align-items: center;">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>
@@ -83,22 +83,6 @@
         <p>&copy; 2024 Drive Mzansi</p>
     </footer>
 
-    <script>
-        // JavaScript to handle login
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form from submitting the default way
-
-            // Sample hardcoded credentials for testing (replace with actual authentication logic)
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            // Simple check for hardcoded credentials
-            if (username === "testuser" && password === "password123") {
-                window.location.href = "profile.html"; // Redirect to profile page if credentials match
-            } else {
-                alert("Incorrect username or password. Please try again.");
-            }
-        });
-    </script>
+    <script src="public/js/login.js"></script> <!-- Link to login.js -->
 </body>
 </html>
