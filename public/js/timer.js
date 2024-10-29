@@ -1,21 +1,32 @@
-// Countdown timer logic
-let timeLeft = localStorage.getItem('timeLeft') || 600; // 10 minutes in seconds
+// Timer functionality
+let timeLeft = 10 * 60; // 10 minutes in seconds
+let timerInterval;
 
-function updateTimer() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-  if (timeLeft === 0) {
-    clearInterval(timerInterval);
-    alert("Time's up!");
-    window.location.href = 'results.html'; // Redirect to results page
-  }
-
-  timeLeft--;
-  localStorage.setItem('timeLeft', timeLeft); // Store remaining time in localStorage
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    if (timerElement) {
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            if (seconds < 10) seconds = '0' + seconds;
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            // Check if time is up
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up!');
+                window.location.href = 'results.html'; // Redirect to results page when time is up
+            }
+            timeLeft--;
+        }, 1000);
+    }
 }
 
-const timerInterval = setInterval(updateTimer, 1000);
+// Start the timer when the page is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('timer')) {
+        startTimer();
+    }
+});
 
 
