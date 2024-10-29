@@ -1,13 +1,13 @@
 // public/js/signup.js
 
-// Initialize Firebase (move this to a separate file if necessary)
+// Initialize Firebase
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+    authDomain: "drive-mzansi-app.firebaseapp.com",
+    projectId: "drive-mzansi-app",
+    storageBucket: "drive-mzansi-app.appspot.com",
+    messagingSenderId: "1007195133421",
+    appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
 // Initialize Firebase
@@ -39,8 +39,11 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
         .then((userCredential) => {
             // Signed up
             alert('Sign-Up successful! Redirecting to login page...');
-            // You might want to store user info in the database here
-            window.location.href = 'login.html'; // Redirect to login page
+            // Store user info in local storage
+            localStorage.setItem('userName', name + ' ' + surname); // Store full name
+            
+            // Redirect to login page
+            window.location.href = 'login.html'; 
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -48,4 +51,5 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
             alert(errorMessage); // Show error message to the user
         });
 });
+
   

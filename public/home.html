@@ -103,7 +103,7 @@
   <!-- Initialize Firebase -->
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
       authDomain: "drive-mzansi-app.firebaseapp.com",
       projectId: "drive-mzansi-app",
       storageBucket: "drive-mzansi-app.appspot.com",
@@ -118,8 +118,8 @@
     // Check if user is logged in
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in, display their name
-        document.getElementById('user-name').textContent = user.email;
+        // User is signed in, display their email or name
+        document.getElementById('user-name').textContent = user.email || 'User';
       } else {
         // No user is signed in, redirect to index page or show an error
         alert("No user logged in. Redirecting to login page.");
