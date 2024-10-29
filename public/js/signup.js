@@ -1,7 +1,10 @@
 // public/js/signup.js
 
-// This is the line where you initialize Firebase
-// (Ensure this is only in one file)
+// Import Firebase App and Auth modules
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
     authDomain: "drive-mzansi-app.firebaseapp.com",
@@ -11,10 +14,9 @@ const firebaseConfig = {
     appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
-// Initialize Firebase (only if it's not already initialized)
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 document.getElementById('signup-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent form submission
@@ -38,7 +40,7 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
     }
 
     // Create user with email and password using Firebase Auth
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up
             alert('Sign-Up successful! Redirecting to login page...');
@@ -54,3 +56,4 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
             alert(errorMessage); // Show error message to the user
         });
 });
+
