@@ -1,4 +1,8 @@
-// Initialize Firebase
+// Import Firebase SDKs
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+// Your Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
     authDomain: "drive-mzansi-app.firebaseapp.com",
@@ -10,17 +14,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 // Get the login form
 document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent the default form submission
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    // Hardcoded test credentials for debugging
+    const email = "tgmchunu@gmail.com"; // Replace with a valid email
+    const password = "Alx@2024"; // Replace with the corresponding password
 
     // Sign in with email and password
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             alert("Login successful!");
