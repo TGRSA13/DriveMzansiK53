@@ -99,16 +99,26 @@
   <!-- Include Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-  <script src="public/js/home.js"></script> <!-- Link to your main JavaScript file -->
+  
+  <!-- Initialize Firebase -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script src="public/js/home.js" type="module"></script> <!-- Use type="module" -->
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Firebase
-      const firebaseConfig = {
-        // Your Firebase configuration goes here
-      };
-      firebase.initializeApp(firebaseConfig);
-
       // Retrieve and display user's name
       const userName = localStorage.getItem('userName');
       if (userName) {
@@ -120,7 +130,7 @@
 
       // Start Test button functionality
       document.getElementById('start-test-btn').addEventListener('click', function() {
-        window.location.href = 'controls_question1.html';
+        window.location.href = 'controls_question1.html'; // Ensure this path is correct
       });
 
       // Logout button functionality
