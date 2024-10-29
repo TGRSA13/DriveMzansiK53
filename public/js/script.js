@@ -10,10 +10,12 @@ function startTimer() {
             let seconds = timeLeft % 60;
             if (seconds < 10) seconds = '0' + seconds;
             timerElement.textContent = `${minutes}:${seconds}`;
+            
+            // Check if time is up
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
-                window.location.href = results.html';' // Redirect to results page when time is up
+                window.location.href = 'results.html'; // Redirect to results page when time is up
             }
             timeLeft--;
         }, 1000);
