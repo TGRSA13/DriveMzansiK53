@@ -6,7 +6,7 @@ function startTimer() {
     const timerElement = document.getElementById('timer');
     if (timerElement) {
         clearInterval(timerInterval); // Clear any existing intervals
-        
+
         timerInterval = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
@@ -15,7 +15,7 @@ function startTimer() {
             } else {
                 let minutes = Math.floor(timeLeft / 60);
                 let seconds = timeLeft % 60;
-                if (seconds < 10) seconds = '0' + seconds;
+                if (seconds < 10) seconds = '0' + seconds; // Add leading zero
                 timerElement.textContent = `${minutes}:${seconds}`;
                 timeLeft--; // Decrement timeLeft only if there's still time
             }
@@ -25,11 +25,16 @@ function startTimer() {
 
 function resetTimer() {
     timeLeft = 10 * 60; // Reset time to 10 minutes
+}
+
+// This function can be called to start the timer
+function beginTest() {
+    resetTimer(); // Reset the timer
     startTimer(); // Start the timer
 }
 
-// Start the timer when the page is loaded
+// Listen for the test to start (for example, from a button click in home.js)
 document.addEventListener('DOMContentLoaded', function() {
-    resetTimer(); // Reset the timer on page load
+    // Uncomment this if you want the timer to start automatically on this page load
+    // resetTimer(); // Reset the timer on page load
 });
-
