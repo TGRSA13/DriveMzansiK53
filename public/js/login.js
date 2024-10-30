@@ -13,8 +13,19 @@ const firebaseConfig = {
     measurementId: "G-WGTMR2MFRY"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if it hasn't been initialized yet
+let app;
+try {
+    app = initializeApp(firebaseConfig);
+} catch (error) {
+    if (error.code === 'app/duplicate-app') {
+        console.log("Firebase app already initialized.");
+        app = firebase.app(); // Use the existing app
+    } else {
+        console.error("Error initializing Firebase app:", error);
+    }
+}
+
 const auth = getAuth(app);
 
 // Set persistence
@@ -41,6 +52,7 @@ setPersistence(auth, browserLocalPersistence)
                     const errorCode = error.code;
                     let errorMessage = error.message;
 
+                    // Provide user-friendly error messages
                     if (errorCode === 'auth/wrong-password') {
                         errorMessage = "Incorrect password. Please try again.";
                     } else if (errorCode === 'auth/user-not-found') {
