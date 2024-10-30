@@ -96,13 +96,17 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Include Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script>
+  <!-- Include Firebase SDK as modules -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js" type="module"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js" type="module"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js" type="module"></script>
 
-  <!-- Initialize Firebase -->
-  <script>
+  <!-- Initialize Firebase in a module -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+
     const firebaseConfig = {
       apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
       authDomain: "drive-mzansi-app.firebaseapp.com",
@@ -114,15 +118,16 @@
     };
     
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(); // Initialize Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); // Initialize Firestore
+    const auth = getAuth(app); // Initialize Auth
 
     // Check if user is logged in
-    firebase.auth().onAuthStateChanged(async (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log("Current user:", user); // Log the current user
-        const docRef = db.collection("users").doc(user.uid);
-        const docSnap = await docRef.get();
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             const userData = docSnap.data();
@@ -161,6 +166,7 @@
   </script>
 </body>
 </html>
+
 
 
 
