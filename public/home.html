@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/styles.css"> <!-- Corrected path -->
+  <link rel="stylesheet" href="css/styles.css"> <!-- Ensure this path is correct -->
   <style>
       /* Inline styles to match the other pages */
       body {
@@ -83,7 +83,7 @@
         <li><a href="index.html">Home</a></li>
       </ul>
     </nav>
-    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
+    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300"> <!-- Ensure this path is correct -->
   </header>
 
   <main>
@@ -120,7 +120,7 @@
     // Check if user is logged in
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        // User is signed in, retrieve their name from Firestore
+        console.log("Current user:", user); // Log the current user
         const docRef = db.collection("users").doc(user.uid);
         const docSnap = await docRef.get();
 
@@ -132,14 +132,14 @@
             document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
         }
       } else {
-        // No user is signed in, redirect to index page or show an error
+        console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
         window.location.href = "index.html"; // Redirect to the homepage if not logged in
       }
     });
   </script>
 
-  <script src="js/home.js" type="module"></script> <!-- Corrected path and used type="module" -->
+  <script src="js/home.js" type="module"></script> <!-- Ensure this path is correct -->
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -161,5 +161,6 @@
   </script>
 </body>
 </html>
+
 
 
