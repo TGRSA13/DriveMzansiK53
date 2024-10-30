@@ -96,49 +96,6 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Include Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Add Firestore SDK -->
-
-  <!-- Initialize Firebase -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
-      authDomain: "drive-mzansi-app.firebaseapp.com",
-      projectId: "drive-mzansi-app",
-      storageBucket: "drive-mzansi-app.appspot.com",
-      messagingSenderId: "1007195133421",
-      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
-      measurementId: "G-WGTMR2MFRY" // Optional for Analytics
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(); // Initialize Firestore
-
-    // Check if user is logged in
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        // User is signed in, retrieve their name from Firestore
-        const docRef = db.collection("users").doc(user.uid);
-        const docSnap = await docRef.get();
-
-        if (docSnap.exists()) {
-            const userData = docSnap.data();
-            document.getElementById('user-name').textContent = userData.name + ' ' + userData.surname; // Display user name and surname
-        } else {
-            console.error("No such document!");
-            document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
-        }
-      } else {
-        // No user is signed in, redirect to index page or show an error
-        alert("No user logged in. Redirecting to login page.");
-        window.location.href = "index.html"; // Redirect to the homepage if not logged in
-      }
-    });
-  </script>
-
   <script src="public/js/home.js" type="module"></script> <!-- Use type="module" -->
 
   <script>
