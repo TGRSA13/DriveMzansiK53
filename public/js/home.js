@@ -14,10 +14,15 @@ const firebaseConfig = {
 
 // Initialize Firebase only if it hasn't been initialized yet
 let app;
-if (!firebase.apps.length) {
+try {
     app = initializeApp(firebaseConfig);
-} else {
-    app = firebase.app(); // Use the existing app
+} catch (error) {
+    if (error.code === 'app/duplicate-app') {
+        console.log("Firebase app already initialized."); // Log if app is already initialized
+        app = firebase.app(); // Use the existing app
+    } else {
+        console.error("Error initializing Firebase app:", error); // Log other errors
+    }
 }
 
 const auth = getAuth(app);
@@ -59,4 +64,5 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         console.error('Sign Out Error', error); // Log sign out errors
     });
 });
+
 
