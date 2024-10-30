@@ -19,20 +19,26 @@ const db = getFirestore(app);
 
 // Check if user is logged in and retrieve their name from Firestore
 onAuthStateChanged(auth, async (user) => {
+    console.log("User state changed:", user); // Debugging log to see user state
     if (user) {
-        // User is signed in, retrieve their name from Firestore
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
+        try {
+            // User is signed in, retrieve their name from Firestore
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            const userData = docSnap.data();
-            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`; // Display user name and surname
-        } else {
-            console.error("No such document!");
-            document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`; // Display user name and surname
+            } else {
+                console.error("No such document!"); // Log error if document doesn't exist
+                document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error); // Log any fetching errors
         }
     } else {
         // No user is signed in, redirect to index page or show an error
+        console.log("No user logged in, redirecting to index.html"); // Log for debugging
         alert("No user logged in. Redirecting to login page.");
         window.location.href = "index.html"; // Redirect to the homepage if not logged in
     }
@@ -44,6 +50,6 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         alert('You have been logged out.');
         window.location.href = 'index.html'; // Redirect to the homepage
     }).catch((error) => {
-        console.error('Sign Out Error', error);
+        console.error('Sign Out Error', error); // Log sign out errors
     });
 });

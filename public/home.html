@@ -154,18 +154,20 @@
       });
 
       // Logout button functionality
-      document.getElementById('logout-btn').addEventListener('click', function() {
-        firebase.auth().signOut().then(() => {
+      document.getElementById('logout-btn').addEventListener('click', async function() {
+        try {
+          await auth.signOut(); // Sign out using Firebase Auth
           alert('You have been logged out.');
           window.location.href = 'index.html'; // Redirect to the homepage
-        }).catch((error) => {
+        } catch (error) {
           console.error('Sign Out Error', error);
-        });
+        }
       });
     });
   </script>
 </body>
 </html>
+
 
 
 
