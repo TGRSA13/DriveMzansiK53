@@ -12,8 +12,14 @@ const firebaseConfig = {
     appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if it hasn't been initialized yet
+let app;
+if (!firebase.apps.length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = firebase.app(); // Use the existing app
+}
+
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -53,3 +59,4 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         console.error('Sign Out Error', error); // Log sign out errors
     });
 });
+
