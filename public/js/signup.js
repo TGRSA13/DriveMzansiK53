@@ -39,6 +39,12 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
         return;
     }
 
+    // Check password strength (at least 6 characters in this case)
+    if (password.length < 6) {
+        alert('Password should be at least 6 characters long.');
+        return;
+    }
+
     // Create user with email and password using Firebase Auth
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -51,9 +57,18 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
             window.location.href = 'login.html'; 
         })
         .catch((error) => {
+            // Enhanced error handling
             const errorCode = error.code;
-            const errorMessage = error.message;
+            let errorMessage = error.message;
+            
+            if (errorCode === 'auth/email-already-in-use') {
+                errorMessage = 'The email address is already in use. Please try another email.';
+            } else if (errorCode === 'auth/invalid-email') {
+                errorMessage = 'The email address is invalid. Please enter a valid email.';
+            } else if (errorCode === 'auth/weak-password') {
+                errorMessage = 'The password is too weak. Please choose a stronger password.';
+            }
+
             alert(errorMessage); // Show error message to the user
         });
 });
-
