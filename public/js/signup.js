@@ -1,8 +1,9 @@
 // public/js/signup.js
 
-// Import Firebase App and Auth modules
+// Import Firebase App, Auth, and Firestore modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app); // Initialize Firestore
 
 document.getElementById('signup-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent form submission
@@ -47,12 +49,18 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
 
     // Create user with email and password using Firebase Auth
     createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
             // Signed up
             alert('Sign-Up successful! Redirecting to login page...');
-            // Store user info in local storage
-            localStorage.setItem('userName', name + ' ' + surname); // Store full name
-            
+
+            // Store user info in Firestore
+            const user = userCredential.user; // Get the user object
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                surname: surname,
+                email: email
+            });
+
             // Redirect to login page
             window.location.href = 'login.html'; 
         })
