@@ -150,9 +150,14 @@
 
     document.getElementById('signs-q2').addEventListener('submit', function(e) {
       e.preventDefault();
-      clearInterval(timerInterval); // Stop the timer when the form is submitted
-      localStorage.setItem('timeLeft', timeLeft); // Save remaining time to localStorage
-      window.location.href = 'signs_question3.html'; // Go to next question
+      const selectedAnswer = document.querySelector('input[name="q2"]:checked'); // Get selected radio button
+      if (selectedAnswer) { // Check if an answer is selected
+        clearInterval(timerInterval); // Stop the timer when the form is submitted
+        localStorage.setItem('timeLeft', timeLeft); // Save remaining time to localStorage
+        window.location.href = 'signs_question3.html'; // Go to next question
+      } else {
+        alert('Please select an answer before proceeding.'); // Alert if no answer is selected
+      }
     });
   </script>
 </body>
