@@ -1,42 +1,41 @@
-let totalTime = 600; // 10 minutes in seconds
+// Timer functionality
+let timeLeft = 10 * 60; // 10 minutes in seconds
+let timerInterval;
 
-// Check if there's already time left in localStorage; if not, set it to totalTime
-let timeLeft = parseInt(localStorage.getItem('timeLeft')) || totalTime;
-
-// Select the timer display element
-const timerDisplay = document.getElementById('timer');
-
-// Update the timer display function
-function updateTimerDisplay() {
-  let minutes = Math.floor(timeLeft / 60);
-  let seconds = timeLeft % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`; // Format display
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    if (timerElement) {
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            if (seconds < 10) seconds = '0' + seconds;
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            // Check if time is up
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up!');
+                window.location.href = 'results.html'; // Redirect to results page when time is up
+            }
+            timeLeft--;
+        }, 1000);
+    }
 }
 
-// Countdown function
-function countdown() {
-  if (timeLeft > 0) {
-    timeLeft--;
-    updateTimerDisplay();
-    localStorage.setItem('timeLeft', timeLeft); // Store the remaining time
-  } else {
-    clearInterval(timerInterval);
-    alert("Time's up!"); // Alert the user when time is up
-    localStorage.removeItem('timeLeft'); // Clear the stored time
-    window.location.href = 'results.html'; // Redirect to the results page
-  }
-}
+// Start the timer when the page is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('timer')) {
+        // Load remaining time from localStorage if exists
+        const savedTime = localStorage.getItem('quizTimeLeft');
+        if (savedTime) {
+            timeLeft = parseInt(savedTime, 10);
+        }
+        startTimer();
+    }
+});
 
-// Initialize the timer display on page load
-updateTimerDisplay();
+// Save the remaining time to localStorage every second
+setInterval(() => {
+    localStorage.setItem('quizTimeLeft', timeLeft);
+}, 1000);
 
-// Check if we already have a timer running before setting a new interval
-if (!localStorage.getItem('timerStarted')) {
-  localStorage.setItem('timerStarted', true);
-  const timerInterval = setInterval(countdown, 1000);
-}
-
-// Save remaining time before leaving the page
-window.onbeforeunload = function() {
-  localStorage.setItem('timeLeft', timeLeft); // Save remaining time
-};

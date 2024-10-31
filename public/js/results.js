@@ -11,48 +11,42 @@ const correctAnswers = {
     'signs_q3': 'C'    // Correct answer for Signs Question 3
 };
 
-    // Function to display results
-    function displayResults() {
-        const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-        let score = 0;
-        const totalQuestions = Object.keys(correctAnswers).length;
+// Function to display results
+function displayResults() {
+    const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+    let score = 0;
+    const totalQuestions = Object.keys(correctAnswers).length;
 
-        console.log('User Answers:', userAnswers); // Debugging: Log user answers
-        console.log('Correct Answers:', correctAnswers); // Debugging: Log correct answers
-
-        // Calculate score based on user answers
-        for (const question in correctAnswers) {
-            // Check if the user answer matches the correct answer
-            if (userAnswers[question] === correctAnswers[question]) {
-                score++;
-            }
+    // Calculate score based on user answers
+    for (const question in correctAnswers) {
+        if (userAnswers[question] === correctAnswers[question]) {
+            score++;
         }
-
-        // Calculate percentage
-        const percentage = (score / totalQuestions) * 100;
-
-        // Display results
-        document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
-        document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
-
-        // Save the latest result to localStorage
-        const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-        pastResults.push({ score: score, percentage: percentage });
-        localStorage.setItem('testResults', JSON.stringify(pastResults));
     }
 
-    // Function to restart the quiz
-    function restartQuiz() {
-        localStorage.removeItem('userAnswers'); // Clear saved answers
-        localStorage.removeItem('quizTimeLeft'); // Clear saved time
-        window.location.href = "home.html"; // Redirect to home
-    }
+    // Calculate percentage
+    const percentage = (score / totalQuestions) * 100;
 
-    // Event listener for the "Start Test" button
-    document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
+    // Display results
+    document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
+    document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
 
-    // Call displayResults when the page loads
-    document.addEventListener('DOMContentLoaded', displayResults);
-  </script>
-</body>
-</html>
+    // Save the latest result to localStorage
+    const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+    pastResults.push({ score: score, percentage: percentage });
+    localStorage.setItem('testResults', JSON.stringify(pastResults));
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    localStorage.removeItem('userAnswers'); // Clear saved answers
+    localStorage.removeItem('quizTimeLeft'); // Clear saved time
+    window.location.href = "home.html"; // Redirect to home
+}
+
+// Event listener for the "Restart Quiz" button
+document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
+
+// Call displayResults when the page loads
+document.addEventListener('DOMContentLoaded', displayResults);
+

@@ -112,8 +112,12 @@
         let score = 0;
         const totalQuestions = Object.keys(correctAnswers).length;
 
+        console.log('User Answers:', userAnswers); // Debugging: Log user answers
+        console.log('Correct Answers:', correctAnswers); // Debugging: Log correct answers
+
         // Calculate score based on user answers
         for (const question in correctAnswers) {
+            // Check if the user answer matches the correct answer
             if (userAnswers[question] === correctAnswers[question]) {
                 score++;
             }
@@ -147,5 +151,3 @@
   </script>
 </body>
 </html>
-
-
