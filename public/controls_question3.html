@@ -127,13 +127,7 @@
 
   <script>
     // Timer initialization
-    let timeLeft = localStorage.getItem('timeLeft');
-    if (!timeLeft) {
-      timeLeft = 600; // 10 minutes in seconds
-    } else {
-      timeLeft = parseInt(timeLeft);
-    }
-
+    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // 10 minutes in seconds
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -153,37 +147,25 @@
 
     const timerInterval = setInterval(updateTimer, 1000); // Update every second
 
-    document.getElementById('control-q3').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop the timer when the form is submitted
-      localStorage.removeItem('timeLeft'); // Clear timer from local storage
-      window.location.href = 'rules_question1.html'; // Go to next section (Rules)
-    });
-
-    // Start the countdown and update every second
-    const timerInterval = setInterval(updateTimer, 1000);
-
     // Form submission event
     document.getElementById('control-q3').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
+      e.preventDefault(); // Prevent default form submission
       
-      // Retrieve or initialize the answers array
+      clearInterval(timerInterval); // Stop the timer when the form is submitted
+      localStorage.removeItem('timeLeft'); // Clear timer from local storage
+
+      // Retrieve or initialize the answers object
       const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
       
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
+      const selectedAnswer = document.querySelector('input[name="q3"]:checked'); // Changed to use the correct name
+      if (selectedAnswer) {
+        userAnswers['q3'] = selectedAnswer.value; // Store the selected answer
+        localStorage.setItem('userAnswers', JSON.stringify(userAnswers)); // Save answers to localStorage
+      }
       
-      // Save the answer to the object and localStorage
-      userAnswers['q1'] = selectedAnswer;
-      localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-      
-      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
-      window.location.href = 'rules_question1.html'; // Go to the next question page
+      window.location.href = 'rules_question1.html'; // Go to next section (Rules)
     });
   </script>
 </body>
 </html>
-
-
-
