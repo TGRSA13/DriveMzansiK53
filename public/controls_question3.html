@@ -125,10 +125,16 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script src="js/timer.js" type="module"></script>
   <script>
-    // Timer script
-    let timeLeft = 600; // 10 minutes in seconds
+    // Timer initialization
+    let timeLeft = localStorage.getItem('timeLeft');
+    if (!timeLeft) {
+      timeLeft = 600; // 10 minutes in seconds
+      localStorage.setItem('timeLeft', timeLeft);
+    } else {
+      timeLeft = parseInt(timeLeft);
+    }
+
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -140,8 +146,10 @@
         clearInterval(timerInterval);
         alert("Time is up! Submitting your answers.");
         document.getElementById('control-q3').submit(); // Automatically submit when time is up
+      } else {
+        timeLeft--;
+        localStorage.setItem('timeLeft', timeLeft); // Update the remaining time
       }
-      timeLeft--;
     }
 
     const timerInterval = setInterval(updateTimer, 1000); // Update every second
@@ -153,4 +161,5 @@
   </script>
 </body>
 </html>
+
 
