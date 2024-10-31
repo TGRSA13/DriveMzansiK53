@@ -14,15 +14,11 @@ const firebaseConfig = {
 
 // Initialize Firebase only if it hasn't been initialized yet
 let app;
-try {
+if (!firebase.apps.length) {
     app = initializeApp(firebaseConfig);
-} catch (error) {
-    if (error.code === 'app/duplicate-app') {
-        console.log("Firebase app already initialized."); // Log if app is already initialized
-        app = firebase.app(); // Use the existing app
-    } else {
-        console.error("Error initializing Firebase app:", error); // Log other errors
-    }
+} else {
+    console.log("Firebase app already initialized.");
+    app = firebase.app();
 }
 
 const auth = getAuth(app);
@@ -30,7 +26,7 @@ const db = getFirestore(app);
 
 // Check if user is logged in and retrieve their name from Firestore
 onAuthStateChanged(auth, async (user) => {
-    console.log("User state changed:", user); // Debugging log to see user state
+    console.log("User state changed:", user);
     if (user) {
         try {
             // User is signed in, retrieve their name from Firestore
@@ -39,19 +35,20 @@ onAuthStateChanged(auth, async (user) => {
 
             if (docSnap.exists()) {
                 const userData = docSnap.data();
-                document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`; // Display user name and surname
+                document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
             } else {
-                console.error("No such document!"); // Log error if document doesn't exist
+                console.error("No such document!");
                 document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
             }
         } catch (error) {
-            console.error("Error fetching user data:", error); // Log any fetching errors
+            console.error("Error fetching user data:", error);
+            alert("An error occurred while fetching user data.");
         }
     } else {
         // No user is signed in, redirect to index page or show an error
-        console.log("No user logged in, redirecting to index.html"); // Log for debugging
+        console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
-        window.location.href = "index.html"; // Redirect to the homepage if not logged in
+        window.location.href = "index.html";
     }
 });
 
@@ -59,10 +56,9 @@ onAuthStateChanged(auth, async (user) => {
 document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth).then(() => {
         alert('You have been logged out.');
-        window.location.href = 'index.html'; // Redirect to the homepage
+        window.location.href = 'index.html';
     }).catch((error) => {
-        console.error('Sign Out Error', error); // Log sign out errors
+        console.error('Sign Out Error', error);
+        alert("An error occurred during sign-out.");
     });
 });
-
-
