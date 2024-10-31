@@ -15,56 +15,56 @@ const firebaseConfig = {
 
 // Initialize Firebase only if it hasn't been initialized yet
 let app;
-try {
+if (!firebase.apps.length) {
     app = initializeApp(firebaseConfig);
-} catch (error) {
-    if (error.code === 'app/duplicate-app') {
-        console.log("Firebase app already initialized.");
-        app = firebase.app(); // Use the existing app
-    } else {
-        console.error("Error initializing Firebase app:", error);
-    }
+} else {
+    console.log("Firebase app already initialized.");
+    app = firebase.app();
 }
 
 const auth = getAuth(app);
 
-// Set persistence
+// Set authentication persistence
 setPersistence(auth, browserLocalPersistence)
     .then(() => {
-        // Get the login form
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        // Attach login form submission event
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault(); // Prevent the default form submission
 
-            // Retrieve input values
+            // Retrieve user inputs
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Sign in with email and password
+            // Attempt to sign in with provided credentials
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    console.log("User signed in:", userCredential.user); // Log user info
+                    console.log("User signed in:", userCredential.user); // Log user info for debugging
                     alert("Login successful!");
-                    // Redirect to the home page
-                    window.location.href = "home.html";
+                    window.location.href = "home.html"; // Redirect to the home page
                 })
                 .catch((error) => {
-                    console.error("Login failed:", error); // Log error for debugging
-                    const errorCode = error.code;
-                    let errorMessage = error.message;
+                    console.error("Login failed:", error); // Log error details
+                    let errorMessage;
 
                     // Provide user-friendly error messages
-                    if (errorCode === 'auth/wrong-password') {
-                        errorMessage = "Incorrect password. Please try again.";
-                    } else if (errorCode === 'auth/user-not-found') {
-                        errorMessage = "No account found with this email. Please sign up.";
-                    } else if (errorCode === 'auth/invalid-email') {
-                        errorMessage = "Invalid email format. Please enter a valid email.";
+                    switch (error.code) {
+                        case 'auth/wrong-password':
+                            errorMessage = "Incorrect password. Please try again.";
+                            break;
+                        case 'auth/user-not-found':
+                            errorMessage = "No account found with this email. Please sign up.";
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = "Invalid email format. Please enter a valid email.";
+                            break;
+                        default:
+                            errorMessage = error.message;
                     }
 
-                    alert(errorMessage); // Display the error message to the user
+                    alert(errorMessage); // Display error to the user
                 });
         });
     })
     .catch((error) => {
-        console.error("Persistence error:", error);
+        console.error("Error setting persistence:", error);
     });
