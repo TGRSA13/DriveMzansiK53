@@ -13,23 +13,27 @@ const firebaseConfig = {
     measurementId: "G-WGTMR2MFRY"
 };
 
-// Initialize Firebase if not already initialized
+// Initialize Firebase only if it hasn't been initialized yet
 let app;
-if (!firebase.apps.length) {
+try {
     app = initializeApp(firebaseConfig);
-} else {
-    console.log("Firebase app already initialized.");
-    app = firebase.app();
+} catch (error) {
+    if (error.code === 'app/duplicate-app') {
+        console.log("Firebase app already initialized.");
+        app = firebase.app(); // Use the existing app
+    } else {
+        console.error("Error initializing Firebase app:", error);
+    }
 }
 
 const auth = getAuth(app);
 
-// Set persistence to ensure session is maintained
+// Set persistence
 setPersistence(auth, browserLocalPersistence)
     .then(() => {
-        // Attach login form submission handler
+        // Get the login form
         document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault(); // Prevent the default form submission
 
             // Retrieve input values
             const email = document.getElementById('email').value;
@@ -48,7 +52,7 @@ setPersistence(auth, browserLocalPersistence)
                     const errorCode = error.code;
                     let errorMessage = error.message;
 
-                    // User-friendly error messages
+                    // Provide user-friendly error messages
                     if (errorCode === 'auth/wrong-password') {
                         errorMessage = "Incorrect password. Please try again.";
                     } else if (errorCode === 'auth/user-not-found') {
@@ -57,10 +61,11 @@ setPersistence(auth, browserLocalPersistence)
                         errorMessage = "Invalid email format. Please enter a valid email.";
                     }
 
-                    alert(errorMessage); // Display error message to user
+                    alert(errorMessage); // Display the error message to the user
                 });
         });
     })
     .catch((error) => {
         console.error("Persistence error:", error);
     });
+
