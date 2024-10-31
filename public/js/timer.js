@@ -30,5 +30,9 @@ function countdown() {
 // Initialize the timer display on page load
 updateTimerDisplay();
 
-// Start the countdown interval
-const timerInterval = setInterval(countdown, 1000);
+// Check if we already have a timer running before setting a new interval
+if (!localStorage.getItem('timerStarted')) {
+  localStorage.setItem('timerStarted', true);
+  const timerInterval = setInterval(countdown, 1000);
+}
+
