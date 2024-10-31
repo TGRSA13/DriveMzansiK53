@@ -1,11 +1,12 @@
 let totalTime = 600; // 10 minutes in seconds
 
-// Check if there’s already time left in localStorage, else set to totalTime
+// Check if there's already time left in localStorage; if not, set it to totalTime
 let timeLeft = parseInt(localStorage.getItem('timeLeft')) || totalTime;
 
+// Select the timer display element
 const timerDisplay = document.getElementById('timer');
 
-// Update the timer display
+// Update the timer display function
 function updateTimerDisplay() {
   let minutes = Math.floor(timeLeft / 60);
   let seconds = timeLeft % 60;
@@ -20,11 +21,14 @@ function countdown() {
     localStorage.setItem('timeLeft', timeLeft); // Store the remaining time
   } else {
     clearInterval(timerInterval);
-    alert("Time's up!");
-    window.location.href = 'results.html'; // Redirect to results page
+    alert("Time's up!"); // Alert the user when time is up
+    localStorage.removeItem('timeLeft'); // Clear the stored time
+    window.location.href = 'results.html'; // Redirect to the results page
   }
 }
 
-// Initialize the timer on page load
+// Initialize the timer display on page load
 updateTimerDisplay();
+
+// Start the countdown interval
 const timerInterval = setInterval(countdown, 1000);
