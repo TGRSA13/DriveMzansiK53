@@ -155,19 +155,9 @@
     const timerInterval = setInterval(updateTimer, 1000); // Update every second
 
     document.getElementById('rules-q1').addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission
       clearInterval(timerInterval); // Stop timer on submit
-      window.location.href = 'rules_question2.html'; // Go to next question
-    });
-  
-    // Start the countdown and update every second
-    const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event
-    document.getElementById('rules-q1').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
-      
       // Retrieve or initialize the answers array
       const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
       
@@ -184,7 +174,3 @@
   </script>
 </body>
 </html>
-
-
-
-
