@@ -6,24 +6,20 @@
     <title>Login - Drive Mzansi</title>
     <link rel="stylesheet" href="public/css/styles.css">
     <style>
-        /* Ensure the menu bar and layout match the index page */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
         }
-
         header {
             background-color: #f8f8f8;
             padding: 20px;
         }
-
         nav {
             background-color: #333;
             overflow: hidden;
         }
-
         nav ul {
             list-style-type: none;
             margin: 0;
@@ -31,25 +27,20 @@
             display: flex;
             justify-content: center;
         }
-
         nav li {
             padding: 14px 20px;
         }
-
         nav a {
             color: white;
             text-decoration: none;
         }
-
         nav a:hover {
             background-color: #ddd;
             color: black;
         }
-
         main {
             padding: 20px;
         }
-
         footer {
             background-color: #f8f8f8;
             padding: 10px;
@@ -83,13 +74,11 @@
         <p>&copy; 2024 Drive Mzansi</p>
     </footer>
 
-    <!-- Include Firebase SDK as modules -->
+    <!-- Firebase SDK and Authentication Code -->
     <script type="module">
-        // Import Firebase SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-        // Your Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
             authDomain: "drive-mzansi-app.firebaseapp.com",
@@ -99,30 +88,25 @@
             appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Get the login form
         document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+            e.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Sign in with email and password
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed in
                     alert("Login successful!");
-                    window.location.href = "home.html"; // Redirect to Start Test page
+                    window.location.href = "home.html";
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage); // Display the error message
+                    alert(error.message);
                 });
         });
     </script>
 </body>
 </html>
+
