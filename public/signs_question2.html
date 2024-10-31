@@ -151,7 +151,7 @@
       localStorage.setItem('timeLeft', timeLeft); // Update the remaining time
     }, 1000);
 
-    document.getElementById('rules-q2').addEventListener('submit', function(e) {
+    document.getElementById('signs-q2').addEventListener('submit', function(e) { // Corrected form ID
       e.preventDefault();
       clearInterval(countdown); // Stop the timer when moving to the next question
       localStorage.removeItem('timeLeft'); // Clear timer from local storage
@@ -160,6 +160,7 @@
   </script>
 </body>
 </html>
+
 
 
 
