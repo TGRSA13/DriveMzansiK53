@@ -149,32 +149,21 @@
     const timerInterval = setInterval(updateTimer, 1000); // Update every second
 
     document.getElementById('signs-q3').addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission
       clearInterval(timerInterval); // Stop the timer when the form is submitted
       localStorage.removeItem('timeLeft'); // Clear timer from localStorage
-      window.location.href = 'results.html'; // Redirect to results page
-    });
-  
-    // Start the countdown and update every second
-    const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event
-    document.getElementById('signs-q3').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
-      
       // Retrieve or initialize the answers array
       const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
       
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
+      const selectedAnswer = document.querySelector('input[name="q3"]:checked').value; // Corrected name to "q3"
       
       // Save the answer to the object and localStorage
-      userAnswers['q1'] = selectedAnswer;
+      userAnswers['q3'] = selectedAnswer; // Updated to store q3 answer
       localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
       
-      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
-      window.location.href = 'results.html'; // Go to the next question page
+      window.location.href = 'results.html'; // Redirect to results page
     });
   </script>
 </body>
