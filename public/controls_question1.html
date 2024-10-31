@@ -57,6 +57,7 @@
 
     #timer {
       font-weight: bold;
+      font-size: 1.5em; /* Increased font size for better visibility */
     }
 
     /* Styles for the button */
@@ -107,8 +108,38 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script src="js/timer.js" type="module"></script> <!-- Corrected path and added type="module" -->
-  <script>
+  <script type="module">
+    // Countdown Timer Logic
+    let timeLeft = 600; // 10 minutes in seconds
+    let timerId;
+
+    function startCountdown() {
+        const countdownElement = document.getElementById('timer');
+
+        timerId = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                alert("Time's up!");
+                // Optionally redirect to the results page
+                window.location.href = "results.html"; // Change as needed
+            } else {
+                countdownElement.textContent = formatTime(timeLeft);
+                timeLeft--;
+            }
+        }, 1000);
+    }
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; // Format as MM:SS
+    }
+
+    // Start the countdown when the page loads
+    window.onload = () => {
+        startCountdown();
+    };
+
     document.getElementById('control-q1').addEventListener('submit', function(e) {
       e.preventDefault();
       window.location.href = 'controls_question2.html'; // Go to the next question page
@@ -116,4 +147,3 @@
   </script>
 </body>
 </html>
-
