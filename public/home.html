@@ -6,7 +6,6 @@
   <title>Home - Drive Mzansi</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-      /* Inline styles to match the other pages */
       body {
           font-family: Arial, sans-serif;
           margin: 0;
@@ -46,14 +45,12 @@
           background-color: #f8f8f8;
           padding: 10px;
       }
-      #start-test-btn {
+      #start-test-btn, #logout-btn {
           padding: 10px 20px;
           font-size: 16px;
           margin: 10px;
       }
       #logout-btn {
-          padding: 10px 20px;
-          font-size: 16px;
           background-color: #f44336;
           color: white;
           border: none;
@@ -85,11 +82,7 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Include Firebase SDK as modules -->
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js" type="module"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js" type="module"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js" type="module"></script>
-
+  <!-- Firebase SDK and User Authentication Code -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
     import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
@@ -104,33 +97,28 @@
       appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
     };
     
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    // Check if user is logged in
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("Current user:", user);
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             const userData = docSnap.data();
-            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`; // Use template literals for clarity
+            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
         } else {
             console.error("No such document!");
-            document.getElementById('user-name').textContent = 'User'; 
+            document.getElementById('user-name').textContent = 'User';
         }
       } else {
-        console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
         window.location.href = "index.html";
       }
     });
 
-    // Add event listeners for buttons
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('start-test-btn').addEventListener('click', function() {
         window.location.href = 'controls_question1.html';
@@ -149,4 +137,5 @@
   </script>
 </body>
 </html>
+
 
