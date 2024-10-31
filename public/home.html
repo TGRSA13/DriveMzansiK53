@@ -60,6 +60,19 @@
       #logout-btn:hover {
           background-color: #d32f2f;
       }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px; /* Added margin for spacing */
+      }
+      th, td {
+          border: 1px solid #000;
+          padding: 8px;
+          text-align: left;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
   </style>
 </head>
 <body>
@@ -73,7 +86,42 @@
   </header>
 
   <main>
-    <h1>Welcome, <span id="user-name">User</span>!</h1>
+    <h1>Welcome!</h1>
+    <h4>Take the Test</h4>
+    <p>Note: This computerized test is just like the official K53 Learner’s Test for 
+      Light & Heavy Motor Vehicle (Code 2). 
+      Click the “Next” button at the bottom of the page to navigate to the next set of questions.</p>
+    
+    <!-- Table added here -->
+    <table>
+        <thead>
+            <tr>
+                <th>Number of Questions</th>
+                <th>Required Passing Score</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3</td>
+                <td>2</td>
+                <td>Vehicle Controls</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2</td>
+                <td>Rules of the Road</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2</td>
+                <td>Road Signs</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>K53 Learner’s test duration: 10 minutes</p>
+
     <button id="start-test-btn">Start Test</button>
     <button id="logout-btn">Logout</button>
   </main>
@@ -134,5 +182,3 @@
   </script>
 </body>
 </html>
-
-
