@@ -125,24 +125,44 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Include timer.js for timer functionality -->
-  <script src="js/timer.js"></script>
-
   <script>
-    document.getElementById('signs-q2').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const selectedAnswer = document.querySelector('input[name="q2"]:checked'); // Get selected radio button
-      if (selectedAnswer) { // Check if an answer is selected
-        clearInterval(timerInterval); // Stop the timer when the form is submitted
-        localStorage.setItem('timeLeft', timeLeft); // Save remaining time to localStorage
-        setTimeout(() => {
-          window.location.href = 'signs_question3.html'; // Go to next question
-        }, 100); // Small delay to ensure interval is cleared
+    // Timer logic
+    const initialTime = 10 * 60; // 10 minutes in seconds
+    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : initialTime;
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      if (timeLeft > 0) {
+        timeLeft--;
+        localStorage.setItem('timeLeft', timeLeft);
       } else {
-        alert('Please select an answer before proceeding.'); // Alert if no answer is selected
+        alert("Time's up! You will be redirected.");
+        window.location.href = 'results.html'; // Redirect to results or any desired page when time is up
       }
+    }
+
+    // Start the timer
+    setInterval(updateTimer, 1000);
+
+    // Reset timer on page load
+    window.onload = function() {
+      const savedTime = localStorage.getItem('timeLeft');
+      if (savedTime && savedTime < initialTime) {
+        timeLeft = parseInt(savedTime);
+      } else {
+        localStorage.setItem('timeLeft', initialTime);
+      }
+    };
+
+    // Handle form submission
+    document.getElementById('signs-q1').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'signs_question3.html'; // Go to next question
     });
   </script>
 </body>
 </html>
+ 
 
