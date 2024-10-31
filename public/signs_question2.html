@@ -126,43 +126,39 @@
   </footer>
 
   <script>
-    // Timer logic
-    const initialTime = 10 * 60; // 10 minutes in seconds
-    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : initialTime;
-
-    function updateTimer() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      if (timeLeft > 0) {
-        timeLeft--;
-        localStorage.setItem('timeLeft', timeLeft);
-      } else {
-        alert("Time's up! You will be redirected.");
-        window.location.href = 'results.html'; // Redirect to results or any desired page when time is up
-      }
+    // Timer functionality
+    let timeLeft = localStorage.getItem('timeLeft');
+    if (!timeLeft) {
+      timeLeft = 600; // 10 minutes in seconds
+      localStorage.setItem('timeLeft', timeLeft);
+    } else {
+      timeLeft = parseInt(timeLeft);
     }
 
-    // Start the timer
-    setInterval(updateTimer, 1000);
+    const timerElement = document.getElementById('timer');
 
-    // Reset timer on page load
-    window.onload = function() {
-      const savedTime = localStorage.getItem('timeLeft');
-      if (savedTime && savedTime < initialTime) {
-        timeLeft = parseInt(savedTime);
-      } else {
-        localStorage.setItem('timeLeft', initialTime);
+    const countdown = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        alert("Time's up! Redirecting to the results page.");
+        window.location.href = 'results.html'; // Redirect to results page when time is up
       }
-    };
+      timeLeft--;
+      localStorage.setItem('timeLeft', timeLeft); // Update the remaining time
+    }, 1000);
 
-    // Handle form submission
-    document.getElementById('signs-q1').addEventListener('submit', function(e) {
+    document.getElementById('rules-q2').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(countdown); // Stop the timer when moving to the next question
+      localStorage.removeItem('timeLeft'); // Clear timer from local storage
       window.location.href = 'signs_question3.html'; // Go to next question
     });
   </script>
 </body>
 </html>
- 
+
 
