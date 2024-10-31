@@ -29,7 +29,7 @@ try {
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Check if user is logged in and retrieve their name from Firestore
+// Display user name if logged in
 onAuthStateChanged(auth, async (user) => {
     console.log("User state changed:", user); // Log the user object
 
@@ -51,11 +51,6 @@ onAuthStateChanged(auth, async (user) => {
             console.error("Error fetching user data:", error);
             alert("Error fetching user data.");
         }
-    } else {
-        // Redirect to index.html if no user is logged in
-        console.log("No user logged in, redirecting to index.html");
-        alert("No user logged in. Redirecting to login page.");
-        window.location.href = "login.html";
     }
 });
 
@@ -70,4 +65,9 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     });
 });
 
+// Function to start the test
+document.getElementById('start-test-btn').addEventListener('click', () => {
+    // Redirect to controls_question1.html
+    window.location.href = 'controls_question1.html';
+});
 
