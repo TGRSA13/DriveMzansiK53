@@ -152,36 +152,27 @@
     }, 1000);
 
     document.getElementById('rules-q2').addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission
+
       clearInterval(countdown); // Stop the timer when moving to the next question
       localStorage.removeItem('timeLeft'); // Clear timer from local storage
-      window.location.href = 'rules_question3.html'; // Go to next question
-    });
-  
-    // Start the countdown and update every second
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Form submission event
-    document.getElementById('rules-q2').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
       
       // Retrieve or initialize the answers array
       const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
       
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
-      
+      const selectedAnswer = document.querySelector('input[name="q2"]:checked').value; // Correct name for q2
+
       // Save the answer to the object and localStorage
-      userAnswers['q1'] = selectedAnswer;
+      userAnswers['q2'] = selectedAnswer;
       localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
       
-      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
       window.location.href = 'rules_question3.html'; // Go to the next question page
     });
   </script>
 </body>
 </html>
+
 
 
 
