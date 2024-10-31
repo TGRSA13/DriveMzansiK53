@@ -127,8 +127,28 @@
 
   <script src="public/js/timer.js"></script>
   <script>
+    // Timer functionality
+    let timeLeft = 600; // 10 minutes in seconds
+    const timerDisplay = document.getElementById('timer');
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert("Time is up! Submitting your answers.");
+        document.getElementById('signs-q3').submit(); // Automatically submit the form when time is up
+      }
+      timeLeft--;
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000); // Update every second
+
     document.getElementById('signs-q3').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(timerInterval); // Stop the timer when the form is submitted
       window.location.href = 'results.html'; // Redirect to results page
     });
   </script>
