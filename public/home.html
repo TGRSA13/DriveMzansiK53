@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/styles.css"> <!-- Ensure this path is correct -->
+  <link rel="stylesheet" href="css/styles.css">
   <style>
       /* Inline styles to match the other pages */
       body {
@@ -13,17 +13,14 @@
           padding: 0;
           text-align: center;
       }
-
       header {
           background-color: #f8f8f8;
           padding: 20px;
       }
-
       nav {
           background-color: #333;
           overflow: hidden;
       }
-
       nav ul {
           list-style-type: none;
           margin: 0;
@@ -31,36 +28,29 @@
           display: flex;
           justify-content: center;
       }
-
       nav li {
           padding: 14px 20px;
       }
-
       nav a {
           color: white;
           text-decoration: none;
       }
-
       nav a:hover {
           background-color: #ddd;
           color: black;
       }
-
       main {
           padding: 20px;
       }
-
       footer {
           background-color: #f8f8f8;
           padding: 10px;
       }
-
       #start-test-btn {
           padding: 10px 20px;
           font-size: 16px;
           margin: 10px;
       }
-
       #logout-btn {
           padding: 10px 20px;
           font-size: 16px;
@@ -70,7 +60,6 @@
           border-radius: 5px;
           cursor: pointer;
       }
-
       #logout-btn:hover {
           background-color: #d32f2f;
       }
@@ -83,7 +72,7 @@
         <li><a href="index.html">Home</a></li>
       </ul>
     </nav>
-    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300"> <!-- Ensure this path is correct -->
+    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
   </header>
 
   <main>
@@ -101,10 +90,9 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js" type="module"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js" type="module"></script>
 
-  <!-- Initialize Firebase in a module -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
-    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
     import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
     const firebaseConfig = {
@@ -113,52 +101,46 @@
       projectId: "drive-mzansi-app",
       storageBucket: "drive-mzansi-app.appspot.com",
       messagingSenderId: "1007195133421",
-      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
-      measurementId: "G-WGTMR2MFRY" // Optional for Analytics
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
     };
     
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app); // Initialize Firestore
-    const auth = getAuth(app); // Initialize Auth
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
     // Check if user is logged in
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("Current user:", user); // Log the current user
+        console.log("Current user:", user);
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             const userData = docSnap.data();
-            document.getElementById('user-name').textContent = userData.name + ' ' + userData.surname; // Display user name and surname
+            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`; // Use template literals for clarity
         } else {
             console.error("No such document!");
-            document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
+            document.getElementById('user-name').textContent = 'User'; 
         }
       } else {
         console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
-        window.location.href = "index.html"; // Redirect to the homepage if not logged in
+        window.location.href = "index.html";
       }
     });
-  </script>
 
-  <script src="js/home.js" type="module"></script> <!-- Ensure this path is correct -->
-
-  <script>
+    // Add event listeners for buttons
     document.addEventListener('DOMContentLoaded', function() {
-      // Start Test button functionality
       document.getElementById('start-test-btn').addEventListener('click', function() {
-        window.location.href = 'controls_question1.html'; // Ensure this path is correct
+        window.location.href = 'controls_question1.html';
       });
 
-      // Logout button functionality
       document.getElementById('logout-btn').addEventListener('click', async function() {
         try {
-          await auth.signOut(); // Sign out using Firebase Auth
+          await signOut(auth);
           alert('You have been logged out.');
-          window.location.href = 'index.html'; // Redirect to the homepage
+          window.location.href = 'index.html';
         } catch (error) {
           console.error('Sign Out Error', error);
         }
@@ -167,8 +149,4 @@
   </script>
 </body>
 </html>
-
-
-
-
 
