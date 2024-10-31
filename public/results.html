@@ -54,6 +54,20 @@
       background-color: #f8f8f8;
       padding: 10px;
     }
+
+    .button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -71,7 +85,7 @@
     <h2>Your Results</h2>
     <p id="score"></p>
     <p id="percentage"></p>
-    <button onclick="startTest()">Start Test</button>
+    <button class="button" id="restart-quiz">Start Test</button>
   </main>
 
   <footer>
@@ -79,24 +93,47 @@
   </footer>
 
   <script>
+    // Correct answers for the quiz
+    const correctAnswers = {
+      'q1': 'A-1',  // Update these to the actual correct answers
+      'q2': 'B-6',
+      'q3': 'C-8',
+      // Add more correct answers for other questions
+      // ...
+    };
+
     // Function to display results
     function displayResults() {
-      const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-      const latestResult = pastResults[pastResults.length - 1]; // Get the latest result
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+      let score = 0;
+      const totalQuestions = Object.keys(correctAnswers).length;
 
-      if (latestResult) {
-          document.getElementById('score').textContent = `You got ${latestResult.score} out of 9.`;
-          document.getElementById('percentage').textContent = `Your score is ${latestResult.percentage}%`;
-      } else {
-          document.getElementById('score').textContent = "No results available.";
-          document.getElementById('percentage').textContent = "";
+      // Calculate score based on user answers
+      for (const question in correctAnswers) {
+        if (userAnswers[question] === correctAnswers[question]) {
+          score++;
+        }
       }
+
+      // Calculate percentage
+      const percentage = (score / totalQuestions) * 100;
+
+      // Display results
+      document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
+      document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
+
+      // Save the latest result to localStorage
+      const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+      pastResults.push({ score: score, percentage: percentage });
+      localStorage.setItem('testResults', JSON.stringify(pastResults));
     }
 
-    // Function to redirect to the test starting point
-    function startTest() {
-      window.location.href = "home.html";
-    }
+    // Function to restart the quiz
+    document.getElementById('restart-quiz').addEventListener('click', function() {
+      localStorage.removeItem('userAnswers'); // Clear saved answers
+      localStorage.removeItem('quizTimeLeft'); // Clear saved time
+      window.location.href = "home.html"; // Redirect to home
+    });
 
     // Call displayResults when the page loads
     document.addEventListener('DOMContentLoaded', displayResults);

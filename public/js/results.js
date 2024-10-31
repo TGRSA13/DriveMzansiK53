@@ -1,46 +1,47 @@
-// results.js
+// Correct answers for the quiz
+const correctAnswers = {
+    'q1': 'A-1',  // Update these to the actual correct answers
+    'q2': 'B-6',
+    'q3': 'C-8',
+    // Add more correct answers for other questions
+    // ...
+};
 
-// Function to save test results in localStorage
-function saveTestResult(score, percentage) {
+// Function to display results
+function displayResults() {
+    const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+    let score = 0;
+    const totalQuestions = Object.keys(correctAnswers).length;
+
+    // Calculate score based on user answers
+    for (const question in correctAnswers) {
+        if (userAnswers[question] === correctAnswers[question]) {
+            score++;
+        }
+    }
+
+    // Calculate percentage
+    const percentage = (score / totalQuestions) * 100;
+
+    // Display results
+    document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
+    document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
+
+    // Save the latest result to localStorage
     const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    
-    const newResult = {
-        date: new Date().toLocaleDateString(),
-        score: score,
-        percentage: percentage
-    };
-
-    pastResults.push(newResult);
+    pastResults.push({ score: score, percentage: percentage });
     localStorage.setItem('testResults', JSON.stringify(pastResults));
 }
 
-// Function to display test results
-function displayTestResults() {
-    const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    const resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = ''; // Clear previous content
-
-    if (pastResults.length === 0) {
-        resultsContainer.innerHTML = '<p>No test results found.</p>';
-    } else {
-        pastResults.forEach(result => {
-            const resultElement = document.createElement('div');
-            resultElement.innerHTML = `<p>Date: ${result.date} - Score: ${result.score}/9 - Percentage: ${result.percentage.toFixed(2)}%</p>`;
-            resultsContainer.appendChild(resultElement);
-        });
-    }
+// Function to restart the quiz
+function restartQuiz() {
+    localStorage.removeItem('userAnswers'); // Clear saved answers
+    localStorage.removeItem('quizTimeLeft'); // Clear saved time
+    window.location.href = "home.html"; // Redirect to home
 }
 
-// Call this function on the profile or results page to show results
-document.addEventListener('DOMContentLoaded', function() {
-    displayTestResults();
-});
+// Event listener for the "Start Test" button
+document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
-// Link back to start test
-document.addEventListener('DOMContentLoaded', function() {
-    const backButton = document.createElement('a');
-    backButton.href = 'index.html'; // Assuming your home page is index.html
-    backButton.innerText = 'Start Test Again';
-    backButton.className = 'start-test-button'; // Add a class for styling
-    document.body.appendChild(backButton);
-});
+// Call displayResults when the page loads
+document.addEventListener('DOMContentLoaded', displayResults);

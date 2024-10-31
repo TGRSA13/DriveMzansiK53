@@ -10,7 +10,7 @@ const timerDisplay = document.getElementById('timer');
 function updateTimerDisplay() {
   let minutes = Math.floor(timeLeft / 60);
   let seconds = timeLeft % 60;
-  timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`; // Format display
 }
 
 // Countdown function
@@ -36,3 +36,7 @@ if (!localStorage.getItem('timerStarted')) {
   const timerInterval = setInterval(countdown, 1000);
 }
 
+// Save remaining time before leaving the page
+window.onbeforeunload = function() {
+  localStorage.setItem('timeLeft', timeLeft); // Save remaining time
+};

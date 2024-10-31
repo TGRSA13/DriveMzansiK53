@@ -126,7 +126,7 @@
   </footer>
 
   <script>
-    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // Retrieve remaining time or set to 600 seconds
+    let timeLeft = localStorage.getItem('quizTimeLeft') ? parseInt(localStorage.getItem('quizTimeLeft')) : 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -136,25 +136,32 @@
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        alert("Time is up! Submitting your answers.");
-        document.getElementById('control-q2').submit(); // Automatically submit when time is up
+        alert("Time's up!");
+        // Automatically submit results to store in local storage
+        saveResult('q2', document.querySelector('input[name="q2"]:checked')?.value);
+        window.location.href = "results.html"; // Go to results page when time is up
+      } else {
+        timeLeft--;
+        localStorage.setItem('quizTimeLeft', timeLeft);
       }
-      timeLeft--;
-      localStorage.setItem('timeLeft', timeLeft); // Update remaining time in localStorage
     }
 
-    const timerInterval = setInterval(updateTimer, 1000); // Update every second
+    const timerInterval = setInterval(updateTimer, 1000);
 
     document.getElementById('control-q2').addEventListener('submit', function(e) {
       e.preventDefault();
-      clearInterval(timerInterval); // Stop the timer when the form is submitted
-      localStorage.removeItem('timeLeft'); // Clear the timer from localStorage
-      window.location.href = 'controls_question3.html'; // Go to next question
+      clearInterval(timerInterval); // Stop timer on form submission
+      saveResult('q2', document.querySelector('input[name="q2"]:checked').value);
+      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
+      window.location.href = 'controls_question3.html'; // Go to the next question page
     });
 
-    window.onbeforeunload = function() {
-      localStorage.setItem('timeLeft', timeLeft); // Save remaining time before leaving the page
-    };
+    function saveResult(question, answer) {
+      const results = JSON.parse(localStorage.getItem('quizResults')) || {};
+      results[question] = answer;
+      localStorage.setItem('quizResults', JSON.stringify(results));
+    }
   </script>
 </body>
 </html>
+

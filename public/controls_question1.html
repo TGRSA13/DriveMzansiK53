@@ -135,10 +135,23 @@
     document.getElementById('control-q1').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
+      
+      // Retrieve or initialize the answers array
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+      
+      // Get the selected answer
+      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
+      
+      // Save the answer to the object and localStorage
+      userAnswers['q1'] = selectedAnswer;
+      localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+      
       localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
       window.location.href = 'controls_question2.html'; // Go to the next question page
     });
   </script>
 </body>
 </html>
+
+
 
