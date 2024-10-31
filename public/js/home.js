@@ -1,3 +1,4 @@
+// Import Firebase SDKs
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
@@ -12,13 +13,17 @@ const firebaseConfig = {
     appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
-// Initialize Firebase only if it hasn't been initialized yet
+// Initialize Firebase if not already initialized
 let app;
-if (!firebase.apps.length) {
+try {
     app = initializeApp(firebaseConfig);
-} else {
-    console.log("Firebase app already initialized.");
-    app = firebase.app();
+} catch (error) {
+    if (error.code === 'app/duplicate-app') {
+        console.log("Firebase app already initialized."); // Log if app is already initialized
+        app = firebase.app(); // Use the existing app
+    } else {
+        console.error("Error initializing Firebase app:", error); // Log other errors
+    }
 }
 
 const auth = getAuth(app);
@@ -26,10 +31,10 @@ const db = getFirestore(app);
 
 // Check if user is logged in and retrieve their name from Firestore
 onAuthStateChanged(auth, async (user) => {
-    console.log("User state changed:", user);
     if (user) {
+        console.log("User logged in:", user); // Confirm user is logged in
         try {
-            // User is signed in, retrieve their name from Firestore
+            // Retrieve user data from Firestore
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
 
@@ -37,15 +42,15 @@ onAuthStateChanged(auth, async (user) => {
                 const userData = docSnap.data();
                 document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
             } else {
-                console.error("No such document!");
-                document.getElementById('user-name').textContent = 'User'; // Fallback if no name found
+                console.error("No user document found in Firestore.");
+                document.getElementById('user-name').textContent = 'User';
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
-            alert("An error occurred while fetching user data.");
+            alert("Error fetching user data.");
         }
     } else {
-        // No user is signed in, redirect to index page or show an error
+        // Redirect to index.html if no user is logged in
         console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
         window.location.href = "index.html";
@@ -58,7 +63,8 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         alert('You have been logged out.');
         window.location.href = 'index.html';
     }).catch((error) => {
-        console.error('Sign Out Error', error);
-        alert("An error occurred during sign-out.");
+        console.error('Sign Out Error:', error);
+        alert("Error during sign-out.");
     });
 });
+
