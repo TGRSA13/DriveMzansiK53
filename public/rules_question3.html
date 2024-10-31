@@ -125,10 +125,38 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script src="js/timer.js" type="module"></script>
   <script>
+    // Timer functionality
+    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // Get stored time or set to 600 seconds
+    const timerElement = document.getElementById('timer');
+
+    // Update the timer display function
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    // Start countdown
+    const countdown = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        alert("Time's up! Redirecting to the results page.");
+        window.location.href = 'results.html'; // Redirect to results page when time is up
+      } else {
+        timeLeft--;
+        localStorage.setItem('timeLeft', timeLeft); // Save time left in local storage
+        updateTimerDisplay();
+      }
+    }, 1000);
+
+    // Display the timer immediately
+    updateTimerDisplay();
+
     document.getElementById('rules-q3').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(countdown); // Stop the timer when moving to the next question
+      localStorage.removeItem('timeLeft'); // Clear the stored time
       window.location.href = 'signs_question1.html'; // Go to next section (Signs)
     });
   </script>

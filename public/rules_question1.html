@@ -156,9 +156,9 @@
 
     document.getElementById('rules-q1').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(timerInterval); // Stop timer on submit
       window.location.href = 'rules_question2.html'; // Go to next question
     });
   </script>
 </body>
 </html>
-

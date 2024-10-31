@@ -42,7 +42,7 @@
     }
 
     nav a:hover {
-      background-color: #ddd; /* Change to light grey */
+      background-color: #ddd;
       color: black;
     }
 
@@ -57,13 +57,13 @@
 
     #timer {
       font-weight: bold;
-      font-size: 1.5em; /* Increased font size for better visibility */
+      font-size: 1.5em;
     }
 
     /* Styles for the button */
     .button {
       padding: 10px 15px;
-      background-color: #4CAF50; /* Green background for the next button */
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
@@ -72,7 +72,7 @@
     }
 
     .button:hover {
-      background-color: #45a049; /* Darker green on hover */
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -100,7 +100,7 @@
       <input type="radio" name="q1" value="B-6"> B-6 <br>
       <input type="radio" name="q1" value="C-8"> C-8 <br>
       <input type="radio" name="q1" value="D-11"> D-11 <br>
-      <button type="submit" class="button">Next</button> <!-- Green styled button -->
+      <button type="submit" class="button">Next</button>
     </form>
   </main>
 
@@ -108,39 +108,34 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script type="module">
-    // Countdown Timer Logic
-    let timeLeft = 600; // 10 minutes in seconds
-    let timerId;
+  <script>
+    // Countdown Timer with Persistent Storage
+    let timeLeft = localStorage.getItem('quizTimeLeft') ? parseInt(localStorage.getItem('quizTimeLeft')) : 600;
+    const timerDisplay = document.getElementById('timer');
 
-    function startCountdown() {
-        const countdownElement = document.getElementById('timer');
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-        timerId = setInterval(() => {
-            if (timeLeft <= 0) {
-                clearInterval(timerId);
-                alert("Time's up!");
-                window.location.href = "results.html"; // Change as needed
-            } else {
-                countdownElement.textContent = formatTime(timeLeft);
-                timeLeft--;
-            }
-        }, 1000);
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert("Time's up!");
+        window.location.href = "results.html"; // Go to results page when time is up
+      } else {
+        timeLeft--;
+        localStorage.setItem('quizTimeLeft', timeLeft);
+      }
     }
 
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; // Format as MM:SS
-    }
+    // Start the countdown and update every second
+    const timerInterval = setInterval(updateTimer, 1000);
 
-    // Start the countdown when the page loads
-    window.onload = () => {
-        startCountdown();
-    };
-
+    // Form submission event
     document.getElementById('control-q1').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(timerInterval); // Stop timer on form submission
+      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
       window.location.href = 'controls_question2.html'; // Go to the next question page
     });
   </script>
