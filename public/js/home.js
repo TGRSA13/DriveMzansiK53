@@ -31,6 +31,8 @@ const db = getFirestore(app);
 
 // Check if user is logged in and retrieve their name from Firestore
 onAuthStateChanged(auth, async (user) => {
+    console.log("User state changed:", user); // Log the user object
+
     if (user) {
         console.log("User logged in:", user); // Confirm user is logged in
         try {
@@ -67,4 +69,5 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         alert("Error during sign-out.");
     });
 });
+
 
