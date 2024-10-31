@@ -130,7 +130,6 @@
     let timeLeft = localStorage.getItem('timeLeft');
     if (!timeLeft) {
       timeLeft = 600; // 10 minutes in seconds
-      localStorage.setItem('timeLeft', timeLeft);
     } else {
       timeLeft = parseInt(timeLeft);
     }
@@ -156,10 +155,13 @@
 
     document.getElementById('control-q3').addEventListener('submit', function(e) {
       e.preventDefault();
+      clearInterval(timerInterval); // Stop the timer when the form is submitted
+      localStorage.removeItem('timeLeft'); // Clear timer from local storage
       window.location.href = 'rules_question1.html'; // Go to next section (Rules)
     });
   </script>
 </body>
 </html>
+
 
 

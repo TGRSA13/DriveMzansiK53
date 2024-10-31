@@ -67,25 +67,25 @@
 
     .button {
       padding: 10px 15px;
-      background-color: #4CAF50; /* Green background */
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin: 0 5px; /* Add space between buttons */
-      text-decoration: none; /* Ensure no underline */
+      margin: 0 5px;
+      text-decoration: none;
     }
 
     .button:hover {
-      background-color: #45a049; /* Darker green on hover */
+      background-color: #45a049;
     }
 
     .back-button {
-      background-color: #f44336; /* Red background for back button */
+      background-color: #f44336;
     }
 
     .back-button:hover {
-      background-color: #d32f2f; /* Darker red on hover */
+      background-color: #d32f2f;
     }
   </style>
 </head>
@@ -128,7 +128,7 @@
   <script src="public/js/timer.js"></script>
   <script>
     // Timer functionality
-    let timeLeft = 600; // 10 minutes in seconds
+    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // 10 minutes in seconds
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -140,8 +140,10 @@
         clearInterval(timerInterval);
         alert("Time is up! Submitting your answers.");
         document.getElementById('signs-q3').submit(); // Automatically submit the form when time is up
+      } else {
+        timeLeft--;
+        localStorage.setItem('timeLeft', timeLeft); // Save remaining time to localStorage
       }
-      timeLeft--;
     }
 
     const timerInterval = setInterval(updateTimer, 1000); // Update every second
@@ -149,8 +151,10 @@
     document.getElementById('signs-q3').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval); // Stop the timer when the form is submitted
+      localStorage.removeItem('timeLeft'); // Clear timer from localStorage
       window.location.href = 'results.html'; // Redirect to results page
     });
   </script>
 </body>
 </html>
+
