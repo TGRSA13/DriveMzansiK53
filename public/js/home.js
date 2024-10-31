@@ -35,6 +35,8 @@ onAuthStateChanged(auth, async (user) => {
 
     if (user) {
         console.log("User logged in:", user); // Confirm user is logged in
+        console.log("User UID:", user.uid); // Log user UID
+
         try {
             // Retrieve user data from Firestore
             const docRef = doc(db, "users", user.uid);
@@ -48,8 +50,8 @@ onAuthStateChanged(auth, async (user) => {
                 document.getElementById('user-name').textContent = 'User';
             }
         } catch (error) {
-            console.error("Error fetching user data:", error);
-            alert("Error fetching user data.");
+            console.error("Error fetching user data:", error.message);
+            alert("Error fetching user data: " + error.message);
         }
     }
 });
@@ -70,4 +72,5 @@ document.getElementById('start-test-btn').addEventListener('click', () => {
     // Redirect to controls_question1.html
     window.location.href = 'controls_question1.html';
 });
+
 
