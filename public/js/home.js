@@ -55,7 +55,7 @@ onAuthStateChanged(auth, async (user) => {
         // Redirect to index.html if no user is logged in
         console.log("No user logged in, redirecting to index.html");
         alert("No user logged in. Redirecting to login page.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
     }
 });
 
