@@ -1,6 +1,6 @@
-// Import Firebase SDKs
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -9,11 +9,10 @@ const firebaseConfig = {
     projectId: "drive-mzansi-app",
     storageBucket: "drive-mzansi-app.appspot.com",
     messagingSenderId: "1007195133421",
-    appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
-    measurementId: "G-WGTMR2MFRY"
+    appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
 };
 
-// Initialize Firebase only if it hasn't been initialized yet
+// Initialize Firebase if not initialized
 let app;
 if (!firebase.apps.length) {
     app = initializeApp(firebaseConfig);
@@ -23,48 +22,43 @@ if (!firebase.apps.length) {
 }
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Set authentication persistence
-setPersistence(auth, browserLocalPersistence)
-    .then(() => {
-        // Attach login form submission event
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent the default form submission
+// Check if user is logged in and retrieve their name from Firestore
+onAuthStateChanged(auth, async (user) => {
+    console.log("Checking user login state:", user); // Added log to check user state
 
-            // Retrieve user inputs
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+    if (user) {
+        console.log("User logged in:", user); // Confirm that user is detected
+        try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
 
-            // Attempt to sign in with provided credentials
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    console.log("User signed in:", userCredential.user); // Log user info for debugging
-                    alert("Login successful!");
-                    window.location.href = "home.html"; // Redirect to the home page
-                })
-                .catch((error) => {
-                    console.error("Login failed:", error); // Log error details
-                    let errorMessage;
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
+            } else {
+                console.error("No user document found in Firestore.");
+                document.getElementById('user-name').textContent = 'User';
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            alert("Error fetching user data.");
+        }
+    } else {
+        console.log("No user logged in, redirecting to index.html");
+        alert("No user logged in. Redirecting to login page.");
+        window.location.href = "index.html";
+    }
+});
 
-                    // Provide user-friendly error messages
-                    switch (error.code) {
-                        case 'auth/wrong-password':
-                            errorMessage = "Incorrect password. Please try again.";
-                            break;
-                        case 'auth/user-not-found':
-                            errorMessage = "No account found with this email. Please sign up.";
-                            break;
-                        case 'auth/invalid-email':
-                            errorMessage = "Invalid email format. Please enter a valid email.";
-                            break;
-                        default:
-                            errorMessage = error.message;
-                    }
-
-                    alert(errorMessage); // Display error to the user
-                });
-        });
-    })
-    .catch((error) => {
-        console.error("Error setting persistence:", error);
+// Logout button functionality
+document.getElementById('logout-btn').addEventListener('click', () => {
+    signOut(auth).then(() => {
+        alert('You have been logged out.');
+        window.location.href = 'index.html';
+    }).catch((error) => {
+        console.error('Sign Out Error:', error);
+        alert("Error during sign-out.");
     });
+});
