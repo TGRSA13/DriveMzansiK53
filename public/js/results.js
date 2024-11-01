@@ -1,14 +1,14 @@
 // Correct answers for the quiz
 const correctAnswers = {
-    'control_q1': 'C', // Correct answer for Control Question 1
-    'control_q2': 'C', // Correct answer for Control Question 2
-    'control_q3': 'B', // Correct answer for Control Question 3
-    'rules_q1': 'A',   // Correct answer for Rules Question 1
-    'rules_q2': 'C',   // Correct answer for Rules Question 2
-    'rules_q3': 'C',   // Correct answer for Rules Question 3
-    'signs_q1': 'A',   // Correct answer for Signs Question 1
-    'signs_q2': 'B',   // Correct answer for Signs Question 2
-    'signs_q3': 'C'    // Correct answer for Signs Question 3
+    'control_q1': 'C',
+    'control_q2': 'C',
+    'control_q3': 'B',
+    'rules_q1': 'A',
+    'rules_q2': 'C',
+    'rules_q3': 'C',
+    'signs_q1': 'A',
+    'signs_q2': 'B',
+    'signs_q3': 'C'
 };
 
 // Function to display results
@@ -33,7 +33,7 @@ function displayResults() {
 
     // Save the latest result to localStorage
     const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    pastResults.push({ score: score, percentage: percentage });
+    pastResults.push({ score: score, percentage: percentage, date: new Date().toLocaleDateString() });
     localStorage.setItem('testResults', JSON.stringify(pastResults));
 }
 
@@ -49,4 +49,3 @@ document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
 // Call displayResults when the page loads
 document.addEventListener('DOMContentLoaded', displayResults);
-
