@@ -150,20 +150,15 @@
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="cq1"]:checked').value;
 
-      // Save the answer under the key 'control_q1'
-      userAnswers['control_q1'] = selectedAnswer;
+      // Save the answer under the key 'cq1'
+      userAnswers['cq1'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
-      // Check if this is the last question and navigate appropriately
-      const isLastQuestion = false; // Set to true if this is the last question
-      if (isLastQuestion) {
-        window.location.href = 'results.html';
-      } else {
-        window.location.href = 'controls_question2.html';
-      }
+      // Navigate to the next question or results page if last question
+      window.location.href = 'controls_question2.html';
     });
   </script>
 </body>

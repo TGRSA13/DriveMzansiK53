@@ -11,26 +11,23 @@ const correctAnswers = {
     'sq3': 'C'   // Signs question 3
 };
 
-// Function to safely retrieve data from localStorage
-function safeLocalStorageGetItem(key) {
-    try {
-        return localStorage.getItem(key);
-    } catch (e) {
-        console.warn("Could not access localStorage", e);
-        return null;
-    }
-}
-
 // Function to display results
 function displayResults() {
     // Retrieve user answers from localStorage
-    const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+    const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+    console.log("User Answers Retrieved from localStorage:", userAnswers);  // Debugging
+
     let score = 0;
     const totalQuestions = Object.keys(correctAnswers).length;
 
     // Calculate score based on user answers
     for (const question in correctAnswers) {
-        if (userAnswers[question] === correctAnswers[question]) {
+        const correctAnswer = correctAnswers[question];
+        const userAnswer = userAnswers[question];
+
+        console.log(`Question Key: ${question}, Correct Answer: ${correctAnswer}, User Answer: ${userAnswer}`);  // Debugging
+
+        if (userAnswer === correctAnswer) {
             score++;
         }
     }
@@ -38,12 +35,19 @@ function displayResults() {
     // Calculate percentage
     const percentage = (score / totalQuestions) * 100;
 
-    // Display results
-    document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
-    document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
+    // Display results in the HTML
+    const scoreElement = document.getElementById('score');
+    const percentageElement = document.getElementById('percentage');
 
-    // Save the latest result to localStorage for record-keeping
-    const pastResults = JSON.parse(safeLocalStorageGetItem('testResults')) || [];
+    if (scoreElement && percentageElement) {
+        scoreElement.textContent = `You got ${score} out of ${totalQuestions}.`;
+        percentageElement.textContent = `Your score is ${percentage.toFixed(2)}%.`;
+    } else {
+        console.warn("Score or Percentage element not found in HTML.");  // Debugging
+    }
+
+    // Store past results in localStorage
+    const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
     pastResults.push({
         score: score,
         percentage: percentage,
@@ -52,5 +56,6 @@ function displayResults() {
     localStorage.setItem('testResults', JSON.stringify(pastResults));
 }
 
-// Call displayResults when the page loads
+// Attach displayResults to DOMContentLoaded
 document.addEventListener('DOMContentLoaded', displayResults);
+
