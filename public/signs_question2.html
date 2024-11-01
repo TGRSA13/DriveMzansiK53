@@ -175,7 +175,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q2"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="sq2"]:checked').value;  // Update question selector
 
       // Save the answer under the key 'control_q2' for this specific question
       userAnswers['signs_q2'] = selectedAnswer;
