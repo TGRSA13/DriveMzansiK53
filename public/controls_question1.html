@@ -72,7 +72,7 @@
         <li><a href="index.html">Home</a></li>
       </ul>
     </nav>
-    <p>Time left: <span id="timer">10:00</span></p>
+    <p>Time left: <span id="timer" aria-live="polite">10:00</span></p> <!-- Added aria-live for accessibility -->
   </header>
 
   <main>
@@ -85,10 +85,11 @@
     </div>
 
     <form id="control-q1" style="text-align: center;">
-      <input type="radio" name="q1" value="A-1" required> A-1 <br>
-      <input type="radio" name="q1" value="B-6"> B-6 <br>
-      <input type="radio" name="q1" value="C-8"> C-8 <br>
-      <input type="radio" name="q1" value="D-11"> D-11 <br>
+      <!-- Updated answer values to match correct answer format -->
+      <input type="radio" name="cq1" value="A" required> A <br>
+      <input type="radio" name="cq1" value="B"> B <br>
+      <input type="radio" name="cq1" value="C"> C <br>
+      <input type="radio" name="cq1" value="D"> D <br>
       <button type="submit" class="button">Next</button>
     </form>
   </main>
@@ -98,8 +99,26 @@
   </footer>
 
   <script>
+    // Safe localStorage functions for improved reliability
+    function safeLocalStorageSetItem(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
+    }
+
+    function safeLocalStorageGetItem(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+      }
+    }
+
     // Countdown Timer with Persistent Storage
-    let timeLeft = localStorage.getItem('quizTimeLeft') ? parseInt(localStorage.getItem('quizTimeLeft')) : 600;
+    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -113,7 +132,7 @@
         window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
-        localStorage.setItem('quizTimeLeft', timeLeft);
+        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
@@ -126,20 +145,25 @@
       clearInterval(timerInterval); // Stop timer on form submission
       
       // Retrieve or initialize the answers object
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-      
+      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
-      
+      const selectedAnswer = document.querySelector('input[name="cq1"]:checked').value;
+
       // Save the answer under the key 'control_q1'
       userAnswers['control_q1'] = selectedAnswer;
-      localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-      
-      // Save remaining time
-      localStorage.setItem('quizTimeLeft', timeLeft);
+      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
-      // Redirect to the next question
-      window.location.href = 'controls_question2.html';
+      // Save remaining time
+      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+
+      // Check if this is the last question and navigate appropriately
+      const isLastQuestion = false; // Set to true if this is the last question
+      if (isLastQuestion) {
+        window.location.href = 'results.html';
+      } else {
+        window.location.href = 'controls_question2.html';
+      }
     });
   </script>
 </body>

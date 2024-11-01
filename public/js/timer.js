@@ -2,31 +2,53 @@
 let timeLeft = 10 * 60; // 10 minutes in seconds
 let timerInterval;
 
+// Function to safely interact with localStorage
+function safeLocalStorageSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+    } catch (e) {
+        console.warn("Could not save to localStorage", e);
+    }
+}
+
+function safeLocalStorageGetItem(key) {
+    try {
+        return localStorage.getItem(key);
+    } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+    }
+}
+
+// Start the timer countdown
 function startTimer() {
     const timerElement = document.getElementById('timer');
     if (timerElement) {
         timerInterval = setInterval(() => {
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-            if (seconds < 10) seconds = '0' + seconds;
+            // Calculate minutes and seconds
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = String(timeLeft % 60).padStart(2, '0');
             timerElement.textContent = `${minutes}:${seconds}`;
-            
+
             // Check if time is up
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
-                window.location.href = 'results.html'; // Redirect to results page when time is up
+                window.location.href = 'results.html'; // Redirect to results page
+            } else {
+                timeLeft--;
+                safeLocalStorageSetItem('quizTimeLeft', timeLeft); // Save remaining time
             }
-            timeLeft--;
         }, 1000);
     }
 }
 
-// Start the timer when the page is loaded
+// Initialize and start the timer when the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('timer')) {
-        // Load remaining time from localStorage if exists
-        const savedTime = localStorage.getItem('quizTimeLeft');
+    const timerElement = document.getElementById('timer');
+    if (timerElement) {
+        // Load remaining time from localStorage if it exists
+        const savedTime = safeLocalStorageGetItem('quizTimeLeft');
         if (savedTime) {
             timeLeft = parseInt(savedTime, 10);
         }
@@ -34,8 +56,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Save the remaining time to localStorage every second
-setInterval(() => {
-    localStorage.setItem('quizTimeLeft', timeLeft);
-}, 1000);
 

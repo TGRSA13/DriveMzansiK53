@@ -13,7 +13,8 @@ const correctAnswers = {
 
 // Function to display results
 function displayResults() {
-    const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+    // Retrieve user answers from localStorage with error handling
+    const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
     let score = 0;
     const totalQuestions = Object.keys(correctAnswers).length;
 
@@ -31,14 +32,37 @@ function displayResults() {
     document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
     document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
 
-    // Save the latest result to localStorage
-    const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    pastResults.push({ score: score, percentage: percentage, date: new Date().toLocaleDateString() });
-    localStorage.setItem('testResults', JSON.stringify(pastResults));
+    // Save the latest result to localStorage with error handling
+    const pastResults = JSON.parse(safeLocalStorageGetItem('testResults')) || [];
+    pastResults.push({
+        score: score,
+        percentage: percentage,
+        date: new Date().toLocaleDateString()
+    });
+    safeLocalStorageSetItem('testResults', JSON.stringify(pastResults));
+}
+
+// Safe localStorage functions
+function safeLocalStorageSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+    } catch (e) {
+        console.warn("Could not save to localStorage", e);
+    }
+}
+
+function safeLocalStorageGetItem(key) {
+    try {
+        return localStorage.getItem(key);
+    } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+    }
 }
 
 // Function to restart the quiz
 function restartQuiz() {
+    // Clear saved answers and timer, then redirect to home
     localStorage.removeItem('userAnswers'); // Clear saved answers
     localStorage.removeItem('quizTimeLeft'); // Clear saved time
     window.location.href = "home.html"; // Redirect to home

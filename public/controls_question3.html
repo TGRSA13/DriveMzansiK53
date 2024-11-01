@@ -109,10 +109,10 @@
     </div>
 
     <form id="control-q3" style="text-align: center;">
-      <input type="radio" name="q3" value="A-9&7" required> A-9&7 <br>
-      <input type="radio" name="q3" value="B-6&8"> B-6&8 <br>
-      <input type="radio" name="q3" value="C-6&1"> C-6&1 <br>
-      <input type="radio" name="q3" value="D-8&9"> D-8&9 <br>
+      <input type="radio" name="cq3" value="A-9&7" required> A-9&7 <br>
+      <input type="radio" name="cq3" value="B-6&8"> B-6&8 <br>
+      <input type="radio" name="cq3" value="C-6&1"> C-6&1 <br>
+      <input type="radio" name="cq3" value="D-8&9"> D-8&9 <br>
       
       <div class="button-container">
         <a href="controls_question2.html" class="button back-button">Back</a> <!-- Back button -->
@@ -126,8 +126,26 @@
   </footer>
 
   <script>
-    // Timer initialization
-    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // 10 minutes in seconds
+    // Safe localStorage functions for improved reliability
+    function safeLocalStorageSetItem(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
+    }
+
+    function safeLocalStorageGetItem(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+      }
+    }
+
+    // Countdown Timer with Persistent Storage
+    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -137,35 +155,43 @@
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        alert("Time is up! Submitting your answers.");
-        document.getElementById('control-q3').submit(); // Automatically submit when time is up
+        alert("Time's up!");
+        window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
-        localStorage.setItem('timeLeft', timeLeft); // Update the remaining time
+        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
-    const timerInterval = setInterval(updateTimer, 1000); // Update every second
+    // Start the countdown and update every second
+    const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event
-    document.getElementById('control-q3').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
+    // Form submission event to save answer and navigate to the next question
+    document.getElementById('control-q3').addEventListener('submit', function(e) {  // Update form ID
+      e.preventDefault();
+      clearInterval(timerInterval); // Stop timer on form submission
       
-      clearInterval(timerInterval); // Stop the timer when the form is submitted
-      localStorage.removeItem('timeLeft'); // Clear timer from local storage
-
       // Retrieve or initialize the answers object
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-      
+      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q3"]:checked'); // Changed to use the correct name
-      if (selectedAnswer) {
-        userAnswers['q3'] = selectedAnswer.value; // Store the selected answer
-        localStorage.setItem('userAnswers', JSON.stringify(userAnswers)); // Save answers to localStorage
+      const selectedAnswer = document.querySelector('input[name="cq3"]:checked').value;  // Update question selector
+
+      // Save the answer under the key 'control_q2' for this specific question
+      userAnswers['control_q3'] = selectedAnswer;
+      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+
+      // Save remaining time
+      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+
+      // Check if this is the last question and navigate appropriately
+      const isLastQuestion = false; // Set to true if this is the last question
+      if (isLastQuestion) {
+        window.location.href = 'results.html';
+      } else {
+        window.location.href = 'rules_question1.html'; // Update to the next question page
       }
-      
-      window.location.href = 'rules_question1.html'; // Go to next section (Rules)
     });
-  </script>
+</script>
 </body>
 </html>

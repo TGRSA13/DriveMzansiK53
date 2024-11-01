@@ -109,10 +109,10 @@
     </div>
 
     <form id="signs-q3" style="text-align: center;">
-      <input type="radio" name="q3" value="A-Dead end ahead" required> A-Dead end ahead <br>
-      <input type="radio" name="q3" value="B-Turn only left or right"> B-Turn only left or right <br>
-      <input type="radio" name="q3" value="C-Do not enter"> C-Do not enter <br>
-      <input type="radio" name="q3" value="D-Line on the road"> D-Line on the road <br>
+      <input type="radio" name="sq3" value="A-Dead end ahead" required> A-Dead end ahead <br>
+      <input type="radio" name="sq3" value="B-Turn only left or right"> B-Turn only left or right <br>
+      <input type="radio" name="sq3" value="C-Do not enter"> C-Do not enter <br>
+      <input type="radio" name="sq3" value="D-Line on the road"> D-Line on the road <br>
 
       <div class="button-container">
         <a href="signs_question2.html" class="button back-button">Back</a> <!-- Back button -->
@@ -125,10 +125,27 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script src="public/js/timer.js"></script>
   <script>
-    // Timer functionality
-    let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // 10 minutes in seconds
+    // Safe localStorage functions
+    function safeLocalStorageSetItem(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
+    }
+
+    function safeLocalStorageGetItem(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+      }
+    }
+
+    // Countdown Timer with Persistent Storage
+    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -138,32 +155,35 @@
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        alert("Time is up! Submitting your answers.");
+        alert("Time's up! Submitting your answers.");
         document.getElementById('signs-q3').submit(); // Automatically submit the form when time is up
       } else {
         timeLeft--;
-        localStorage.setItem('timeLeft', timeLeft); // Save remaining time to localStorage
+        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
-    const timerInterval = setInterval(updateTimer, 1000); // Update every second
+    // Start the countdown and update every second
+    const timerInterval = setInterval(updateTimer, 1000);
 
+    // Form submission event to save answer and navigate to the results page
     document.getElementById('signs-q3').addEventListener('submit', function(e) {
       e.preventDefault(); // Prevent default form submission
-      clearInterval(timerInterval); // Stop the timer when the form is submitted
-      localStorage.removeItem('timeLeft'); // Clear timer from localStorage
+      clearInterval(timerInterval); // Stop the timer on form submission
+      localStorage.removeItem('quizTimeLeft'); // Clear timer from localStorage
 
-      // Retrieve or initialize the answers array
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-      
+      // Retrieve or initialize the answers object
+      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q3"]:checked').value; // Corrected name to "q3"
-      
-      // Save the answer to the object and localStorage
-      userAnswers['q3'] = selectedAnswer; // Updated to store q3 answer
-      localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-      
-      window.location.href = 'results.html'; // Redirect to results page
+      const selectedAnswer = document.querySelector('input[name="sq3"]:checked').value;
+
+      // Save the answer under the key 'signs_q3' for this specific question
+      userAnswers['signs_q3'] = selectedAnswer;
+      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+
+      // Redirect to results page
+      window.location.href = 'results.html';
     });
   </script>
 </body>

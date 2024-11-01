@@ -109,10 +109,10 @@
     </div>
 
     <form id="control-q2" style="text-align: center;">
-      <input type="radio" name="q2" value="A-10" required> A-10 <br>
-      <input type="radio" name="q2" value="B-5"> B-5 <br>
-      <input type="radio" name="q2" value="C-7"> C-7 <br>
-      <input type="radio" name="q2" value="D-3"> D-3 <br>
+      <input type="radio" name="cq2" value="A-10" required> A-10 <br>
+      <input type="radio" name="cq2" value="B-5"> B-5 <br>
+      <input type="radio" name="cq2" value="C-7"> C-7 <br>
+      <input type="radio" name="cq2" value="D-3"> D-3 <br>
       
       <div class="button-container">
         <a href="controls_question1.html" class="button back-button">Back</a> <!-- Back button -->
@@ -126,7 +126,26 @@
   </footer>
 
   <script>
-    let timeLeft = localStorage.getItem('quizTimeLeft') ? parseInt(localStorage.getItem('quizTimeLeft')) : 600;
+    // Safe localStorage functions for improved reliability
+    function safeLocalStorageSetItem(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
+    }
+
+    function safeLocalStorageGetItem(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+      }
+    }
+
+    // Countdown Timer with Persistent Storage
+    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -137,31 +156,42 @@
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time's up!");
-        // Automatically submit results to store in local storage
-        saveResult('q2', document.querySelector('input[name="q2"]:checked')?.value);
         window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
-        localStorage.setItem('quizTimeLeft', timeLeft);
+        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
+    // Start the countdown and update every second
     const timerInterval = setInterval(updateTimer, 1000);
 
-    document.getElementById('control-q2').addEventListener('submit', function(e) {
+    // Form submission event to save answer and navigate to the next question
+    document.getElementById('control-q2').addEventListener('submit', function(e) {  // Update form ID
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
-      saveResult('q2', document.querySelector('input[name="q2"]:checked').value);
-      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
-      window.location.href = 'controls_question3.html'; // Go to the next question page
-    });
+      
+      // Retrieve or initialize the answers object
+      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
-    function saveResult(question, answer) {
-      const results = JSON.parse(localStorage.getItem('quizResults')) || {};
-      results[question] = answer;
-      localStorage.setItem('quizResults', JSON.stringify(results));
-    }
-  </script>
+      // Get the selected answer
+      const selectedAnswer = document.querySelector('input[name="cq2"]:checked').value;  // Update question selector
+
+      // Save the answer under the key 'control_q2' for this specific question
+      userAnswers['control_q2'] = selectedAnswer;
+      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+
+      // Save remaining time
+      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+
+      // Check if this is the last question and navigate appropriately
+      const isLastQuestion = false; // Set to true if this is the last question
+      if (isLastQuestion) {
+        window.location.href = 'results.html';
+      } else {
+        window.location.href = 'controls_question3.html'; // Update to the next question page
+      }
+    });
+</script>
 </body>
 </html>
-

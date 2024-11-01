@@ -109,10 +109,10 @@
     </div>
 
     <form id="rules-q1" style="text-align: center;">
-      <input type="radio" name="q1" value="A-30 Meters" required> A-30 Meters <br>
-      <input type="radio" name="q1" value="B-40 Meters"> B-40 Meters <br>
-      <input type="radio" name="q1" value="C-50 Meters"> C-50 Meters <br>
-      <input type="radio" name="q1" value="D-35 Meters"> D-35 Meters <br>
+      <input type="radio" name="rq1" value="A-30 Meters" required> A-30 Meters <br>
+      <input type="radio" name="rq1" value="B-40 Meters"> B-40 Meters <br>
+      <input type="radio" name="rq1" value="C-50 Meters"> C-50 Meters <br>
+      <input type="radio" name="rq1" value="D-35 Meters"> D-35 Meters <br>
 
       <div class="button-container">
         <a href="controls_question3.html" class="button back-button">Back</a> <!-- Back button -->
@@ -126,15 +126,26 @@
   </footer>
 
   <script>
-    // Timer initialization
-    let timeLeft = localStorage.getItem('timeLeft');
-    if (!timeLeft) {
-      timeLeft = 600; // 10 minutes in seconds
-      localStorage.setItem('timeLeft', timeLeft);
-    } else {
-      timeLeft = parseInt(timeLeft);
+    // Safe localStorage functions for improved reliability
+    function safeLocalStorageSetItem(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("Could not save to localStorage", e);
+      }
     }
 
+    function safeLocalStorageGetItem(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn("Could not access localStorage", e);
+        return null;
+      }
+    }
+
+    // Countdown Timer with Persistent Storage
+    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -144,33 +155,43 @@
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        alert("Time is up! Submitting your answers.");
-        document.getElementById('rules-q1').submit(); // Automatically submit when time is up
+        alert("Time's up!");
+        window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
-        localStorage.setItem('timeLeft', timeLeft); // Update the remaining time
+        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
-    const timerInterval = setInterval(updateTimer, 1000); // Update every second
+    // Start the countdown and update every second
+    const timerInterval = setInterval(updateTimer, 1000);
 
-    document.getElementById('rules-q1').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-      clearInterval(timerInterval); // Stop timer on submit
-
-      // Retrieve or initialize the answers array
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+    // Form submission event to save answer and navigate to the next question
+    document.getElementById('rules-q1').addEventListener('submit', function(e) {  // Update form ID
+      e.preventDefault();
+      clearInterval(timerInterval); // Stop timer on form submission
       
+      // Retrieve or initialize the answers object
+      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="q1"]:checked').value;
-      
-      // Save the answer to the object and localStorage
-      userAnswers['q1'] = selectedAnswer;
-      localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-      
-      localStorage.setItem('quizTimeLeft', timeLeft); // Save remaining time
-      window.location.href = 'rules_question2.html'; // Go to the next question page
+      const selectedAnswer = document.querySelector('input[name="rq1"]:checked').value;  // Update question selector
+
+      // Save the answer under the key 'control_q2' for this specific question
+      userAnswers['control_q2'] = selectedAnswer;
+      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+
+      // Save remaining time
+      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+
+      // Check if this is the last question and navigate appropriately
+      const isLastQuestion = false; // Set to true if this is the last question
+      if (isLastQuestion) {
+        window.location.href = 'results.html';
+      } else {
+        window.location.href = 'rules_question2.html'; // Update to the next question page
+      }
     });
-  </script>
+</script>
 </body>
 </html>
