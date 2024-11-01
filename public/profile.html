@@ -99,5 +99,28 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Include Firestore if needed -->
   <script src="public/profile.js"></script> <!-- Link to your JS file -->
+
+  <!-- Script to load test results -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const resultsContainer = document.getElementById('results-container');
+        const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+
+        if (pastResults.length === 0) {
+            resultsContainer.innerHTML = "<p>No test results available.</p>";
+        } else {
+            pastResults.forEach((result, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <p><strong>Test ${index + 1}</strong></p>
+                    <p>Score: ${result.score} / 9</p>
+                    <p>Percentage: ${result.percentage.toFixed(2)}%</p>
+                `;
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+    });
+  </script>
 </body>
 </html>

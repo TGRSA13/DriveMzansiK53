@@ -95,15 +95,15 @@
   <script>
     // Correct answers for the quiz
     const correctAnswers = {
-        'control_q1': 'C', // Correct answer for Control Question 1
-        'control_q2': 'C', // Correct answer for Control Question 2
-        'control_q3': 'B', // Correct answer for Control Question 3
-        'rules_q1': 'A',   // Correct answer for Rules Question 1
-        'rules_q2': 'C',   // Correct answer for Rules Question 2
-        'rules_q3': 'C',   // Correct answer for Rules Question 3
-        'signs_q1': 'A',   // Correct answer for Signs Question 1
-        'signs_q2': 'B',   // Correct answer for Signs Question 2
-        'signs_q3': 'C'    // Correct answer for Signs Question 3
+        'control_q1': 'C',
+        'control_q2': 'C',
+        'control_q3': 'B',
+        'rules_q1': 'A',
+        'rules_q2': 'C',
+        'rules_q3': 'C',
+        'signs_q1': 'A',
+        'signs_q2': 'B',
+        'signs_q3': 'C'
     };
 
     // Function to display results
@@ -112,12 +112,8 @@
         let score = 0;
         const totalQuestions = Object.keys(correctAnswers).length;
 
-        console.log('User Answers:', userAnswers); // Debugging: Log user answers
-        console.log('Correct Answers:', correctAnswers); // Debugging: Log correct answers
-
         // Calculate score based on user answers
         for (const question in correctAnswers) {
-            // Check if the user answer matches the correct answer
             if (userAnswers[question] === correctAnswers[question]) {
                 score++;
             }
