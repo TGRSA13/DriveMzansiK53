@@ -22,4 +22,5 @@ var App = function App() {
     );
 };
 
+// Ensure there's an element with the id 'root' in your HTML
 _reactDom2['default'].render(_react2['default'].createElement(App, null), document.getElementById('root'));
