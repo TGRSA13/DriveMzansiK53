@@ -1,24 +1,29 @@
 const path = require('path');
 
 module.exports = {
-    entry: './public/src/index.js', // Path to your entry file
+    mode: 'development', // Change to 'production' for production builds
+    entry: './public/src/index.js', // Adjust entry point as needed
     output: {
-        path: path.resolve(__dirname, 'public/dist'), // Path to the output directory
         filename: 'index.js', // Output filename
+        path: path.resolve(__dirname, 'public/dist'), // Output path
+        clean: true, // Clean the output directory before emit
     },
     module: {
         rules: [
             {
-                test: /\.js$/, // Match all .js files
-                exclude: /node_modules/, // Exclude node_modules folder
+                test: /\.jsx?$/, // Include both .js and .jsx files
+                exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader', // Use Babel loader for transpiling
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
                 },
             },
         ],
     },
     resolve: {
-        extensions: ['.js'], // Resolve .js files
+        extensions: ['.js', '.jsx'], // Resolve these extensions
     },
-    mode: 'development', // Set mode to development
+    devtool: 'source-map', // Use 'source-map' for better debugging
 };
