@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Import createRoot
 
 const App = () => {
-    return (
-        <div>
-            <h1>Hello, React!</h1>
-        </div>
-    );
+    return <h1>Hello, React!</h1>; // Simple message for testing
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Get the DOM element
+const container = document.getElementById('root');
+if (container) { // Check if the container exists
+    const root = createRoot(container); // Create a root for the React app
+    root.render(<App />); // Render the app
+} else {
+    console.error("Target container is not a DOM element."); // Log an error if the container is not found
+}
