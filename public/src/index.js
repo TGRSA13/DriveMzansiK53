@@ -1,15 +1,20 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client'; // Import createRoot
+import React from 'react'; 
+import { createRoot } from 'react-dom/client';
+import Greeting from './components/Greeting'; // Import the Greeting component
 
 const App = () => {
-    return <h1>Hello, React!</h1>; // Simple message for testing
+    return (
+        <div>
+            <h1>Hello, React!</h1> {/* A simple React component */}
+            <Greeting /> {/* Render the Greeting component */}
+        </div>
+    );
 };
 
-// Get the DOM element
-const container = document.getElementById('root');
-if (container) { // Check if the container exists
-    const root = createRoot(container); // Create a root for the React app
-    root.render(<App />); // Render the app
+const container = document.getElementById('root'); // Get the container
+if (container) {
+    const root = createRoot(container); // Create the root
+    root.render(<App />); // Render the App component
 } else {
-    console.error("Target container is not a DOM element."); // Log an error if the container is not found
+    console.error("Target container is not a DOM element.");
 }

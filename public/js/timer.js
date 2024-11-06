@@ -1,4 +1,4 @@
-// Timer functionality
+ // Timer functionality
 let timeLeft = 10 * 60; // 10 minutes in seconds
 let timerInterval;
 
@@ -34,6 +34,7 @@ function startTimer() {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
+                safeLocalStorageSetItem('quizTimeLeft', 10 * 60); // Reset timer in local storage
                 window.location.href = 'results.html'; // Redirect to results page
             } else {
                 timeLeft--;
@@ -47,13 +48,21 @@ function startTimer() {
 document.addEventListener('DOMContentLoaded', function() {
     const timerElement = document.getElementById('timer');
     if (timerElement) {
-        // Load remaining time from localStorage if it exists
+        // Load remaining time from localStorage if it exists, otherwise start fresh
         const savedTime = safeLocalStorageGetItem('quizTimeLeft');
         if (savedTime) {
             timeLeft = parseInt(savedTime, 10);
+        } else {
+            safeLocalStorageSetItem('quizTimeLeft', timeLeft); // Save initial time to local storage
         }
         startTimer();
     }
 });
 
-
+// Optional: Reset timer (for testing)
+document.getElementById('resetTimer').addEventListener('click', function() {
+    clearInterval(timerInterval);
+    timeLeft = 10 * 60; // Reset to 10 minutes
+    safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+    startTimer();
+});
