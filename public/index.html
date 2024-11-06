@@ -1,26 +1,183 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Mzansi - K53 App</title>
-    <!-- Link to CSS styles -->
-    <link rel="stylesheet" href="css/style.css"> <!-- Adjusted path for your actual CSS file -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Drive Mzansi</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+      }
+      header {
+          background-color: #f8f8f8;
+          padding: 20px;
+      }
+      nav {
+          background-color: #333;
+          overflow: hidden;
+      }
+      nav ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+      }
+      nav li {
+          padding: 14px 20px;
+      }
+      nav a {
+          color: white;
+          text-decoration: none;
+      }
+      nav a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      main {
+          padding: 20px;
+      }
+      footer {
+          background-color: #f8f8f8;
+          padding: 10px;
+      }
+      #start-test-btn, #logout-btn {
+          padding: 10px 20px;
+          font-size: 16px;
+          margin: 10px;
+      }
+      #logout-btn {
+          background-color: #f44336;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+      #logout-btn:hover {
+          background-color: #d32f2f;
+      }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px; /* Added margin for spacing */
+      }
+      th, td {
+          border: 1px solid #000;
+          padding: 8px;
+          text-align: left;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
+  </style>
 </head>
 <body>
-    <!-- Main content for the app -->
-    <div id="content">
-        <h1>Welcome to Drive Mzansi</h1>
-        <p>Get started with your K53 practice test.</p>
-        <a href="home.html">Start Test</a> <!-- Link to the home page for the test -->
-        <a href="sign-up.html">Sign Up</a> <!-- Link to the sign-up page -->
-        <a href="login.html">Login</a> <!-- Link to the login page -->
-    </div>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
+  </header>
 
-    <!-- Link to JavaScript files -->
-    <script src="js/timer.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/quiz.js"></script>
-    <script src="js/script.js"></script>
+  <main>
+    <h1>Welcome!</h1>
+    <h4>Take the Test</h4>
+    <p>Note: This computerized test is just like the official K53 Learner’s Test for Light (Code 2) & Heavy Motor Vehicle (Code 3). 
+      Click the "Start Test" button to start the test and the “Next” button at the bottom of the page to navigate to the next set of questions.</p>
+    
+    <!-- Table added here -->
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Number of Questions</th>
+                <th>Required Passing Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Vehicle Controls</td>
+                <td>3</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Rules of the Road</td>
+                <td>3</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Road Signs</td>
+                <td>3</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>K53 Learner’s test duration: 10 minutes</p>
+
+    <button id="start-test-btn">Start Test</button>
+    <button id="logout-btn">Logout</button>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Drive Mzansi</p>
+  </footer>
+
+  <!-- Firebase SDK and User Authentication Code -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      authDomain: "drive-mzansi-app.firebaseapp.com",
+      projectId: "drive-mzansi-app",
+      storageBucket: "drive-mzansi-app.appspot.com",
+      messagingSenderId: "1007195133421",
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
+        } else {
+            console.error("No such document!");
+            document.getElementById('user-name').textContent = 'User';
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('start-test-btn').addEventListener('click', function() {
+        window.location.href = 'controls_question1.html';
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', async function() {
+        try {
+          await signOut(auth);
+          alert('You have been logged out.');
+          window.location.href = 'index.html';
+        } catch (error) {
+          console.error('Sign Out Error', error);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
