@@ -1,16 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const NavBar = () => {
   return (
     <nav>
-      <h1>Drive Mzansi</h1>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/signup">Sign Up</a></li>
-        <li><a href="/login">Login</a></li>
-      </ul>
+      <Link to="/">Home</Link> {/* Link to the Home page */}
+      <Link to="/quiz">Start Quiz</Link> {/* Link to the Quiz page */}
+      <Link to="/results">Results</Link> {/* Link to the Results page */}
+      <Link to="/profile">Profile</Link> {/* Link to the Profile page */}
     </nav>
   );
 };
 
 export default NavBar;
+
