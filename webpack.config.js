@@ -23,7 +23,11 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx'], // Resolve these extensions
+        extensions: ['.js', '.jsx'], // Add .jsx to the list of extensions to resolve
     },
-    devtool: 'source-map', // Use 'source-map' for better debugging
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),  // Directory to serve
+        compress: true,
+        port: 9000,  // You can change the port if needed
+    },
 };
