@@ -109,10 +109,18 @@
     </div>
 
     <form id="signs-q1" style="text-align: center;">
-      <input type="radio" name="sq1" value="A-Turn right at the next intersection" required> A-Turn right at the next intersection <br>
-      <input type="radio" name="sq1" value="B-Turn right immediately"> B-Turn right immediately <br>
-      <input type="radio" name="sq1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right <br>
-      <input type="radio" name="sq1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right <br>
+      <label>
+        <input type="radio" name="sq1" value="A-Turn right at the next intersection" required> A-Turn right at the next intersection
+      </label><br>
+      <label>
+        <input type="radio" name="sq1" value="B-Turn right immediately"> B-Turn right immediately
+      </label><br>
+      <label>
+        <input type="radio" name="sq1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right
+      </label><br>
+      <label>
+        <input type="radio" name="sq1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right
+      </label><br>
 
       <div class="button-container">
         <a href="rules_question3.html" class="button back-button">Back</a> <!-- Back button -->
@@ -175,9 +183,9 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="sq1"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="sq1"]:checked').value;
 
-      // Save the answer under the key 'control_q2' for this specific question
+      // Save the answer under the key 'signs_q1' for this specific question
       userAnswers['signs_q1'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 

@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             text-align: center;
+            background-color: #f4f4f9;
         }
         header {
             background-color: #f8f8f8;
@@ -40,10 +41,48 @@
         }
         main {
             padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #555;
         }
         footer {
             background-color: #f8f8f8;
             padding: 10px;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -62,9 +101,9 @@
         <h1>Login</h1>
         <form id="login-form" style="display: flex; flex-direction: column; align-items: center;">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" aria-label="Email address" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" aria-label="Password" required>
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="sign-up.html">Sign up here</a></p>
@@ -103,10 +142,21 @@
                     window.location.href = "home.html";
                 })
                 .catch((error) => {
-                    alert(error.message);
+                    const errorCode = error.code;
+                    let errorMessage = "Something went wrong, please try again.";
+
+                    // Specific error handling
+                    if (errorCode === 'auth/user-not-found') {
+                        errorMessage = "No user found with this email address.";
+                    } else if (errorCode === 'auth/wrong-password') {
+                        errorMessage = "Incorrect password. Please try again.";
+                    } else if (errorCode === 'auth/invalid-email') {
+                        errorMessage = "Invalid email address format.";
+                    }
+
+                    alert(errorMessage);
                 });
         });
     </script>
 </body>
 </html>
-

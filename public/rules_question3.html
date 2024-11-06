@@ -177,7 +177,7 @@
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="rq3"]:checked').value;  // Update question selector
 
-      // Save the answer under the key 'control_q2' for this specific question
+      // Save the answer under the key 'rules_q3' for this specific question
       userAnswers['rules_q3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
@@ -185,13 +185,13 @@
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
       // Check if this is the last question and navigate appropriately
-      const isLastQuestion = false; // Set to true if this is the last question
+      const isLastQuestion = true; // Set to true if this is the last question
       if (isLastQuestion) {
         window.location.href = 'results.html';
       } else {
         window.location.href = 'signs_question1.html'; // Update to the next question page
       }
     });
-</script>
+  </script>
 </body>
 </html>

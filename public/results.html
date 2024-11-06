@@ -68,6 +68,15 @@
     .button:hover {
       background-color: #45a049;
     }
+
+    .result-details {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .result-details p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -83,8 +92,11 @@
 
   <main>
     <h2>Your Results</h2>
-    <p id="score"></p>
-    <p id="percentage"></p>
+    <div class="result-details">
+      <p id="score"></p>
+      <p id="percentage"></p>
+      <p id="date"></p>
+    </div>
     <button class="button" id="restart-quiz">Start Test</button>
   </main>
 
@@ -93,7 +105,7 @@
   </footer>
 
   <script>
-    // Correct answers for the quiz (using updated keys)
+    // Correct answers for the quiz (updated keys)
     const correctAnswers = {
         'cq1': 'C',  // Controls question 1
         'cq2': 'C',  // Controls question 2
@@ -125,6 +137,9 @@
         // Display results
         document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
         document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
+
+        // Display the date of the results
+        document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
 
         // Save the latest result to localStorage
         const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];

@@ -177,8 +177,8 @@
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="rq1"]:checked').value;  // Update question selector
 
-      // Save the answer under the key 'control_q2' for this specific question
-      userAnswers['control_q2'] = selectedAnswer;
+      // Save the answer under the key 'rules_q1' for this specific question
+      userAnswers['rules_q1'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Save remaining time
@@ -192,6 +192,6 @@
         window.location.href = 'rules_question2.html'; // Update to the next question page
       }
     });
-</script>
+  </script>
 </body>
 </html>
