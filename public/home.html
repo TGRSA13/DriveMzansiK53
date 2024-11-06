@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/style.css"> <!-- Updated path for CSS to match the actual file name -->
   <style>
       body {
           font-family: Arial, sans-serif;
@@ -63,7 +63,7 @@
       table {
           width: 100%;
           border-collapse: collapse;
-          margin-top: 20px; /* Added margin for spacing */
+          margin-top: 20px;
       }
       th, td {
           border: 1px solid #000;
@@ -88,11 +88,9 @@
   <main>
     <h1>Welcome!</h1>
     <h4>Take the Test</h4>
-    <p>Note: This computerized test is just like the official K53 Learner’s Test for 
-      Light (Code 2) & Heavy Motor Vehicle (Code 3). 
-      Click the "Start Test" button to start the test and the “Next” button at the bottom of the page to navigate to the next set of questions.</p>
+    <p>Note: This computerized test is just like the official K53 Learner’s Test for Light (Code 2) & Heavy Motor Vehicle (Code 3). Click the "Start Test" button to start the test and the “Next” button at the bottom of the page to navigate to the next set of questions.</p>
     
-    <!-- Table added here -->
+    <!-- Table for Test Information -->
     <table>
         <thead>
             <tr>
@@ -145,6 +143,7 @@
       appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
     };
     
+    // Initialize Firebase and Authentication
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
