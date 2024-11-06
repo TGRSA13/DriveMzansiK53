@@ -1,12 +1,12 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development', // Change to 'production' for production builds
-    entry: './public/src/index.js', // Adjust entry point as needed
+    mode: 'development',  // Change to 'production' for production builds
+    entry: './src/index.js', // Corrected entry point path
     output: {
-        filename: 'index.js', // Output filename
-        path: path.resolve(__dirname, 'public/dist'), // Output path
-        clean: true, // Clean the output directory before emit
+        filename: 'bundle.js',  // Change to 'bundle.js'
+        path: path.resolve(__dirname, 'public/dist'), // Output directory
+        clean: true,  // Clean the output directory before emit
     },
     module: {
         rules: [
@@ -23,11 +23,13 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx'], // Add .jsx to the list of extensions to resolve
+        extensions: ['.js', '.jsx'],  // Resolve .js and .jsx extensions
     },
     devServer: {
-        contentBase: path.join(__dirname, 'public'),  // Directory to serve
+        contentBase: path.join(__dirname, 'public'),  // Serve from the 'public' folder
         compress: true,
-        port: 9000,  // You can change the port if needed
+        port: 9000,  // Port for the dev server
+        open: true,  // Automatically open the browser
+        hot: true,  // Enable hot reloading
     },
 };
