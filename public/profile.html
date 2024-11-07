@@ -64,12 +64,32 @@
     #results-container {
       margin-top: 20px;
       text-align: left;
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
       border: 1px solid #333;
       padding: 15px;
       background-color: #f8f8f8;
       border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
     }
 
     .result-item {
@@ -124,19 +144,34 @@
         const resultsContainer = document.getElementById('results-container');
         const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
 
-        if (pastResults.length === 0) {
+        // Limit results to 3
+        const limitedResults = pastResults.slice(0, 3);
+
+        if (limitedResults.length === 0) {
             resultsContainer.innerHTML = "<p>No test results available.</p>";
         } else {
-            pastResults.forEach((result, index) => {
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = ` 
-                    <p><strong>Test ${index + 1}</strong></p>
-                    <p>Score: ${result.score} / 9</p>
-                    <p>Percentage: ${result.percentage.toFixed(2)}%</p>
+            // Create table structure
+            let tableHTML = `
+                <table>
+                    <tr>
+                        <th>Test Number</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                    </tr>
+            `;
+
+            limitedResults.forEach((result, index) => {
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${result.score} / 9</td>
+                        <td>${result.percentage.toFixed(2)}%</td>
+                    </tr>
                 `;
-                resultsContainer.appendChild(resultItem);
             });
+
+            tableHTML += `</table>`;
+            resultsContainer.innerHTML = tableHTML;
         }
 
         // Logout functionality
@@ -151,3 +186,4 @@
   </script>
 </body>
 </html>
+
