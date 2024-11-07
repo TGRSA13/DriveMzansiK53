@@ -200,13 +200,14 @@
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
       // Check if this is the last question and navigate appropriately
-      const isLastQuestion = false; // Set to true if this is the last question
+      const isLastQuestion = window.location.pathname.includes('controls_question3.html'); // Check if this is the last question
       if (isLastQuestion) {
-        window.location.href = 'results.html';
+        window.location.href = 'results.html'; // Go to results page if it's the last question
       } else {
-        window.location.href = 'controls_question3.html'; // Update to the next question page
+        window.location.href = 'controls_question3.html'; // Otherwise, go to the next question
       }
     });
   </script>
 </body>
 </html>
+
