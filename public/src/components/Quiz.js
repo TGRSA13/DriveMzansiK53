@@ -59,6 +59,11 @@ const Quiz = () => {
     });
 
     setScore(newScore); // Update score
+
+    // Store the score and user answers in localStorage
+    localStorage.setItem('userScore', newScore);
+    localStorage.setItem('userAnswers', JSON.stringify(userAnswers)); // Save answers as a string
+
     navigate('/results'); // Navigate to results page after submission
   };
 
