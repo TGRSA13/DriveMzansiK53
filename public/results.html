@@ -116,58 +116,77 @@
         'sq3': 'C'   // Signs question 3
     };
 
+    // Debugging function to log the data flow
+    function debugData() {
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+      console.log("User Answers:", userAnswers);
+
+      const results = document.querySelector('#score');
+      if (!userAnswers) {
+        results.textContent = "No user answers found in localStorage!";
+        return;
+      }
+      console.log("Correct Answers:", correctAnswers);
+    }
+
     // Function to display results
     function displayResults() {
-        const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+      console.log("Displaying Results:", userAnswers);
 
-        if (Object.keys(userAnswers).length === 0) {
-            document.getElementById('score').textContent = "You haven't completed the quiz yet.";
-            document.getElementById('percentage').textContent = "";
-            document.getElementById('date').textContent = "";
-            return;
+      if (Object.keys(userAnswers).length === 0) {
+        document.getElementById('score').textContent = "You haven't completed the quiz yet.";
+        document.getElementById('percentage').textContent = "";
+        document.getElementById('date').textContent = "";
+        return;
+      }
+
+      let score = 0;
+      const totalQuestions = Object.keys(correctAnswers).length;
+
+      // Calculate score based on user answers
+      for (const question in correctAnswers) {
+        if (userAnswers[question] === correctAnswers[question]) {
+          score++;
         }
+      }
 
-        let score = 0;
-        const totalQuestions = Object.keys(correctAnswers).length;
+      // Calculate percentage
+      const percentage = (score / totalQuestions) * 100;
 
-        // Calculate score based on user answers
-        for (const question in correctAnswers) {
-            if (userAnswers[question] === correctAnswers[question]) {
-                score++;
-            }
-        }
+      // Debug the results calculation
+      console.log(`Score: ${score}, Percentage: ${percentage}`);
 
-        // Calculate percentage
-        const percentage = (score / totalQuestions) * 100;
+      // Display results
+      document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
+      document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
+      document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
 
-        // Display results
-        document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
-        document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
-        document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
-
-        // Save the latest result to localStorage
-        const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-        pastResults.push({
-          score: score,
-          percentage: percentage,
-          date: new Date().toLocaleDateString()
-        });
-        localStorage.setItem('testResults', JSON.stringify(pastResults));
+      // Save the latest result to localStorage
+      const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+      pastResults.push({
+        score: score,
+        percentage: percentage,
+        date: new Date().toLocaleDateString()
+      });
+      localStorage.setItem('testResults', JSON.stringify(pastResults));
     }
 
     // Function to restart the quiz
     function restartQuiz() {
-        localStorage.removeItem('userAnswers'); // Clear saved answers
-        localStorage.removeItem('quizTimeLeft'); // Clear saved time
-        window.location.href = "home.html"; // Redirect to home
+      localStorage.removeItem('userAnswers');
+      localStorage.removeItem('quizTimeLeft');
+      window.location.href = "home.html";
     }
 
     // Event listener for the "Start Test" button
     document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
-    // Call displayResults when the page loads
-    document.addEventListener('DOMContentLoaded', displayResults);
+    // Call displayResults and debugData when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      debugData();
+      displayResults();
+    });
   </script>
 </body>
 </html>
-
