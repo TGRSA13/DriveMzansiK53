@@ -59,11 +59,15 @@ const Results = () => {
 
       <h2>Past Results:</h2>
       <ul>
-        {pastResults.map((result, index) => (
-          <li key={index}>
-            {result.date}: {result.score} out of 9 - {result.percentage.toFixed(2)}%
-          </li>
-        ))}
+        {pastResults.length > 0 ? (
+          pastResults.map((result, index) => (
+            <li key={index}>
+              {result.date}: {result.score} out of 9 - {result.percentage.toFixed(2)}%
+            </li>
+          ))
+        ) : (
+          <p>No past results available.</p>
+        )}
       </ul>
     </div>
   );

@@ -1,29 +1,27 @@
 // Wait for the DOM content to load
 document.addEventListener('DOMContentLoaded', function() {
-
     // Get the form or the question container element
     const form = document.getElementById('questionForm');
-    const nextButton = document.getElementById('nextButton');  // Button to move to next question
-  
+    const nextButton = document.getElementById('nextButton'); // Button to move to next question
+
     // Handle the next button click event
     nextButton.addEventListener('click', function(event) {
-      event.preventDefault();  // Prevent form from submitting normally
-  
-      // Get the selected answer (assuming the answers are radio buttons with name 'control-question')
-      const selectedAnswer = document.querySelector('input[name="control-question"]:checked');
-  
-      if (selectedAnswer) {
-        // Store the selected answer in localStorage
-        localStorage.setItem('control-question3', selectedAnswer.value);
-  
-        // Redirect to the next question page
-        window.location.href = 'rules_question1.html';  // Replace with your actual next question page
-  
-      } else {
-        // If no answer is selected, alert the user
-        alert("Please select an answer before proceeding.");
-      }
+        event.preventDefault(); // Prevent form from submitting normally
+
+        // Get the selected answer (assuming the answers are radio buttons with name 'control-question')
+        const selectedAnswer = document.querySelector('input[name="control-question"]:checked');
+
+        if (selectedAnswer) {
+            // Store the selected answer in localStorage
+            localStorage.setItem('control_question1', selectedAnswer.value); // Use a specific key like 'control_question1'
+
+            // Redirect to the next question page
+            window.location.href = 'controls_question2.html'; // Go to the next question in the Controls section
+        } else {
+            // If no answer is selected, alert the user
+            alert("Please select an answer before proceeding.");
+        }
     });
-  
-  });
+});
+
   

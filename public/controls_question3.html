@@ -125,11 +125,8 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
-
-  <!-- Include the JavaScript file -->
-  <script src="js/controls_question3.js"></script>  <!-- This is the newly added script link -->
+  <!-- Add the JavaScript file -->
+  <script src="js/controls_question3.js"></script>
 
   <script>
     // Safe localStorage functions for improved reliability
@@ -173,7 +170,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('control-q3').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('control-q3').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
       
@@ -181,7 +178,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="cq3"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="cq3"]:checked').value;
 
       // Save the answer under the key 'control_q3' for this specific question
       userAnswers['control_q3'] = selectedAnswer;
@@ -190,13 +187,8 @@
       // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
-      // Check if this is the last question and navigate appropriately
-      const isLastQuestion = true; // This is the last question, so set this to true
-      if (isLastQuestion) {
-        window.location.href = 'results.html'; // Go to results page on the last question
-      } else {
-        window.location.href = 'rules_question1.html'; // Update to the next question page
-      }
+      // Redirect to the next section (Rules) after the last Controls question
+      window.location.href = 'rules_question1.html';
     });
   </script>
 </body>

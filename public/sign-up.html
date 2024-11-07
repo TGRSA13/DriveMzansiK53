@@ -150,14 +150,61 @@
         <p>&copy; 2024 Drive Mzansi</p>
     </footer>
 
-   <!-- Add the React root element -->
-   <div id="root"></div>  <!-- React will render components here -->
-
     <!-- Firebase SDK scripts -->
     <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
 
     <!-- Path to the custom sign-up JavaScript file -->
-    <script type="module" src="js/signup.js"></script>
+    <script type="module">
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Sign-up function
+        const signupForm = document.getElementById('signup-form');
+        signupForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Firebase signup
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log("User signed up:", user);
+                    alert("Sign up successful! Please log in.");
+                    window.location.href = "login.html"; // Redirect to login page
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Error during sign up:", errorCode, errorMessage);
+                    alert(errorMessage); // Display error message
+                });
+        });
+    </script>
 </body>
 </html>

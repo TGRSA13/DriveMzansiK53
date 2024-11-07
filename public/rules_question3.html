@@ -67,25 +67,25 @@
 
     .button {
       padding: 10px 15px;
-      background-color: #4CAF50; /* Green background */
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin: 0 5px; /* Add space between buttons */
-      text-decoration: none; /* Ensure no underline */
+      margin: 0 5px;
+      text-decoration: none;
     }
 
     .button:hover {
-      background-color: #45a049; /* Darker green on hover */
+      background-color: #45a049;
     }
 
     .back-button {
-      background-color: #f44336; /* Red background for back button */
+      background-color: #f44336;
     }
 
     .back-button:hover {
-      background-color: #d32f2f; /* Darker red on hover */
+      background-color: #d32f2f;
     }
   </style>
 </head>
@@ -115,8 +115,8 @@
       <input type="radio" name="rq3" value="D-None of the above"> D-None of the above <br>
 
       <div class="button-container">
-        <a href="rules_question2.html" class="button back-button">Back</a> <!-- Back button -->
-        <button type="submit" class="button">Next</button> <!-- Next button -->
+        <a href="rules_question2.html" class="button back-button">Back</a>
+        <button type="submit" class="button">Next</button>
       </div>
     </form>
   </main>
@@ -125,14 +125,11 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
+  <div id="root"></div>
 
-  <!-- Include the JavaScript file -->
-  <script src="js/rules_question3.js"></script>  <!-- This is the newly added script link -->
+  <script src="js/rules_question3.js"></script>
 
   <script>
-    // Safe localStorage functions for improved reliability
     function safeLocalStorageSetItem(key, value) {
       try {
         localStorage.setItem(key, value);
@@ -150,7 +147,6 @@
       }
     }
 
-    // Countdown Timer with Persistent Storage
     let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
@@ -162,41 +158,27 @@
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time's up!");
-        window.location.href = "results.html"; // Go to results page when time is up
+        window.location.href = "results.html";
       } else {
         timeLeft--;
         safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
-    // Start the countdown and update every second
     const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event to save answer and navigate to the next question
-    document.getElementById('rules-q3').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('rules-q3').addEventListener('submit', function(e) {
       e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
-      
-      // Retrieve or initialize the answers object
+      clearInterval(timerInterval);
+
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+      const selectedAnswer = document.querySelector('input[name="rq3"]:checked').value;
 
-      // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="rq3"]:checked').value;  // Update question selector
-
-      // Save the answer under the key 'rules_q3' for this specific question
       userAnswers['rules_q3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
-
-      // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
-      // Check if this is the last question and navigate appropriately
-      const isLastQuestion = true; // Set to true if this is the last question
-      if (isLastQuestion) {
-        window.location.href = 'results.html';
-      } else {
-        window.location.href = 'signs_question1.html'; // Update to the next question page
-      }
+      window.location.href = 'signs_question1.html';
     });
   </script>
 </body>
