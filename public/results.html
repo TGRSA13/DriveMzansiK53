@@ -6,7 +6,6 @@
   <title>Results - Drive Mzansi</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    /* Consistent styling */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -120,7 +119,7 @@
     // Function to display results
     function displayResults() {
         const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-        
+
         if (Object.keys(userAnswers).length === 0) {
             document.getElementById('score').textContent = "You haven't completed the quiz yet.";
             document.getElementById('percentage').textContent = "";
@@ -148,8 +147,8 @@
 
         // Save the latest result to localStorage
         const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-        pastResults.push({ 
-          score: score, 
+        pastResults.push({
+          score: score,
           percentage: percentage,
           date: new Date().toLocaleDateString()
         });
@@ -171,3 +170,4 @@
   </script>
 </body>
 </html>
+
