@@ -44,7 +44,7 @@ const Results = () => {
     storedResults.push({
       score: userScore,
       percentage: userPercentage,
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleDateString()  // Save the current date
     });
     setPastResults(storedResults);
     localStorage.setItem('testResults', JSON.stringify(storedResults));
@@ -74,3 +74,4 @@ const Results = () => {
 };
 
 export default Results;
+

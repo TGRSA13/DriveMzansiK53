@@ -176,9 +176,10 @@
     document.getElementById('control-q2').addEventListener('submit', function(e) {  // Update form ID
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
-      
+
       // Retrieve or initialize the answers object
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
+      let score = parseInt(safeLocalStorageGetItem('userScore')) || 0;
 
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="cq2"]:checked').value;  // Update question selector
@@ -186,6 +187,14 @@
       // Save the answer under the key 'control_q2' for this specific question
       userAnswers['control_q2'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+
+      // Check the answer and adjust the score
+      if (selectedAnswer === "A-10") {  // Assuming A-10 is the correct answer
+        score += 1;
+      }
+
+      // Save updated score to localStorage
+      safeLocalStorageSetItem('userScore', score);
 
       // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);

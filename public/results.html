@@ -6,7 +6,7 @@
   <title>Results - Drive Mzansi</title>
   <link rel="stylesheet" href="public/css/styles.css">
   <style>
-    /* Page consistency and styling */
+    /* Consistent styling */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -104,11 +104,9 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
+  <div id="root"></div>  <!-- React will render here -->
 
   <script>
-    // Correct answers for the quiz (updated keys)
     const correctAnswers = {
         'cq1': 'C',  // Controls question 1
         'cq2': 'C',  // Controls question 2
@@ -124,6 +122,14 @@
     // Function to display results
     function displayResults() {
         const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+        
+        if (Object.keys(userAnswers).length === 0) {
+            document.getElementById('score').textContent = "You haven't completed the quiz yet.";
+            document.getElementById('percentage').textContent = "";
+            document.getElementById('date').textContent = "";
+            return;
+        }
+
         let score = 0;
         const totalQuestions = Object.keys(correctAnswers).length;
 
@@ -140,8 +146,6 @@
         // Display results
         document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
         document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
-
-        // Display the date of the results
         document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
 
         // Save the latest result to localStorage
@@ -149,7 +153,7 @@
         pastResults.push({ 
           score: score, 
           percentage: percentage,
-          date: new Date().toLocaleDateString() // Adding date for tracking
+          date: new Date().toLocaleDateString()
         });
         localStorage.setItem('testResults', JSON.stringify(pastResults));
     }
