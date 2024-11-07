@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Quiz from './components/Quiz';
-import Results from './components/Results';
-import Profile from './components/Profile';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Home from './components/Home';  // Home component after logging in
+import NavBar from './components/navBar';
+import Quiz from './components/quiz';
+import Results from './components/results';
+import Profile from './components/profile';
+import Signup from './components/signup';
+import Login from './components/login';
+import Home from './components/home';  // Home component after logging in
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // For redirecting after login/signup
+  const navigate = useNavigate(); // Make sure this is imported and used correctly
 
   const handleSignup = () => {
     setIsAuthenticated(true);
