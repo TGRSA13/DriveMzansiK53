@@ -14,26 +14,23 @@ const App = () => {
 
   const handleSignup = () => {
     setIsAuthenticated(true);
-    // After signup, redirect to home page
-    navigate('/home');
+    navigate('/home'); // Redirect to home page after signup
   };
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    // After login, redirect to home page
-    navigate('/home');
+    navigate('/home'); // Redirect to home page after login
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    // After logout, redirect to the home page (or login page)
-    navigate('/');
+    navigate('/'); // Redirect to welcome page after logout
   };
 
   return (
     <Router>
       <div>
-        <NavBar navigateTo={handleLogout} />
+        <NavBar navigateTo={handleLogout} /> {/* Pass handleLogout as prop to NavBar */}
         <Routes>
           <Route path="/" element={<h1>Welcome to Drive Mzansi</h1>} />
           <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
