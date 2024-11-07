@@ -2,84 +2,75 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
-  // Define your quiz questions and answers
   const questions = [
-    { question: 'What is the control question 1?', answer: 'A', options: ['A', 'B', 'C'] },
-    { question: 'What is the control question 2?', answer: 'B', options: ['A', 'B', 'C'] },
-    { question: 'What is the control question 3?', answer: 'C', options: ['A', 'B', 'C'] },
-    { question: 'What is the signs question 1?', answer: 'B', options: ['A', 'B', 'C'] },
-    { question: 'What is the signs question 2?', answer: 'A', options: ['A', 'B', 'C'] },
-    { question: 'What is the signs question 3?', answer: 'C', options: ['A', 'B', 'C'] },
-    { question: 'What is the rules question 1?', answer: 'C', options: ['A', 'B', 'C'] },
-    { question: 'What is the rules question 2?', answer: 'A', options: ['A', 'B', 'C'] },
-    { question: 'What is the rules question 3?', answer: 'B', options: ['A', 'B', 'C'] }
+    { question: 'Which control does a vehicle with automatic transmission not have?', answer: 'C', options: ['A-9', 'B-4', 'C-8', 'D-2'] },
+    { question: 'Which control prevents a parked vehicle from moving?', answer: 'C', options: ['A-10', 'B-5', 'C-7', 'D-3'] },
+    { question: 'Which controls are used to select a gear?', answer: 'B', options: ['A-9&7', 'B-6&8', 'C-6&1', 'D-6&9'] },
+    { question: 'Stop lights (braking lights) must be visible in sunlight at a distance of at least:', answer: 'A', options: ['A-30 Meters', 'B-40 Meters', 'C-50 Meters', 'D-35 Meters'] },
+    { question: 'When is it compulsory for a passenger to wear a seatbelt?', answer: 'C', options: ['A-Old people sitting in the back of the vehicle', 'B-Children or adults moving forward', 'C-All of the above', 'D-None of the above'] },
+    { question: 'A drivers license must always be kept:', answer: 'C', options: ['A-Inside the vehicle', 'B-With the driver', 'C-All of the above', 'D-None of the above'] },
+    { question: 'What does this sign indicate?', answer: 'A', options: ['A-Turn right at the next intersection', 'B-Turn right immediately', 'C-A sharp bend in the road to the right', 'D-The road comes to an end to the right'] },
+    { question: 'This sign indicates the:', answer: 'B', options: ['A-Fastest speed you may drive', 'B-Slowest speed you may drive', 'C-Distance to the next offramp', 'D-Minimum weight allowance'] },
+    { question: 'What does this sign indicate?', answer: 'C', options: ['A-Dead end ahead', 'B-Turn only left or right', 'C-Do not enter', 'D-Line on the road'] },
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate();
 
-  // Start Timer
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 0) {
           clearInterval(interval);
           alert('Time is up!');
-          handleSubmit(); // Automatically submit when time is up
+          handleSubmit();
           return 0;
         }
         return prevTime - 1;
       });
     }, 1000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
-  // Handle answer selection
   const handleAnswerSelect = (answer) => {
+    const selectedAnswer = answer[0]; // Take only the first character (A, B, C, etc.)
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
-      [currentQuestionIndex]: answer,
+      [currentQuestionIndex]: selectedAnswer,
     }));
   };
 
-  // Handle quiz submission
   const handleSubmit = () => {
     let newScore = 0;
 
-    // Check user answers and calculate score
     questions.forEach((question, index) => {
       if (userAnswers[index] === question.answer) {
         newScore++;
       }
     });
 
-    setScore(newScore); // Update score
+    setScore(newScore);
 
-    // Store the score and user answers in localStorage
     localStorage.setItem('userScore', newScore);
-    localStorage.setItem('userAnswers', JSON.stringify(userAnswers)); // Save answers as a string
+    localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
 
-    navigate('/results'); // Navigate to results page after submission
+    navigate('/results');
   };
 
-  // Handle moving to the next question
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
-  // Get current time in minutes and seconds format
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   const formattedTime = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 
-  // Get the current question and options
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
@@ -91,7 +82,7 @@ const Quiz = () => {
             key={index}
             onClick={() => handleAnswerSelect(option)}
             style={{
-              backgroundColor: userAnswers[currentQuestionIndex] === option ? 'lightgreen' : '',
+              backgroundColor: userAnswers[currentQuestionIndex] === option[0] ? 'lightgreen' : '',
             }}
           >
             {option}
@@ -99,13 +90,10 @@ const Quiz = () => {
         ))}
       </div>
       <div>
-        <p>Time Left: {formattedTime}</p> {/* Display timer */}
-        {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={handleNextQuestion}>Next Question</button>
-        ) : (
-          <button onClick={handleSubmit}>Submit Quiz</button>
-        )}
+        <button onClick={handleNextQuestion}>Next Question</button>
       </div>
+      <div>Time left: {formattedTime}</div>
+      <button onClick={handleSubmit}>Submit Quiz</button>
     </div>
   );
 };
