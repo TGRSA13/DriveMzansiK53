@@ -62,6 +62,10 @@
         p {
             font-size: 16px;
         }
+        #startTestBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -84,10 +88,34 @@
     <main>
         <h1>Welcome to Drive Mzansi</h1>
         <p>Start your journey towards mastering the K53 driving test. Get ready to test your knowledge and practice with interactive questions!</p>
+        
+        <!-- Start Test Button (Initially Disabled) -->
+        <button id="startTestBtn" disabled>Start Test</button>
     </main>
     
     <footer>
         <p>&copy; 2024 Drive Mzansi</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const startTestBtn = document.getElementById('startTestBtn');
+            const userName = localStorage.getItem('userName');  // Check if user is logged in
+
+            // Enable the Start Test button if the user is logged in
+            if (userName) {
+                startTestBtn.disabled = false;
+            } else {
+                startTestBtn.disabled = true;
+            }
+
+            // Optional: You can also add a click event to redirect to the login page if not logged in
+            startTestBtn.addEventListener('click', function () {
+                if (!userName) {
+                    window.location.href = 'login.html'; // Redirect to login page if not logged in
+                }
+            });
+        });
+    </script>
 </body>
 </html>
