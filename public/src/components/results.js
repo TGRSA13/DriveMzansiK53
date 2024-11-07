@@ -1,77 +1,47 @@
-import React, { useEffect, useState } from 'react';
-
-const Results = () => {
-  const [score, setScore] = useState(0);
-  const [percentage, setPercentage] = useState(0);
-  const [pastResults, setPastResults] = useState([]);
+document.addEventListener('DOMContentLoaded', function() {
+  // Debugging: Check what’s in localStorage
+  const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+  console.log("User Answers in localStorage:", userAnswers);
   
-  useEffect(() => {
-    // Correct answers for the quiz
-    const correctAnswers = {
-      'cq1': 'C',  // Controls question 1
-      'cq2': 'C',  // Controls question 2
-      'cq3': 'B',  // Controls question 3
-      'rq1': 'A',  // Rules question 1
-      'rq2': 'C',  // Rules question 2
-      'rq3': 'C',  // Rules question 3
-      'sq1': 'A',  // Signs question 1
-      'sq2': 'B',  // Signs question 2
-      'sq3': 'C'   // Signs question 3
-    };
+  if (!userAnswers) {
+    alert("No answers found! Please make sure you've completed the quiz.");
+    return;
+  }
 
-    // Retrieve user answers from localStorage
-    const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-    
-    let userScore = 0;
-    const totalQuestions = Object.keys(correctAnswers).length;
+  // Check if correctAnswers is correctly populated
+  const correctAnswers = {
+    'cq1': 'C',
+    'cq2': 'C',
+    'cq3': 'B',
+    'rq1': 'A',
+    'rq2': 'C',
+    'rq3': 'C',
+    'sq1': 'A',
+    'sq2': 'B',
+    'sq3': 'C'
+  };
 
-    // Calculate score based on user answers
-    for (const question in correctAnswers) {
-      const correctAnswer = correctAnswers[question];
-      const userAnswer = userAnswers[question];
-      if (userAnswer === correctAnswer) {
-        userScore++;
-      }
+  // Calculate score
+  let score = 0;
+  let totalQuestions = Object.keys(correctAnswers).length;
+
+  for (let question in correctAnswers) {
+    if (userAnswers[question] === correctAnswers[question]) {
+      score++;
     }
+  }
 
-    // Calculate percentage
-    const userPercentage = (userScore / totalQuestions) * 100;
-    setScore(userScore);
-    setPercentage(userPercentage);
+  // Calculate percentage
+  let percentage = (score / totalQuestions) * 100;
 
-    // Store past results in localStorage
-    const storedResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    storedResults.push({
-      score: userScore,
-      percentage: userPercentage,
-      date: new Date().toLocaleDateString()  // Save the current date
-    });
-    setPastResults(storedResults);
-    localStorage.setItem('testResults', JSON.stringify(storedResults));
+  console.log(`Score: ${score}, Percentage: ${percentage}%`);
 
-  }, []);
+  // Display results
+  document.getElementById('score').textContent = `Your Score: ${score} out of ${totalQuestions}`;
+  document.getElementById('percentage').textContent = `Percentage: ${percentage.toFixed(2)}%`;
 
-  return (
-    <div>
-      <h1>Results</h1>
-      <p id="score">You got {score} out of 9.</p>
-      <p id="percentage">Your score is {percentage.toFixed(2)}%.</p>
-
-      <h2>Past Results:</h2>
-      <ul>
-        {pastResults.length > 0 ? (
-          pastResults.map((result, index) => (
-            <li key={index}>
-              {result.date}: {result.score} out of 9 - {result.percentage.toFixed(2)}%
-            </li>
-          ))
-        ) : (
-          <p>No past results available.</p>
-        )}
-      </ul>
-    </div>
-  );
-};
-
-export default Results;
-
+  // Optional: Store the result for history tracking
+  const resultsHistory = JSON.parse(localStorage.getItem('testResults')) || [];
+  resultsHistory.push({ score, percentage, date: new Date().toLocaleDateString() });
+  localStorage.setItem('testResults', JSON.stringify(resultsHistory));
+});
