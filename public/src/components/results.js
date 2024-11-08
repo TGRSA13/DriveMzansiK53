@@ -1,47 +1,65 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Debugging: Check what’s in localStorage
-  const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-  console.log("User Answers in localStorage:", userAnswers);
-  
-  if (!userAnswers) {
-    alert("No answers found! Please make sure you've completed the quiz.");
-    return;
+// Correct answers for the quiz
+const correctAnswers = {
+  'cq1': 'C', // Controls question 1
+  'cq2': 'C', // Controls question 2
+  'cq3': 'B', // Controls question 3
+  'rq1': 'A', // Rules question 1
+  'rq2': 'C', // Rules question 2
+  'rq3': 'C', // Rules question 3
+  'sq1': 'A', // Signs question 1
+  'sq2': 'B', // Signs question 2
+  'sq3': 'C'  // Signs question 3
+};
+
+// Function to display results
+function displayResults() {
+  const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+ 
+  // If no user answers found in localStorage, show a message
+  if (Object.keys(userAnswers).length === 0) {
+      document.getElementById('no-results').textContent = "No answers found. Please complete the quiz first.";
+      document.getElementById('score').textContent = "";
+      document.getElementById('percentage').textContent = "";
+      return; // Exit early if no answers are found
   }
 
-  // Check if correctAnswers is correctly populated
-  const correctAnswers = {
-    'cq1': 'C',
-    'cq2': 'C',
-    'cq3': 'B',
-    'rq1': 'A',
-    'rq2': 'C',
-    'rq3': 'C',
-    'sq1': 'A',
-    'sq2': 'B',
-    'sq3': 'C'
-  };
-
-  // Calculate score
   let score = 0;
-  let totalQuestions = Object.keys(correctAnswers).length;
+  const totalQuestions = Object.keys(correctAnswers).length;
 
-  for (let question in correctAnswers) {
-    if (userAnswers[question] === correctAnswers[question]) {
-      score++;
-    }
+  // Calculate score based on user answers
+  for (const question in correctAnswers) {
+      if (userAnswers[question] === correctAnswers[question]) {
+          score++;
+      }
   }
 
   // Calculate percentage
-  let percentage = (score / totalQuestions) * 100;
-
-  console.log(`Score: ${score}, Percentage: ${percentage}%`);
+  const percentage = (score / totalQuestions) * 100;
 
   // Display results
-  document.getElementById('score').textContent = `Your Score: ${score} out of ${totalQuestions}`;
-  document.getElementById('percentage').textContent = `Percentage: ${percentage.toFixed(2)}%`;
+  document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
+  document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
 
-  // Optional: Store the result for history tracking
-  const resultsHistory = JSON.parse(localStorage.getItem('testResults')) || [];
-  resultsHistory.push({ score, percentage, date: new Date().toLocaleDateString() });
-  localStorage.setItem('testResults', JSON.stringify(resultsHistory));
-});
+  // Save the latest result to localStorage
+  const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+  pastResults.push({
+      score: score,
+      percentage: percentage,
+      date: new Date().toLocaleDateString()
+  });
+  localStorage.setItem('testResults', JSON.stringify(pastResults));
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+  localStorage.removeItem('userAnswers'); // Clear saved answers
+  localStorage.removeItem('quizTimeLeft'); // Clear saved time (if relevant)
+  window.location.href = "index.html"; // Redirect to home
+}
+
+// Event listener for the "Start Test" button
+document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
+
+// Call displayResults when the page loads
+document.addEventListener('DOMContentLoaded', displayResults);
+

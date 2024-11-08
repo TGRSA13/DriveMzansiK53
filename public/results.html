@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Results - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="public/css/styles.css">
   <style>
+    /* Page consistency and styling */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -68,13 +69,9 @@
       background-color: #45a049;
     }
 
-    .result-details {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-
-    .result-details p {
-      margin: 5px 0;
+    .no-results {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -91,11 +88,9 @@
 
   <main>
     <h2>Your Results</h2>
-    <div class="result-details">
-      <p id="score"></p>
-      <p id="percentage"></p>
-      <p id="date"></p>
-    </div>
+    <p id="score"></p>
+    <p id="percentage"></p>
+    <p id="no-results" class="no-results"></p>
     <button class="button" id="restart-quiz">Start Test</button>
   </main>
 
@@ -103,90 +98,6 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script>
-    const correctAnswers = {
-        'cq1': 'C',  // Controls question 1
-        'cq2': 'C',  // Controls question 2
-        'cq3': 'B',  // Controls question 3
-        'rq1': 'A',  // Rules question 1
-        'rq2': 'C',  // Rules question 2
-        'rq3': 'C',  // Rules question 3
-        'sq1': 'A',  // Signs question 1
-        'sq2': 'B',  // Signs question 2
-        'sq3': 'C'   // Signs question 3
-    };
-
-    // Debugging function to log the data flow
-    function debugData() {
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-      console.log("User Answers:", userAnswers);
-
-      const results = document.querySelector('#score');
-      if (!userAnswers) {
-        results.textContent = "No user answers found in localStorage!";
-        return;
-      }
-      console.log("Correct Answers:", correctAnswers);
-    }
-
-    // Function to display results
-    function displayResults() {
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
-      console.log("Displaying Results:", userAnswers);
-
-      if (Object.keys(userAnswers).length === 0) {
-        document.getElementById('score').textContent = "You haven't completed the quiz yet.";
-        document.getElementById('percentage').textContent = "";
-        document.getElementById('date').textContent = "";
-        return;
-      }
-
-      let score = 0;
-      const totalQuestions = Object.keys(correctAnswers).length;
-
-      // Calculate score based on user answers
-      for (const question in correctAnswers) {
-        if (userAnswers[question] === correctAnswers[question]) {
-          score++;
-        }
-      }
-
-      // Calculate percentage
-      const percentage = (score / totalQuestions) * 100;
-
-      // Debug the results calculation
-      console.log(`Score: ${score}, Percentage: ${percentage}`);
-
-      // Display results
-      document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
-      document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
-      document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
-
-      // Save the latest result to localStorage
-      const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-      pastResults.push({
-        score: score,
-        percentage: percentage,
-        date: new Date().toLocaleDateString()
-      });
-      localStorage.setItem('testResults', JSON.stringify(pastResults));
-    }
-
-    // Function to restart the quiz
-    function restartQuiz() {
-      localStorage.removeItem('userAnswers');
-      localStorage.removeItem('quizTimeLeft');
-      window.location.href = "home.html";
-    }
-
-    // Event listener for the "Start Test" button
-    document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
-
-    // Call displayResults and debugData when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      debugData();
-      displayResults();
-    });
-  </script>
+  <script src="results.js"></script>
 </body>
 </html>
