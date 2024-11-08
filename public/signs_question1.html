@@ -108,18 +108,18 @@
       <p>What does this sign indicate?</p>
     </div>
 
-    <form id="signs-q1" style="text-align: center;">
+    <form id="sign-question1" style="text-align: center;">
       <label>
-        <input type="radio" name="sq1" value="A-Turn right at the next intersection" required> A-Turn right at the next intersection
+        <input type="radio" name="sign-question1" value="A-Turn right at the next intersection" required> A-Turn right at the next intersection
       </label><br>
       <label>
-        <input type="radio" name="sq1" value="B-Turn right immediately"> B-Turn right immediately
+        <input type="radio" name="sign-question1" value="B-Turn right immediately"> B-Turn right immediately
       </label><br>
       <label>
-        <input type="radio" name="sq1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right
+        <input type="radio" name="sign-question1" value="C-A sharp bend in the road to the right"> C-A sharp bend in the road to the right
       </label><br>
       <label>
-        <input type="radio" name="sq1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right
+        <input type="radio" name="sign-question1" value="D-The road comes to an end to the right"> D-The road comes to an end to the right
       </label><br>
 
       <div class="button-container">
@@ -181,7 +181,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('signs-q1').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('sign-question1').addEventListener('submit', function(e) {  // Update form ID
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
       
@@ -189,7 +189,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="sq1"]:checked').value;
+      const selectedAnswer = document.querySelector('input[name="sign-question1"]:checked').value;
 
       // Save the answer under the key 'signs_q1' for this specific question
       userAnswers['signs_q1'] = selectedAnswer;

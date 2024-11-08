@@ -108,11 +108,11 @@
       <p>This sign indicates the:</p>
     </div>
 
-    <form id="signs-q2" style="text-align: center;">
-      <input type="radio" name="sq2" value="A-Fastest speed you may drive" id="q2-a" required aria-label="Fastest speed you may drive"> A-Fastest speed you may drive <br>
-      <input type="radio" name="sq2" value="B-Slowest speed you may drive" id="q2-b" aria-label="Slowest speed you may drive"> B-Slowest speed you may drive <br>
-      <input type="radio" name="sq2" value="C-Distance to the next offramp" id="q2-c" aria-label="Distance to the next offramp"> C-Distance to the next offramp <br>
-      <input type="radio" name="sq2" value="D-Minimum weight allowance" id="q2-d" aria-label="Minimum weight allowance"> D-Minimum weight allowance <br>
+    <form id="sign-question2" style="text-align: center;">
+      <input type="radio" name="sign-question2" value="A-Fastest speed you may drive" id="q2-a" required aria-label="Fastest speed you may drive"> A-Fastest speed you may drive <br>
+      <input type="radio" name="sign-question2" value="B-Slowest speed you may drive" id="q2-b" aria-label="Slowest speed you may drive"> B-Slowest speed you may drive <br>
+      <input type="radio" name="sign-question2" value="C-Distance to the next offramp" id="q2-c" aria-label="Distance to the next offramp"> C-Distance to the next offramp <br>
+      <input type="radio" name="sign-question2" value="D-Minimum weight allowance" id="q2-d" aria-label="Minimum weight allowance"> D-Minimum weight allowance <br>
 
       <div class="button-container">
         <a href="signs_question1.html" class="button back-button">Back</a> <!-- Back button -->
@@ -173,7 +173,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('signs-q2').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('sign-question2').addEventListener('submit', function(e) {  // Update form ID
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
       
@@ -181,7 +181,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="sq2"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="sign-question2"]:checked').value;  // Update question selector
 
       // Save the answer under the key 'control_q2' for this specific question
       userAnswers['signs_q2'] = selectedAnswer;

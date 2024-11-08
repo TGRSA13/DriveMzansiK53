@@ -84,12 +84,12 @@
       <p>Which control does a vehicle with automatic transmission not have?</p>
     </div>
 
-    <form id="control-q1" style="text-align: center;">
+    <form id="control-question1" style="text-align: center;">
       <!-- Updated answer values to match correct answer format -->
-      <input type="radio" name="cq1" value="A-9" required> A-9 <br>
-      <input type="radio" name="cq1" value="B-3"> B-3 <br>
-      <input type="radio" name="cq1" value="C-8"> C-8 <br>
-      <input type="radio" name="cq1" value="D-2"> D-2 <br>
+      <input type="radio" name="control-question1" value="A-9" required> A-9 <br>
+      <input type="radio" name="control-question1" value="B-3"> B-3 <br>
+      <input type="radio" name="control-question1" value="C-8"> C-8 <br>
+      <input type="radio" name="control-question1" value="D-2"> D-2 <br>
       <button type="submit" class="button">Next</button>
     </form>
   </main>
@@ -146,7 +146,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('control-q1').addEventListener('submit', function(e) {
+    document.getElementById('control-question1').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
       
@@ -154,11 +154,11 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="cq1"]:checked').value;
-      console.log("Selected Answer for cq1:", selectedAnswer);  // Debugging log
+      const selectedAnswer = document.querySelector('input[name="control-question1"]:checked').value;
+      console.log("Selected Answer for control-question1:", selectedAnswer);  // Debugging log
 
-      // Save the answer under the key 'cq1'
-      userAnswers['cq1'] = selectedAnswer;
+      // Save the answer under the key 'control-question1'
+      userAnswers['control-question1'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Save remaining time

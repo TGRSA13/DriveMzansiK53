@@ -108,11 +108,11 @@
       <p>Which control prevents a parked vehicle from moving?</p>
     </div>
 
-    <form id="control-q2" style="text-align: center;">
-      <input type="radio" name="cq2" value="A-10" required> A-10 <br>
-      <input type="radio" name="cq2" value="B-5"> B-5 <br>
-      <input type="radio" name="cq2" value="C-7"> C-7 <br>
-      <input type="radio" name="cq2" value="D-3"> D-3 <br>
+    <form id="control-question2" style="text-align: center;">
+      <input type="radio" name="control-question2" value="A-10" required> A-10 <br>
+      <input type="radio" name="control-question2" value="B-5"> B-5 <br>
+      <input type="radio" name="control-question2" value="C-7"> C-7 <br>
+      <input type="radio" name="control-question2" value="D-3"> D-3 <br>
       
       <div class="button-container">
         <a href="controls_question1.html" class="button back-button">Back</a> <!-- Back button -->
@@ -173,7 +173,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('control-q2').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('control-question2').addEventListener('submit', function(e) {  // Update form ID
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
 
@@ -182,7 +182,7 @@
       let score = parseInt(safeLocalStorageGetItem('userScore')) || 0;
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="cq2"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="control-question2"]:checked').value;  // Update question selector
 
       // Save the answer under the key 'control_q2' for this specific question
       userAnswers['control_q2'] = selectedAnswer;

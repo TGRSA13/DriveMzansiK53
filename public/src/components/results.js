@@ -1,14 +1,14 @@
 // Correct answers for the quiz
 const correctAnswers = {
-  'cq1': 'C', // Controls question 1
-  'cq2': 'C', // Controls question 2
-  'cq3': 'B', // Controls question 3
-  'rq1': 'A', // Rules question 1
-  'rq2': 'C', // Rules question 2
-  'rq3': 'C', // Rules question 3
-  'sq1': 'A', // Signs question 1
-  'sq2': 'B', // Signs question 2
-  'sq3': 'C'  // Signs question 3
+  'control-question1': 'C', // Controls question 1
+  'control-question2': 'C', // Controls question 2
+  'control-question3': 'B', // Controls question 3
+  'rule-question1': 'A', // Rules question 1
+  'rule-question2': 'C', // Rules question 2
+  'rule-question3': 'C', // Rules question 3
+  'sign-question1': 'A', // Signs question 1
+  'sign-question2': 'B', // Signs question 2
+  'sign-question3': 'C'  // Signs question 3
 };
 
 // Function to display results
@@ -21,10 +21,10 @@ function displayResults() {
 
   // Check if there are user answers
   if (Object.keys(userAnswers).length === 0) {
-      document.getElementById('no-results').textContent = "No answers found. Please complete the quiz first.";
-      document.getElementById('score').textContent = "";
-      document.getElementById('percentage').textContent = "";
-      return;
+    document.getElementById('no-results').textContent = "No answers found. Please complete the quiz first.";
+    document.getElementById('score').textContent = "";
+    document.getElementById('percentage').textContent = "";
+    return;
   }
 
   let score = 0;
@@ -32,9 +32,9 @@ function displayResults() {
 
   // Calculate score based on user answers
   for (const question in correctAnswers) {
-      if (userAnswers[question] === correctAnswers[question]) {
-          score++;
-      }
+    if (userAnswers[question] === correctAnswers[question]) {
+      score++;
+    }
   }
 
   // Calculate percentage
@@ -47,9 +47,9 @@ function displayResults() {
   // Save the latest result to localStorage
   const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
   pastResults.push({
-      score: score,
-      percentage: percentage,
-      date: new Date().toLocaleDateString()
+    score: score,
+    percentage: percentage,
+    date: new Date().toLocaleDateString()
   });
   localStorage.setItem('testResults', JSON.stringify(pastResults));
   console.log("Results displayed and saved successfully.");
@@ -68,3 +68,4 @@ document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
 // Call displayResults when the page loads
 document.addEventListener('DOMContentLoaded', displayResults);
+

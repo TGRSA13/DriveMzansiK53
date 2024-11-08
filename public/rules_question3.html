@@ -108,11 +108,11 @@
       <p>A driver's license must always be kept:</p>
     </div>
 
-    <form id="rules-q3" style="text-align: center;">
-      <input type="radio" name="rq3" value="A-Inside the vehicle" required> A-Inside the vehicle <br>
-      <input type="radio" name="rq3" value="B-With the driver"> B-With the driver <br>
-      <input type="radio" name="rq3" value="C-All of the above"> C-All of the above <br>
-      <input type="radio" name="rq3" value="D-None of the above"> D-None of the above <br>
+    <form id="rule-question3" style="text-align: center;">
+      <input type="radio" name="rule-question3" value="A-Inside the vehicle" required> A-Inside the vehicle <br>
+      <input type="radio" name="rule-question3" value="B-With the driver"> B-With the driver <br>
+      <input type="radio" name="rule-question3" value="C-All of the above"> C-All of the above <br>
+      <input type="radio" name="rule-question3" value="D-None of the above"> D-None of the above <br>
 
       <div class="button-container">
         <a href="rules_question2.html" class="button back-button">Back</a>
@@ -167,12 +167,12 @@
 
     const timerInterval = setInterval(updateTimer, 1000);
 
-    document.getElementById('rules-q3').addEventListener('submit', function(e) {
+    document.getElementById('rule-question3').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval);
 
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
-      const selectedAnswer = document.querySelector('input[name="rq3"]:checked').value;
+      const selectedAnswer = document.querySelector('input[name="rule-question3"]:checked').value;
 
       userAnswers['rules_q3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));

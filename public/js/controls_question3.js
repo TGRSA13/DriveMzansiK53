@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedAnswer) {
             // Store the selected answer in localStorage
-            localStorage.setItem('control_question3', selectedAnswer.value); // Use a specific key like 'control_question3'
+            localStorage.setItem('control-question3', selectedAnswer.value); // Use a specific key like 'control-question3'
 
             // Save the remaining time
             localStorage.setItem('quizTimeLeft', timeLeft);

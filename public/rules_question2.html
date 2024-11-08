@@ -108,11 +108,11 @@
       <p>When is it compulsory for a passenger to wear a seatbelt?</p>
     </div>
 
-    <form id="rules-q2" style="text-align: center;">
-      <input type="radio" name="rq2" value="A-Old people sitting in the back of the vehicle" required> A-Old people sitting in the back of the vehicle <br>
-      <input type="radio" name="rq2" value="B-Children or adults moving forward"> B-Children or adults moving forward <br>
-      <input type="radio" name="rq2" value="C-All of the above"> C-All of the above <br>
-      <input type="radio" name="rq2" value="D-None of the above"> D-None of the above <br>
+    <form id="rule-question2" style="text-align: center;">
+      <input type="radio" name="rule-question2" value="A-Old people sitting in the back of the vehicle" required> A-Old people sitting in the back of the vehicle <br>
+      <input type="radio" name="rule-question2" value="B-Children or adults moving forward"> B-Children or adults moving forward <br>
+      <input type="radio" name="rule-question2" value="C-All of the above"> C-All of the above <br>
+      <input type="radio" name="rule-question2" value="D-None of the above"> D-None of the above <br>
 
       <div class="button-container">
         <a href="rules_question1.html" class="button back-button">Back</a> <!-- Back button -->
@@ -173,7 +173,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('rules-q2').addEventListener('submit', function(e) {  
+    document.getElementById('rule-question2').addEventListener('submit', function(e) {  
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
       
@@ -181,7 +181,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="rq2"]:checked').value;  
+      const selectedAnswer = document.querySelector('input[name="rule-question2"]:checked').value;  
 
       // Save the answer under the key 'rules_q2' for this specific question
       userAnswers['rules_q2'] = selectedAnswer;

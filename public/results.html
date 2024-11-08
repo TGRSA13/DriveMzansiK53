@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Results - Drive Mzansi</title>
-  <!-- Corrected path to the CSS file for consistency -->
+  <!-- Path to the CSS file -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -24,7 +24,7 @@
     <h2>Your Results</h2>
     <p id="score"></p>
     <p id="percentage"></p>
-    <button class="button" id="restart-quiz">Start Test</button>
+    <button class="button" id="restart-quiz">Restart Test</button>
   </main>
 
   <!-- Footer -->
@@ -34,18 +34,21 @@
 
   <!-- JavaScript for Calculating and Displaying Results -->
   <script>
+    // Correct answers for the quiz
     const correctAnswers = {
-      'cq1': 'C', 'cq2': 'C', 'cq3': 'B',
-      'rq1': 'A', 'rq2': 'C', 'rq3': 'C',
-      'sq1': 'A', 'sq2': 'B', 'sq3': 'C'
+      'control-question1': 'C', 'control-question2': 'C', 'control-question3': 'B',  // Controls section
+      'rule-question1': 'A', 'rule-question2': 'C', 'rule-question3': 'C',  // Rules section
+      'sign-question1': 'A', 'sign-question2': 'B', 'sign-question3': 'C'   // Signs section
     };
 
+    // Function to display results
     function displayResults() {
+      // Retrieve user answers from localStorage
       const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
       let score = 0;
       const totalQuestions = Object.keys(correctAnswers).length;
 
-      // Calculate score
+      // Calculate the score based on correct answers
       for (const question in correctAnswers) {
         if (userAnswers[question] === correctAnswers[question]) {
           score++;
@@ -55,23 +58,31 @@
       // Calculate percentage
       const percentage = (score / totalQuestions) * 100;
 
-      // Display results
+      // Display results on the page
       document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
       document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
 
-      // Save to localStorage
+      // Save the latest result to localStorage for record
       const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
-      pastResults.push({ score, percentage, date: new Date().toLocaleDateString() });
+      pastResults.push({
+        score: score,
+        percentage: percentage,
+        date: new Date().toLocaleDateString()
+      });
       localStorage.setItem('testResults', JSON.stringify(pastResults));
     }
 
+    // Function to restart the quiz
     function restartQuiz() {
-      localStorage.removeItem('userAnswers'); // Clear answers
-      localStorage.removeItem('quizTimeLeft'); // Clear timer
+      localStorage.removeItem('userAnswers'); // Clear saved answers
+      localStorage.removeItem('quizTimeLeft'); // Clear saved time if applicable
       window.location.href = "home.html"; // Redirect to start
     }
 
+    // Event listener for the "Restart Test" button
     document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
+
+    // Call displayResults when the page loads
     document.addEventListener('DOMContentLoaded', displayResults);
   </script>
 </body>

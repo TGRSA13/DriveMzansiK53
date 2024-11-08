@@ -108,11 +108,11 @@
       <p>What does this sign indicate?</p>
     </div>
 
-    <form id="signs-q3" style="text-align: center;">
-      <input type="radio" name="sq3" value="A-Dead end ahead" required> A-Dead end ahead <br>
-      <input type="radio" name="sq3" value="B-Turn only left or right"> B-Turn only left or right <br>
-      <input type="radio" name="sq3" value="C-Do not enter"> C-Do not enter <br>
-      <input type="radio" name="sq3" value="D-Line on the road"> D-Line on the road <br>
+    <form id="sign-question3" style="text-align: center;">
+      <input type="radio" name="sign-question3" value="A-Dead end ahead" required> A-Dead end ahead <br>
+      <input type="radio" name="sign-question3" value="B-Turn only left or right"> B-Turn only left or right <br>
+      <input type="radio" name="sign-question3" value="C-Do not enter"> C-Do not enter <br>
+      <input type="radio" name="sign-question3" value="D-Line on the road"> D-Line on the road <br>
 
       <div class="button-container">
         <a href="signs_question2.html" class="button back-button">Back</a> <!-- Back button -->
@@ -162,7 +162,7 @@
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time's up! Submitting your answers.");
-        document.getElementById('signs-q3').submit(); // Automatically submit the form when time is up
+        document.getElementById('sign-question3').submit(); // Automatically submit the form when time is up
       } else {
         timeLeft--;
         safeLocalStorageSetItem('quizTimeLeft', timeLeft);
@@ -173,7 +173,7 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the results page
-    document.getElementById('signs-q3').addEventListener('submit', function(e) {
+    document.getElementById('sign-question3').addEventListener('submit', function(e) {
       e.preventDefault(); // Prevent default form submission
       clearInterval(timerInterval); // Stop the timer on form submission
       localStorage.removeItem('quizTimeLeft'); // Clear timer from localStorage
@@ -182,7 +182,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="sq3"]:checked').value;
+      const selectedAnswer = document.querySelector('input[name="sign-question3"]:checked').value;
 
       // Save the answer under the key 'signs_q3' for this specific question
       userAnswers['signs_q3'] = selectedAnswer;
