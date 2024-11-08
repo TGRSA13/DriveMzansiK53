@@ -13,14 +13,17 @@ const correctAnswers = {
 
 // Function to display results
 function displayResults() {
+  console.log("displayResults function called");
+
   const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
- 
-  // If no user answers found in localStorage, show a message
+  console.log("Retrieved userAnswers from localStorage:", userAnswers);
+
+  // Check if there are user answers
   if (Object.keys(userAnswers).length === 0) {
       document.getElementById('no-results').textContent = "No answers found. Please complete the quiz first.";
       document.getElementById('score').textContent = "";
       document.getElementById('percentage').textContent = "";
-      return; // Exit early if no answers are found
+      return;
   }
 
   let score = 0;
@@ -48,10 +51,12 @@ function displayResults() {
       date: new Date().toLocaleDateString()
   });
   localStorage.setItem('testResults', JSON.stringify(pastResults));
+  console.log("Results displayed successfully.");
 }
 
 // Function to restart the quiz
 function restartQuiz() {
+  console.log("Restart quiz clicked");
   localStorage.removeItem('userAnswers'); // Clear saved answers
   localStorage.removeItem('quizTimeLeft'); // Clear saved time (if relevant)
   window.location.href = "index.html"; // Redirect to home
