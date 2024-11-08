@@ -15,6 +15,7 @@ const correctAnswers = {
 function displayResults() {
   console.log("displayResults function called");
 
+  // Retrieve user answers from localStorage
   const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
   console.log("Retrieved userAnswers from localStorage:", userAnswers);
 
@@ -51,7 +52,7 @@ function displayResults() {
       date: new Date().toLocaleDateString()
   });
   localStorage.setItem('testResults', JSON.stringify(pastResults));
-  console.log("Results displayed successfully.");
+  console.log("Results displayed and saved successfully.");
 }
 
 // Function to restart the quiz
@@ -62,9 +63,8 @@ function restartQuiz() {
   window.location.href = "index.html"; // Redirect to home
 }
 
-// Event listener for the "Start Test" button
+// Event listener for the "Restart Quiz" button
 document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
 // Call displayResults when the page loads
 document.addEventListener('DOMContentLoaded', displayResults);
-
