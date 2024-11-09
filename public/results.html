@@ -36,15 +36,28 @@
   <script>
     // Correct answers for the quiz
     const correctAnswers = {
-      'control-question1': 'C', 'control-question2': 'C', 'control-question3': 'B',  // Controls section
-      'rule-question1': 'A', 'rule-question2': 'C', 'rule-question3': 'C',  // Rules section
-      'sign-question1': 'A', 'sign-question2': 'B', 'sign-question3': 'C'   // Signs section
+      'control-question1': 'C',
+      'control-question2': 'C',
+      'control-question3': 'B',
+      'rule-question1': 'A',
+      'rule-question2': 'C',
+      'rule-question3': 'C',
+      'sign-question1': 'A',
+      'sign-question2': 'B',
+      'sign-question3': 'C'
     };
 
     // Function to display results
     function displayResults() {
       // Retrieve user answers from localStorage
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};  // Default to empty object if no answers
+
+      if (Object.keys(userAnswers).length === 0) {
+        // If no answers are found, display an error or return early
+        alert("No answers found in localStorage.");
+        return;
+      }
+
       let score = 0;
       const totalQuestions = Object.keys(correctAnswers).length;
 
@@ -53,7 +66,10 @@
 
       // Calculate the score based on correct answers
       for (const question in correctAnswers) {
-        if (userAnswers[question] === correctAnswers[question]) {
+        // Extract the correct answer letter from userAnswers (ignoring the extra part after the dash, like "-8")
+        const userAnswer = userAnswers[question] ? userAnswers[question].split('-')[0] : '';  // Safely get the first character (e.g., 'C')
+
+        if (userAnswer === correctAnswers[question]) {
           score++;
         }
       }

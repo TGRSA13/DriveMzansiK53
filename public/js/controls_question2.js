@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const nextButton = document.getElementById('nextButton');  // Button to move to next question
   const timerDisplay = document.getElementById('timer'); // Timer display
 
+  // Ensure all required elements are present in the DOM
+  if (!form || !nextButton || !timerDisplay) {
+    console.error('One or more required elements are missing from the DOM');
+    return;
+  }
+
   // Retrieve the remaining time from localStorage or set to 10 minutes (600 seconds) initially
   let timeLeft = parseInt(localStorage.getItem('quizTimeLeft')) || 600;
 
@@ -34,11 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();  // Prevent form from submitting normally
 
     // Get the selected answer (assuming the answers are radio buttons with name 'control-question')
-    const selectedAnswer = document.querySelector('input[name="control-question"]:checked');
+    const selectedAnswer = document.querySelector('input[name="control-question2"]:checked');
 
     if (selectedAnswer) {
-      // Store the selected answer in localStorage
-      localStorage.setItem('control-question2', selectedAnswer.value);
+      // Store only the answer letter in localStorage (e.g., 'C', 'B', etc.)
+      localStorage.setItem('control-question2', selectedAnswer.value.charAt(0)); // Save only the letter of the answer
 
       // Save the remaining time to localStorage for persistence across pages
       localStorage.setItem('quizTimeLeft', timeLeft);

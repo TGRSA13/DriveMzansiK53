@@ -174,7 +174,7 @@
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
       const selectedAnswer = document.querySelector('input[name="rule-question3"]:checked').value;
 
-      userAnswers['rules_q3'] = selectedAnswer;
+      userAnswers['rules-question3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 

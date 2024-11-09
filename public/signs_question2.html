@@ -184,7 +184,7 @@
       const selectedAnswer = document.querySelector('input[name="sign-question2"]:checked').value;  // Update question selector
 
       // Save the answer under the key 'control_q2' for this specific question
-      userAnswers['signs_q2'] = selectedAnswer;
+      userAnswers['sign-question2'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Save remaining time

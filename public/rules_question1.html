@@ -184,7 +184,7 @@
       const selectedAnswer = document.querySelector('input[name="rule-question1"]:checked').value;  // Update question selector
 
       // Save the answer under the key 'rules_q1' for this specific question
-      userAnswers['rules_q1'] = selectedAnswer;
+      userAnswers['rule-question1'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Save remaining time
