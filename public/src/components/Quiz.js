@@ -15,6 +15,7 @@ const Quiz = () => {
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Quiz = () => {
         if (prevTime <= 0) {
           clearInterval(interval);
           alert('Time is up!');
-          handleSubmit(); // Call submit when time is up
+          handleSubmit(); // Call the submit function when time is up
           return 0;
         }
         return prevTime - 1;
@@ -36,7 +37,7 @@ const Quiz = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle answer selection
+  // Function to handle answer selection
   const handleAnswerSelect = (answer) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
@@ -44,50 +45,73 @@ const Quiz = () => {
     }));
   };
 
-  // Handle submission and score calculation
-  const handleSubmit = () => {
-    const correctAnswers = questions.reduce((acc, curr, index) => {
-      acc[index] = curr.answer;
-      return acc;
-    }, {});
-
+  // Function to calculate score
+  function scoreTest(userAnswers, questions) {
     let score = 0;
+
+    // Compare the user's answers to the correct answers
     Object.keys(userAnswers).forEach((index) => {
-      if (userAnswers[index] === correctAnswers[index]) {
+      const question = questions[index];
+      if (userAnswers[index] === question.answer) {
         score++;
       }
     });
 
-    localStorage.setItem('userScore', score); // Store the score
+    return score;
+  }
 
-    navigate('/results'); // Navigate to results page
+  // Submit quiz and calculate score
+  const handleSubmit = () => {
+    const finalScore = scoreTest(userAnswers, questions);
+    setScore(finalScore);
+
+    // Store score in localStorage for displaying on results page
+    localStorage.setItem('userScore', finalScore);
+
+    // Navigate to the results page
+    navigate('/results');
   };
 
-  // Get current question
+  // Handle next question
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  // Format time
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const formattedTime = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+  // Get the current question based on the index
   const currentQuestion = questions[currentQuestionIndex];
+
+  // Check if the answer is correct
+  const isCorrect = userAnswers[currentQuestionIndex] === currentQuestion.answer;
 
   return (
     <div>
       <h2>{currentQuestion.question}</h2>
-      {currentQuestion.options.map((option, index) => (
-        <button
-          key={index}
-          onClick={() => handleAnswerSelect(option)}
-          style={{
-            backgroundColor: userAnswers[currentQuestionIndex] === option ? 'lightgreen' : '',
-          }}
-        >
-          {option}
-        </button>
-      ))}
-
       <div>
-        <h3>Time left: {Math.floor(timeLeft / 60)}:{timeLeft % 60}</h3>
+        {currentQuestion.options.map((option, index) => (
+          <button
+            key={index}
+            onClick={() => handleAnswerSelect(option)}
+            style={{
+              backgroundColor: userAnswers[currentQuestionIndex] === option 
+                ? (isCorrect ? 'lightgreen' : 'lightcoral') 
+                : '',
+            }}
+          >
+            {option}
+          </button>
+        ))}
       </div>
-
       <div>
+        <p>Time Left: {formattedTime}</p>
         {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}>Next</button>
+          <button onClick={handleNextQuestion}>Next Question</button>
         ) : (
           <button onClick={handleSubmit}>Submit Quiz</button>
         )}
@@ -97,3 +121,4 @@ const Quiz = () => {
 };
 
 export default Quiz;
+
