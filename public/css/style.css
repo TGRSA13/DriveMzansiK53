@@ -51,9 +51,14 @@ nav ul li a:hover {
 
 /* Logo Styles */
 header img {
-    width: 150px; /* Adjust logo size */
+    width: 150px; /* Default logo size for all pages */
     height: auto;
     margin-top: 10px;
+}
+
+/* Specific styles for the index.html page */
+body.index-page header img {
+    width: 300px; /* Keep the logo at its original size on index.html */
 }
 
 /* Heading and Main Content */
