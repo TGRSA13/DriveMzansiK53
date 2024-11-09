@@ -32,6 +32,7 @@ function displayResults() {
 
   // Calculate score based on user answers
   for (const question in correctAnswers) {
+    // Ensure the key matches and the answer is correct
     if (userAnswers[question] === correctAnswers[question]) {
       score++;
     }
@@ -68,4 +69,5 @@ document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
 // Call displayResults when the page loads
 document.addEventListener('DOMContentLoaded', displayResults);
+
 

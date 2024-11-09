@@ -103,10 +103,14 @@ const Quiz = () => {
           </button>
         ))}
       </div>
+
       <div>
-        <p>Time Left: {formattedTime}</p>
+        <h3>Time left: {formattedTime}</h3>
+      </div>
+
+      <div>
         {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={handleNextQuestion}>Next Question</button>
+          <button onClick={handleNextQuestion}>Next</button>
         ) : (
           <button onClick={handleSubmit}>Submit Quiz</button>
         )}
