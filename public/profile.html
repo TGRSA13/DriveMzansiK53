@@ -16,7 +16,7 @@
 
     header {
       background-color: #333;
-      padding: 20px;
+      padding: 10px 0; /* Reduced padding for a smaller nav bar */
     }
 
     nav ul {
@@ -24,16 +24,17 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      justify-content: center; /* Center the nav items */
     }
 
     nav li {
-      padding: 14px 20px;
+      padding: 10px 15px; /* Adjusted padding to make it smaller */
     }
 
     nav a {
       color: white;
       text-decoration: none;
+      font-size: 16px; /* Adjusted font size for consistency */
     }
 
     nav a:hover {
@@ -41,16 +42,16 @@
       color: black;
     }
 
-    nav .logout {
-      background-color: #f44336; /* Red color for logout */
-      color: white;
+    .logout {
+      background-color: #f44336;
       border-radius: 5px;
-      padding: 10px 20px;
+      padding: 8px 15px;
+      color: white;
       text-decoration: none;
     }
 
-    nav .logout:hover {
-      background-color: #d32f2f; /* Darker red for hover */
+    .logout:hover {
+      background-color: #d32f2f;
     }
 
     main {
@@ -90,12 +91,6 @@
     th {
       background-color: #4CAF50;
       color: white;
-    }
-
-    .result-item {
-      margin-bottom: 10px;
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
     }
   </style>
 </head>
@@ -186,4 +181,3 @@
   </script>
 </body>
 </html>
-
