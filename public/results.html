@@ -48,6 +48,9 @@
       let score = 0;
       const totalQuestions = Object.keys(correctAnswers).length;
 
+      console.log('User Answers:', userAnswers);  // Debugging: Check the user answers
+      console.log('Correct Answers:', correctAnswers);  // Debugging: Check the correct answers
+
       // Calculate the score based on correct answers
       for (const question in correctAnswers) {
         if (userAnswers[question] === correctAnswers[question]) {
@@ -55,8 +58,11 @@
         }
       }
 
+      console.log('Score:', score);  // Debugging: Verify the score calculation
+
       // Calculate percentage
       const percentage = (score / totalQuestions) * 100;
+      console.log('Percentage:', percentage);  // Debugging: Verify the percentage calculation
 
       // Display results on the page
       document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
