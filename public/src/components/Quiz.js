@@ -15,7 +15,6 @@ const Quiz = () => {
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const Quiz = () => {
         if (prevTime <= 0) {
           clearInterval(interval);
           alert('Time is up!');
-          handleSubmit(); // Call the submit function when time is up
+          handleSubmit(); // Call submit when time is up
           return 0;
         }
         return prevTime - 1;
@@ -37,7 +36,7 @@ const Quiz = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Function to handle answer selection
+  // Handle answer selection
   const handleAnswerSelect = (answer) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
@@ -45,72 +44,50 @@ const Quiz = () => {
     }));
   };
 
-  // Function to calculate score
-  function scoreTest(userAnswers, questions) {
-    let score = 0;
+  // Handle submission and score calculation
+  const handleSubmit = () => {
+    const correctAnswers = questions.reduce((acc, curr, index) => {
+      acc[index] = curr.answer;
+      return acc;
+    }, {});
 
-    // Compare the user's answers to the correct answers
+    let score = 0;
     Object.keys(userAnswers).forEach((index) => {
-      const question = questions[index];
-      if (userAnswers[index] === question.answer) {
+      if (userAnswers[index] === correctAnswers[index]) {
         score++;
       }
     });
 
-    return score;
-  }
+    localStorage.setItem('userScore', score); // Store the score
 
-  // Submit quiz and calculate score
-  const handleSubmit = () => {
-    const finalScore = scoreTest(userAnswers, questions);
-    setScore(finalScore);
-
-    // Store score in localStorage for displaying on results page
-    localStorage.setItem('userScore', finalScore);
-
-    // Navigate to the results page
-    navigate('/results');
+    navigate('/results'); // Navigate to results page
   };
 
-  // Handle next question
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
-
-  // Format time
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const formattedTime = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-
-  // Get the current question based on the index
+  // Get current question
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div>
       <h2>{currentQuestion.question}</h2>
-      <div>
-        {currentQuestion.options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswerSelect(option)}
-            style={{
-              backgroundColor: userAnswers[currentQuestionIndex] === option ? 'lightgreen' : '',
-            }}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      {currentQuestion.options.map((option, index) => (
+        <button
+          key={index}
+          onClick={() => handleAnswerSelect(option)}
+          style={{
+            backgroundColor: userAnswers[currentQuestionIndex] === option ? 'lightgreen' : '',
+          }}
+        >
+          {option}
+        </button>
+      ))}
 
       <div>
-        <h3>Time left: {formattedTime}</h3>
+        <h3>Time left: {Math.floor(timeLeft / 60)}:{timeLeft % 60}</h3>
       </div>
 
       <div>
         {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={handleNextQuestion}>Next</button>
+          <button onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}>Next</button>
         ) : (
           <button onClick={handleSubmit}>Submit Quiz</button>
         )}

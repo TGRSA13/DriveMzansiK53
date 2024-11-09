@@ -11,7 +11,6 @@ const correctAnswers = {
   'sign-question3': 'C'  // Signs question 3
 };
 
-// Function to display results
 function displayResults() {
   console.log("displayResults function called");
 
@@ -69,5 +68,6 @@ document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
 
 // Call displayResults when the page loads
 document.addEventListener('DOMContentLoaded', displayResults);
+
 
 
