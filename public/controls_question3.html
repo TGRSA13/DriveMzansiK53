@@ -94,7 +94,7 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="profile.html">Profile</a></li> <!-- Added profile link -->
+        <li><a href="profile.html">Profile</a></li>
       </ul>
     </nav>
     <p>Time left: <span id="timer">10:00</span></p>
@@ -116,8 +116,8 @@
       <input type="radio" name="cq3" value="D-8&9"> D-8&9 <br>
       
       <div class="button-container">
-        <a href="controls_question2.html" class="button back-button">Back</a> <!-- Back button -->
-        <button type="submit" class="button">Next</button> <!-- Next button -->
+        <a href="controls_question2.html" class="button back-button">Back</a>
+        <button type="submit" class="button">Next</button>
       </div>
     </form>
   </main>
@@ -126,11 +126,7 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the JavaScript file -->
-  <script src="js/controls_question3.js"></script>
-
   <script>
-    // Safe localStorage functions for improved reliability
     function safeLocalStorageSetItem(key, value) {
       try {
         localStorage.setItem(key, value);
@@ -148,7 +144,6 @@
       }
     }
 
-    // Countdown Timer with Persistent Storage
     let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
@@ -160,50 +155,42 @@
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time's up!");
-        window.location.href = "results.html"; // Go to results page when time is up
+        window.location.href = "results.html";
       } else {
         timeLeft--;
         safeLocalStorageSetItem('quizTimeLeft', timeLeft);
       }
     }
 
-    // Start the countdown and update every second
     const timerInterval = setInterval(updateTimer, 1000);
 
-    // Scoring Logic
     function calculateScore(selectedAnswer) {
-      let score = parseInt(safeLocalStorageGetItem('quizScore')) || 0;  // Get current score or initialize to 0
-      const correctAnswer = "A-9&7"; // Correct answer for Control Question 3
+      let score = parseInt(safeLocalStorageGetItem('quizScore')) || 0;
+      const correctAnswer = "A-9&7";
 
       if (selectedAnswer === correctAnswer) {
-        score++;  // Increment score for correct answer
+        score++;
       }
 
-      safeLocalStorageSetItem('quizScore', score);  // Save updated score
+      safeLocalStorageSetItem('quizScore', score);
     }
 
-    // Form submission event to save answer, calculate score, and navigate to the next question
-    document.getElementById('control-question3').addEventListener('submit', function(e) {
+    // Updated form ID and input name to match HTML
+    document.getElementById('control-q3').addEventListener('submit', function(e) {
       e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
-      
-      // Retrieve or initialize the answers object
+      clearInterval(timerInterval);
+
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
-      // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="cq3"]:checked').value;
 
-      // Save the answer under the key 'control-question3' for this specific question
       userAnswers['control-question3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
-      // Calculate and update the score
       calculateScore(selectedAnswer);
 
-      // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
-      // Redirect to the next section (Rules) after the last Controls question
       window.location.href = 'rules_question1.html';
     });
   </script>

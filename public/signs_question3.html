@@ -125,17 +125,15 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
-
   <!-- Include the JavaScript file -->
   <script src="js/signs_question3.js"></script>  <!-- This is the newly added script link -->
 
   <script>
-    // Safe localStorage functions
+    // Safe localStorage functions for improved reliability
     function safeLocalStorageSetItem(key, value) {
       try {
         localStorage.setItem(key, value);
+        console.log(`Saved to localStorage: ${key} =`, value);  // Debugging log
       } catch (e) {
         console.warn("Could not save to localStorage", e);
       }
@@ -143,7 +141,9 @@
 
     function safeLocalStorageGetItem(key) {
       try {
-        return localStorage.getItem(key);
+        const value = localStorage.getItem(key);
+        console.log(`Retrieved from localStorage: ${key} =`, value);  // Debugging log
+        return value;
       } catch (e) {
         console.warn("Could not access localStorage", e);
         return null;
@@ -161,8 +161,8 @@
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        alert("Time's up! Submitting your answers.");
-        document.getElementById('sign-question3').submit(); // Automatically submit the form when time is up
+        alert("Time's up!");
+        window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
         safeLocalStorageSetItem('quizTimeLeft', timeLeft);
@@ -172,23 +172,27 @@
     // Start the countdown and update every second
     const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event to save answer and navigate to the results page
+    // Form submission event to save answer and navigate to the next question
     document.getElementById('sign-question3').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-      clearInterval(timerInterval); // Stop the timer on form submission
-      localStorage.removeItem('quizTimeLeft'); // Clear timer from localStorage
-
+      e.preventDefault();
+      clearInterval(timerInterval); // Stop timer on form submission
+      
       // Retrieve or initialize the answers object
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="sign-question3"]:checked').value;
+      console.log("Selected Answer for sign-question3:", selectedAnswer);  // Debugging log
 
-      // Save the answer under the key 'signs_q3' for this specific question
-      userAnswers['sign-question33'] = selectedAnswer;
+      // Save the answer under the key 'sign-question3'
+      userAnswers['sign-question3'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
-      // Redirect to results page
+      // Save remaining time
+      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+
+      // Navigate to the next question
+      console.log("Navigating to results.html");  // Debugging log
       window.location.href = 'results.html';
     });
   </script>

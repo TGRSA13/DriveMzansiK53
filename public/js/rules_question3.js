@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (selectedAnswer) {
           // Store only the answer letter in localStorage (e.g., 'C', 'B', etc.)
-      localStorage.setItem('rule-question1', selectedAnswer.value.charAt(0)); // Save only the letter of the answer
+      localStorage.setItem('rule-question3', selectedAnswer.value.charAt(0)); // Save only the letter of the answer
 
 
           // Save the remaining time

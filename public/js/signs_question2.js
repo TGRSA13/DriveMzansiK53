@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();  // Prevent form from submitting normally
 
       // Get the selected answer (assuming the answers are radio buttons with name 'control-question')
-      const selectedAnswer = document.querySelector('input[name="control-question2"]:checked');
+      const selectedAnswer = document.querySelector('input[name="sign-question2"]:checked');
 
       if (selectedAnswer) {
 // Store only the answer letter in localStorage (e.g., 'C', 'B', etc.)
