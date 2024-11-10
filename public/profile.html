@@ -124,58 +124,83 @@
 
   <footer>&copy; 2024 Drive Mzansi</footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
-
-  <!-- Include Firebase SDK -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Include Firestore if needed -->
-  <script src="public/js/profile.js"></script> <!-- Correct path to your JS file -->
-
-  <!-- Script to load test results -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Firestore SDK -->
+  
   <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      authDomain: "drive-mzansi-app.firebaseapp.com",
+      projectId: "drive-mzansi-app",
+      storageBucket: "drive-mzansi-app.appspot.com",
+      messagingSenderId: "1007195133421",
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+      measurementId: "G-WGTMR2MFRY"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get Firestore reference
+    const db = firebase.firestore();
+
     document.addEventListener('DOMContentLoaded', function () {
         const resultsContainer = document.getElementById('results-container');
-        const pastResults = JSON.parse(localStorage.getItem('testResults')) || [];
+        
+        // Get current user's UID from Firebase Authentication
+        const user = firebase.auth().currentUser;
+        if (user) {
+            const userId = user.uid;
 
-        // Limit results to 3
-        const limitedResults = pastResults.slice(0, 3);
+            // Fetch past results from Firestore for the current user
+            db.collection('testResults').where('userId', '==', userId)
+              .get()
+              .then((querySnapshot) => {
+                if (querySnapshot.empty) {
+                    resultsContainer.innerHTML = "<p>No test results available.</p>";
+                    return;
+                }
 
-        if (limitedResults.length === 0) {
-            resultsContainer.innerHTML = "<p>No test results available.</p>";
-        } else {
-            // Create table structure
-            let tableHTML = `
-                <table>
-                    <tr>
-                        <th>Test Number</th>
-                        <th>Score</th>
-                        <th>Percentage</th>
-                    </tr>
-            `;
-
-            limitedResults.forEach((result, index) => {
-                tableHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${result.score} / 9</td>
-                        <td>${result.percentage.toFixed(2)}%</td>
-                    </tr>
+                let tableHTML = `
+                  <table>
+                      <tr>
+                          <th>Test Number</th>
+                          <th>Score</th>
+                          <th>Percentage</th>
+                      </tr>
                 `;
-            });
 
-            tableHTML += `</table>`;
-            resultsContainer.innerHTML = tableHTML;
+                querySnapshot.forEach((doc, index) => {
+                    const result = doc.data();
+                    tableHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${result.score} / 9</td>
+                            <td>${result.percentage.toFixed(2)}%</td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += `</table>`;
+                resultsContainer.innerHTML = tableHTML;
+              })
+              .catch((error) => {
+                console.error("Error fetching results: ", error);
+              });
+        } else {
+            resultsContainer.innerHTML = "<p>You need to be logged in to view your results.</p>";
         }
 
         // Logout functionality
         const logoutBtn = document.getElementById('logout-btn');
         logoutBtn.addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default link behavior
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userAnswers');
-            window.location.href = 'login.html'; // Redirect to login page after logout
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'login.html'; // Redirect to login page after logout
+            });
         });
     });
   </script>

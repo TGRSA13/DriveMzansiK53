@@ -125,79 +125,79 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
-
-  <!-- Include the JavaScript file -->
-  <script src="js/signs_question2.js"></script>  <!-- This is the newly added script link -->
-
-  <script>
-    // Safe localStorage functions for improved reliability
-    function safeLocalStorageSetItem(key, value) {
-      try {
-        localStorage.setItem(key, value);
-      } catch (e) {
-        console.warn("Could not save to localStorage", e);
-      }
-    }
-
-    function safeLocalStorageGetItem(key) {
-      try {
-        return localStorage.getItem(key);
-      } catch (e) {
-        console.warn("Could not access localStorage", e);
-        return null;
-      }
-    }
-
-    // Countdown Timer with Persistent Storage
-    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
-    const timerDisplay = document.getElementById('timer');
-
-    function updateTimer() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        alert("Time's up!");
-        window.location.href = "results.html"; // Go to results page when time is up
-      } else {
-        timeLeft--;
-        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
-      }
-    }
-
-    // Start the countdown and update every second
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Form submission event to save answer and navigate to the next question
-    document.getElementById('sign-question2').addEventListener('submit', function(e) {  // Update form ID
-      e.preventDefault();
-      clearInterval(timerInterval); // Stop timer on form submission
-      
-      // Retrieve or initialize the answers object
-      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
-
-      // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="sign-question2"]:checked').value;  // Update question selector
-
-      // Save the answer under the key 'control_q2' for this specific question
-      userAnswers['sign-question2'] = selectedAnswer;
-      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
-
-      // Save remaining time
-      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
-
-      // Check if this is the last question and navigate appropriately
-      const isLastQuestion = false; // Set to true if this is the last question
-      if (isLastQuestion) {
-        window.location.href = 'results.html';
-      } else {
-        window.location.href = 'signs_question3.html'; // Update to the next question page
-      }
-    });
-</script>
-</body>
-</html>
+   <!-- Include the Firebase SDK -->
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+ 
+   <script>
+     // Firebase configuration
+     const firebaseConfig = {
+       apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+       authDomain: "drive-mzansi-app.firebaseapp.com",
+       projectId: "drive-mzansi-app",
+       storageBucket: "drive-mzansi-app.appspot.com",
+       messagingSenderId: "1007195133421",
+       appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+       measurementId: "G-WGTMR2MFRY"
+     };
+ 
+     // Initialize Firebase
+     const app = firebase.initializeApp(firebaseConfig);
+     const db = firebase.firestore();
+ 
+     // Countdown Timer with Persistent Storage
+     let timeLeft = parseInt(localStorage.getItem('quizTimeLeft')) || 600;
+     const timerDisplay = document.getElementById('timer');
+ 
+     function updateTimer() {
+       const minutes = Math.floor(timeLeft / 60);
+       const seconds = timeLeft % 60;
+       timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+ 
+       if (timeLeft <= 0) {
+         clearInterval(timerInterval);
+         alert("Time's up!");
+         window.location.href = "results.html"; // Go to results page when time is up
+       } else {
+         timeLeft--;
+         localStorage.setItem('quizTimeLeft', timeLeft);
+       }
+     }
+ 
+     const timerInterval = setInterval(updateTimer, 1000);
+ 
+     // Form submission event to save answer and navigate to the next question
+     document.getElementById('sign-question2').addEventListener('submit', function(e) {
+       e.preventDefault();
+       clearInterval(timerInterval); // Stop timer on form submission
+ 
+       // Get the selected answer
+       const selectedAnswer = document.querySelector('input[name="sign-question2"]:checked').value;
+ 
+       // Save the user's answer to Firestore
+       const userAnswersRef = db.collection('user_answers').doc('user_id');  // replace 'user_id' with actual user ID from Firebase auth
+       userAnswersRef.update({
+         control_question1: selectedAnswer
+       }).then(() => {
+         console.log("Answer saved to Firestore");
+       }).catch((error) => {
+         console.error("Error saving answer: ", error);
+       });
+ 
+       // Save remaining time to Firestore
+       const timeRef = db.collection('quiz_time').doc('user_id');  // replace 'user_id' with actual user ID
+       timeRef.update({
+         time_left: timeLeft
+       }).then(() => {
+         console.log("Remaining time saved to Firestore");
+       }).catch((error) => {
+         console.error("Error saving time: ", error);
+       });
+ 
+       // Navigate to the next question
+       window.location.href = 'signs_question3.html';
+     });
+   </script>
+ </body>
+ </html>
+ 

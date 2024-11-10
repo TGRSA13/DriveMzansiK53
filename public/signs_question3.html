@@ -125,33 +125,28 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <!-- Include the JavaScript file -->
-  <script src="js/signs_question3.js"></script>  <!-- This is the newly added script link -->
+  <!-- Include the Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 
   <script>
-    // Safe localStorage functions for improved reliability
-    function safeLocalStorageSetItem(key, value) {
-      try {
-        localStorage.setItem(key, value);
-        console.log(`Saved to localStorage: ${key} =`, value);  // Debugging log
-      } catch (e) {
-        console.warn("Could not save to localStorage", e);
-      }
-    }
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      authDomain: "drive-mzansi-app.firebaseapp.com",
+      projectId: "drive-mzansi-app",
+      storageBucket: "drive-mzansi-app.appspot.com",
+      messagingSenderId: "1007195133421",
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+      measurementId: "G-WGTMR2MFRY"
+    };
 
-    function safeLocalStorageGetItem(key) {
-      try {
-        const value = localStorage.getItem(key);
-        console.log(`Retrieved from localStorage: ${key} =`, value);  // Debugging log
-        return value;
-      } catch (e) {
-        console.warn("Could not access localStorage", e);
-        return null;
-      }
-    }
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
     // Countdown Timer with Persistent Storage
-    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
+    let timeLeft = parseInt(localStorage.getItem('quizTimeLeft')) || 600;
     const timerDisplay = document.getElementById('timer');
 
     function updateTimer() {
@@ -165,36 +160,43 @@
         window.location.href = "results.html"; // Go to results page when time is up
       } else {
         timeLeft--;
-        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+        localStorage.setItem('quizTimeLeft', timeLeft);
       }
     }
 
-    // Start the countdown and update every second
     const timerInterval = setInterval(updateTimer, 1000);
 
-    // Form submission event to save answer and navigate to the next question
+    // Form submission event to save answer and navigate to results page
     document.getElementById('sign-question3').addEventListener('submit', function(e) {
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
-      
-      // Retrieve or initialize the answers object
-      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
 
       // Get the selected answer
       const selectedAnswer = document.querySelector('input[name="sign-question3"]:checked').value;
-      console.log("Selected Answer for sign-question3:", selectedAnswer);  // Debugging log
 
-      // Save the answer under the key 'sign-question3'
-      userAnswers['sign-question3'] = selectedAnswer;
-      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
+      // Save the user's answer to Firestore
+      const userAnswersRef = db.collection('user_answers').doc('user_id');  // replace 'user_id' with actual user ID from Firebase auth
+      userAnswersRef.update({
+        signs_question3: selectedAnswer
+      }).then(() => {
+        console.log("Answer saved to Firestore");
+      }).catch((error) => {
+        console.error("Error saving answer: ", error);
+      });
 
-      // Save remaining time
-      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
+      // Save remaining time to Firestore
+      const timeRef = db.collection('quiz_time').doc('user_id');  // replace 'user_id' with actual user ID
+      timeRef.update({
+        time_left: timeLeft
+      }).then(() => {
+        console.log("Remaining time saved to Firestore");
+      }).catch((error) => {
+        console.error("Error saving time: ", error);
+      });
 
-      // Navigate to the next question
-      console.log("Navigating to results.html");  // Debugging log
+      // Navigate to the results page
       window.location.href = 'results.html';
     });
   </script>
 </body>
-</html>
+</html> 

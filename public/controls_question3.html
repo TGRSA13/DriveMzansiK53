@@ -126,73 +126,79 @@
     <p>&copy; 2024 Drive Mzansi</p>
   </footer>
 
-  <script>
-    function safeLocalStorageSetItem(key, value) {
-      try {
-        localStorage.setItem(key, value);
-      } catch (e) {
-        console.warn("Could not save to localStorage", e);
-      }
-    }
-
-    function safeLocalStorageGetItem(key) {
-      try {
-        return localStorage.getItem(key);
-      } catch (e) {
-        console.warn("Could not access localStorage", e);
-        return null;
-      }
-    }
-
-    let timeLeft = parseInt(safeLocalStorageGetItem('quizTimeLeft')) || 600;
-    const timerDisplay = document.getElementById('timer');
-
-    function updateTimer() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        alert("Time's up!");
-        window.location.href = "results.html";
-      } else {
-        timeLeft--;
-        safeLocalStorageSetItem('quizTimeLeft', timeLeft);
-      }
-    }
-
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    function calculateScore(selectedAnswer) {
-      let score = parseInt(safeLocalStorageGetItem('quizScore')) || 0;
-      const correctAnswer = "A-9&7";
-
-      if (selectedAnswer === correctAnswer) {
-        score++;
-      }
-
-      safeLocalStorageSetItem('quizScore', score);
-    }
-
-    // Updated form ID and input name to match HTML
-    document.getElementById('control-q3').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearInterval(timerInterval);
-
-      const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
-
-      const selectedAnswer = document.querySelector('input[name="cq3"]:checked').value;
-
-      userAnswers['control-question3'] = selectedAnswer;
-      safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
-
-      calculateScore(selectedAnswer);
-
-      safeLocalStorageSetItem('quizTimeLeft', timeLeft);
-
-      window.location.href = 'rules_question1.html';
-    });
-  </script>
-</body>
-</html>
+   <!-- Include the Firebase SDK -->
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+ 
+   <script>
+     // Firebase configuration
+     const firebaseConfig = {
+       apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+       authDomain: "drive-mzansi-app.firebaseapp.com",
+       projectId: "drive-mzansi-app",
+       storageBucket: "drive-mzansi-app.appspot.com",
+       messagingSenderId: "1007195133421",
+       appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+       measurementId: "G-WGTMR2MFRY"
+     };
+ 
+     // Initialize Firebase
+     const app = firebase.initializeApp(firebaseConfig);
+     const db = firebase.firestore();
+ 
+     // Countdown Timer with Persistent Storage
+     let timeLeft = parseInt(localStorage.getItem('quizTimeLeft')) || 600;
+     const timerDisplay = document.getElementById('timer');
+ 
+     function updateTimer() {
+       const minutes = Math.floor(timeLeft / 60);
+       const seconds = timeLeft % 60;
+       timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+ 
+       if (timeLeft <= 0) {
+         clearInterval(timerInterval);
+         alert("Time's up!");
+         window.location.href = "results.html"; // Go to results page when time is up
+       } else {
+         timeLeft--;
+         localStorage.setItem('quizTimeLeft', timeLeft);
+       }
+     }
+ 
+     const timerInterval = setInterval(updateTimer, 1000);
+ 
+     // Form submission event to save answer and navigate to the next question
+     document.getElementById('control-question3').addEventListener('submit', function(e) {
+       e.preventDefault();
+       clearInterval(timerInterval); // Stop timer on form submission
+ 
+       // Get the selected answer
+       const selectedAnswer = document.querySelector('input[name="control-question3"]:checked').value;
+ 
+       // Save the user's answer to Firestore
+       const userAnswersRef = db.collection('user_answers').doc('user_id');  // replace 'user_id' with actual user ID from Firebase auth
+       userAnswersRef.update({
+         control_question1: selectedAnswer
+       }).then(() => {
+         console.log("Answer saved to Firestore");
+       }).catch((error) => {
+         console.error("Error saving answer: ", error);
+       });
+ 
+       // Save remaining time to Firestore
+       const timeRef = db.collection('quiz_time').doc('user_id');  // replace 'user_id' with actual user ID
+       timeRef.update({
+         time_left: timeLeft
+       }).then(() => {
+         console.log("Remaining time saved to Firestore");
+       }).catch((error) => {
+         console.error("Error saving time: ", error);
+       });
+ 
+       // Navigate to the next question
+       window.location.href = 'rules_question1.html';
+     });
+   </script>
+ </body>
+ </html>
+ 

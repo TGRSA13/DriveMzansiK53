@@ -128,11 +128,28 @@
   <!-- Add the React root element -->
   <div id="root"></div>  <!-- React will render components here -->
 
-  <!-- Include the JavaScript file -->
-  <script src="js/controls_question2.js"></script>  <!-- This is the newly added script link -->
+  <!-- Include Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 
   <script>
-    // Safe localStorage functions for improved reliability
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      authDomain: "drive-mzansi-app.firebaseapp.com",
+      projectId: "drive-mzansi-app",
+      storageBucket: "drive-mzansi-app.appspot.com",
+      messagingSenderId: "1007195133421",
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+      measurementId: "G-WGTMR2MFRY"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+
+    // Safe localStorage functions
     function safeLocalStorageSetItem(key, value) {
       try {
         localStorage.setItem(key, value);
@@ -148,6 +165,15 @@
         console.warn("Could not access localStorage", e);
         return null;
       }
+    }
+
+    // Check if user is authenticated
+    function checkUserAuthentication() {
+      const user = auth.currentUser;
+      if (!user) {
+        window.location.href = "index.html"; // Redirect to login page if not authenticated
+      }
+      return user;
     }
 
     // Countdown Timer with Persistent Storage
@@ -173,23 +199,26 @@
     const timerInterval = setInterval(updateTimer, 1000);
 
     // Form submission event to save answer and navigate to the next question
-    document.getElementById('control-question2').addEventListener('submit', function(e) {  // Update form ID
+    document.getElementById('control-question2').addEventListener('submit', function(e) {  
       e.preventDefault();
       clearInterval(timerInterval); // Stop timer on form submission
+
+      // Retrieve the current user
+      const user = checkUserAuthentication();
 
       // Retrieve or initialize the answers object
       const userAnswers = JSON.parse(safeLocalStorageGetItem('userAnswers')) || {};
       let score = parseInt(safeLocalStorageGetItem('userScore')) || 0;
 
       // Get the selected answer
-      const selectedAnswer = document.querySelector('input[name="control-question2"]:checked').value;  // Update question selector
+      const selectedAnswer = document.querySelector('input[name="control-question2"]:checked').value;
 
       // Save the answer under the key 'control_q2' for this specific question
       userAnswers['control-question2'] = selectedAnswer;
       safeLocalStorageSetItem('userAnswers', JSON.stringify(userAnswers));
 
       // Check the answer and adjust the score
-      if (selectedAnswer === "A-10") {  // Assuming A-10 is the correct answer
+      if (selectedAnswer === "A-10") {
         score += 1;
       }
 
@@ -199,15 +228,21 @@
       // Save remaining time
       safeLocalStorageSetItem('quizTimeLeft', timeLeft);
 
-      // Check if this is the last question and navigate appropriately
-      const isLastQuestion = window.location.pathname.includes('controls_question3.html'); // Check if this is the last question
-      if (isLastQuestion) {
-        window.location.href = 'results.html'; // Go to results page if it's the last question
-      } else {
-        window.location.href = 'controls_question3.html'; // Otherwise, go to the next question
-      }
+      // Save the score to Firestore
+      firestore.collection('users').doc(user.uid).update({
+        score: score
+      }).then(() => {
+        // Check if this is the last question and navigate appropriately
+        const isLastQuestion = window.location.pathname.includes('controls_question3.html'); 
+        if (isLastQuestion) {
+          window.location.href = 'results.html'; 
+        } else {
+          window.location.href = 'controls_question3.html'; 
+        }
+      }).catch((error) => {
+        console.error("Error updating score in Firestore:", error);
+      });
     });
   </script>
 </body>
 </html>
-
