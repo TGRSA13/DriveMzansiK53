@@ -63,6 +63,25 @@ const server = http.createServer((req, res) => {
                 res.end(resultPage);
             }
         });
+    }
+
+    // Route: Serve profile page with session data
+    else if (parsedUrl.pathname === '/profile' && req.method === 'GET') {
+        fs.readFile('./profile.html', 'utf-8', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Error loading profile.html');
+            } else {
+                // Inject session data into HTML content
+                const profilePage = data
+                    .replace('{{userName}}', sessionData.userName || 'Guest')
+                    .replace('{{userScore}}', sessionData.quizScore || '0')
+                    .replace('{{quizPercentage}}', sessionData.quizPercentage || '0');
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(profilePage);
+            }
+        });
     } else {
         // Handle 404 for any other paths
         res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -74,3 +93,4 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
     console.log('Server is running at http://localhost:3000');
 });
+

@@ -56,59 +56,41 @@
     <div class="container" id="results-container">
         <h2>Quiz Results</h2>
         <div class="result-info" id="score-display">
-            <p><strong>User Email:</strong> {{userName}}</p>
-            <p><strong>Score:</strong> {{quizScore}} / 9</p>
-            <p><strong>Percentage:</strong> {{quizPercentage}}%</p>
+            <!-- Dynamic content will be inserted here -->
         </div>
         <button id="logout-btn" onclick="logout()">Logout</button>
         <button id="restart-btn" onclick="restartTest()">Restart Test</button>
     </div>
 
     <script>
-        // Check if Firebase auth is in use and if the user is logged in
-        function checkAuth() {
-            if (typeof firebase !== "undefined") {
-                firebase.auth().onAuthStateChanged(user => {
-                    if (!user) {
-                        alert("You need to be logged in to view the results.");
-                        window.location.href = "index.html";
-                    }
-                });
-            }
-        }
-        checkAuth();
+        // Retrieve the stored data from localStorage
+        const score = localStorage.getItem('userScore');
+        const percentage = localStorage.getItem('quizPercentage');
+        const userName = localStorage.getItem('userName');
 
-        // Display data provided by server placeholders
-        function displayResults() {
-            document.getElementById("score-display").innerHTML = `
-                <p><strong>User Email:</strong> ${'{{userName}}'}</p>
-                <p><strong>Score:</strong> ${'{{quizScore}}'} / 9</p>
-                <p><strong>Percentage:</strong> ${'{{quizPercentage}}'}%</p>
-            `;
-        }
-        displayResults();
-
-        // Logout function, if using Firebase
+        // Update the result info dynamically with the stored values
+        document.getElementById("score-display").innerHTML = `
+            <p><strong>User Email:</strong> ${userName}</p>
+            <p><strong>Score:</strong> ${score} / 9</p>
+            <p><strong>Percentage:</strong> ${percentage}%</p>
+        `;
+        
+        // Logout function
         function logout() {
-            if (typeof firebase !== "undefined") {
-                firebase.auth().signOut().then(() => {
-                    window.location.href = "index.html";
-                }).catch(error => {
-                    console.error("Error signing out: ", error);
-                });
-            } else {
-                alert("No authentication service connected.");
-            }
+            localStorage.clear();  // Clear localStorage
+            window.location.href = "index.html";
         }
 
-        // Restart test function - clears data and redirects
+        // Restart test function
         function restartTest() {
             window.location.href = "home.html";
         }
     </script>
 
-    <!-- Include external JavaScript file if needed -->
-    <script src="public/src/components/results.js"></script>
+    <!-- Include the external JavaScript file if needed -->
+    <script src="src/components/results.js"></script>
 </body>
 </html>
+
+
 

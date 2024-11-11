@@ -115,7 +115,7 @@
     <p>Here you can view your past test results.</p>
 
     <div id="profile-score">
-      <!--profile.html-->
+      <!-- Will be dynamically updated with the user's last score -->
     </div>
     
     <div id="results-container">
@@ -134,15 +134,6 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Firestore SDK -->
   
   <script>
-    // Fetch and display past score on profile page
-    if (user) {
-      db.collection('users').doc(user.uid).get().then(doc => {
-        if (doc.exists) {
-          let score =doc.data().score;
-          document.getElementById("profile-score").textContent = `Last score: ${score} out of 9`;
-        }
-      });
-    }
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
@@ -162,11 +153,22 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         const resultsContainer = document.getElementById('results-container');
+        const profileScoreContainer = document.getElementById('profile-score');
         
         // Get current user's UID from Firebase Authentication
         const user = firebase.auth().currentUser;
         if (user) {
             const userId = user.uid;
+
+            // Fetch user's last score and display it on the profile page
+            db.collection('users').doc(userId).get().then(doc => {
+                if (doc.exists) {
+                    const score = doc.data().score;
+                    profileScoreContainer.textContent = `Last score: ${score} out of 9`;
+                } else {
+                    profileScoreContainer.textContent = 'No score found for this user.';
+                }
+            });
 
             // Fetch past results from Firestore for the current user
             db.collection('testResults').where('userId', '==', userId)
@@ -219,4 +221,3 @@
   </script>
 </body>
 </html>
-

@@ -2,32 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db, collection, getDocs } from './firebase';
 
-const Profile = ({ userName }) => {
+const Profile = () => {
   const [userResults, setUserResults] = useState([]);
+  const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchResults = async () => {
-      try {
-        // Retrieve results from Firestore
-        const querySnapshot = await getDocs(collection(db, "quizResults"));
-        const results = [];
-        
-        // Filter results for the specific user
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.userName === userName) {
-            results.push(data);
-          }
-        });
-        
-        setUserResults(results);
-      } catch (error) {
-        console.error("Error fetching results: ", error);
-      }
-    };
+    // Retrieve userName from localStorage if not passed as prop
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    } else {
+      navigate('/login'); // Redirect to login if no userName is found
+    }
+  }, [navigate]);
 
-    fetchResults();
+  useEffect(() => {
+    if (userName) {
+      const fetchResults = async () => {
+        try {
+          // Retrieve results from Firestore
+          const querySnapshot = await getDocs(collection(db, "quizResults"));
+          const results = [];
+          
+          // Filter results for the specific user
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.userName === userName) {
+              results.push(data);
+            }
+          });
+          
+          setUserResults(results);
+        } catch (error) {
+          console.error("Error fetching results: ", error);
+        }
+      };
+
+      fetchResults();
+    }
   }, [userName]);
 
   const handleLogout = () => {
@@ -59,4 +72,3 @@ const Profile = ({ userName }) => {
 };
 
 export default Profile;
-
