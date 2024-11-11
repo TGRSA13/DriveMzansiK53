@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db, collection, getDocs } from './firebase';
 
 const Profile = ({ userName }) => {
   const [userResults, setUserResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve past results for the specific user from localStorage
-    const storedResults = JSON.parse(localStorage.getItem('testResults')) || [];
-    // Filter results based on userName (assuming it's stored as part of the result)
-    const userSpecificResults = storedResults.filter(result => result.userName === userName);
-    setUserResults(userSpecificResults);
+    const fetchResults = async () => {
+      try {
+        // Retrieve results from Firestore
+        const querySnapshot = await getDocs(collection(db, "quizResults"));
+        const results = [];
+        
+        // Filter results for the specific user
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.userName === userName) {
+            results.push(data);
+          }
+        });
+        
+        setUserResults(results);
+      } catch (error) {
+        console.error("Error fetching results: ", error);
+      }
+    };
+
+    fetchResults();
   }, [userName]);
 
   const handleLogout = () => {
-    // Clear user data from localStorage and navigate to login
+    // Clear user data and navigate to login
     localStorage.removeItem('userName');
-    localStorage.removeItem('userAnswers');
-    navigate('/login'); // Navigate to the login page
+    navigate('/login');
   };
 
   return (
@@ -31,7 +47,7 @@ const Profile = ({ userName }) => {
         {userResults.length > 0 ? (
           userResults.map((result, index) => (
             <li key={index}>
-              {result.date}: {result.score} out of 9 - {result.percentage.toFixed(2)}%
+              {result.date.toDate().toLocaleString()}: {result.score} out of 9 - {(result.score / 9 * 100).toFixed(2)}%
             </li>
           ))
         ) : (
@@ -43,3 +59,4 @@ const Profile = ({ userName }) => {
 };
 
 export default Profile;
+

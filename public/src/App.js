@@ -1,46 +1,74 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/navBar';
 import Quiz from './components/quiz';
 import Results from './components/results';
 import Profile from './components/profile';
 import Signup from './components/signup';
 import Login from './components/login';
-import Home from './components/home';  // Home component after logging in
+import Home from './components/home';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // Make sure this is imported and used correctly
+  const [userName, setUserName] = useState('');
 
-  const handleSignup = () => {
+  // Check if the user is authenticated on component mount
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setIsAuthenticated(true);
+      setUserName(storedUserName);
+    }
+  }, []);
+
+  const handleSignup = (userName) => {
     setIsAuthenticated(true);
-    navigate('/home'); // Redirect to home page after signup
+    setUserName(userName);
+    localStorage.setItem('userName', userName);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (userName) => {
     setIsAuthenticated(true);
-    navigate('/home'); // Redirect to home page after login
+    setUserName(userName);
+    localStorage.setItem('userName', userName);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    navigate('/'); // Redirect to welcome page after logout
+    setUserName('');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userAnswers');
   };
 
   return (
     <Router>
       <div>
-        <NavBar navigateTo={handleLogout} /> {/* Pass handleLogout as prop to NavBar */}
+        <NavBar onLogout={handleLogout} />
+        
         <Routes>
           <Route path="/" element={<h1>Welcome to Drive Mzansi</h1>} />
           <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           
-          {/* Protected Routes - Redirect to login if not authenticated */}
-          <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
-          <Route path="/quiz" element={isAuthenticated ? <Quiz /> : <Navigate to="/login" />} />
-          <Route path="/results" element={isAuthenticated ? <Results /> : <Navigate to="/login" />} />
-          <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
+          {/* Home route */}
+          <Route
+            path="/home"
+            element={isAuthenticated ? <Home userName={userName} /> : <Navigate to="/login" />}
+          />
+          
+          {/* Quiz, Results, Profile routes */}
+          <Route
+            path="/quiz"
+            element={isAuthenticated ? <Quiz /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/results"
+            element={isAuthenticated ? <Results /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile"
+            element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
+          />
         </Routes>
       </div>
     </Router>

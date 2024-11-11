@@ -1,137 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results - Drive Mzansi</title>
-  <!-- Path to the CSS file -->
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Mzansi - Results</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .result-info {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-info p {
+            font-size: 18px;
+        }
+
+        #logout-btn, #restart-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #logout-btn:hover, #restart-btn:hover {
+            background-color: #444;
+        }
+    </style>
 </head>
 <body>
-  <!-- Header with Navigation -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-    </nav>
-    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
-  </header>
+    <div class="container" id="results-container">
+        <h2>Quiz Results</h2>
+        <div class="result-info" id="score-display">
+            <!-- Score and percentage will be displayed here -->
+        </div>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+        <button id="restart-btn" onclick="restartTest()">Restart Test</button>
+    </div>
 
-  <!-- Main Content Area -->
-  <main>
-    <h2>Your Results</h2>
-    <p id="score"></p>
-    <p id="percentage"></p>
-    <button class="button" id="restart-quiz">Restart Test</button>
-  </main>
+    <script>
+        // Setting a sample score and percentage as an example
+        let score = 7; // Example score, update this dynamically based on answers
+        let percentage = (score / 9) * 100;
+        localStorage.setItem('quizScore', score);
+        localStorage.setItem('quizPercentage', percentage.toFixed(2));
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2024 Drive Mzansi</p>
-  </footer>
-
-  <!-- JavaScript for Calculating and Displaying Results -->
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
-      authDomain: "drive-mzansi-app.firebaseapp.com",
-      projectId: "drive-mzansi-app",
-      storageBucket: "drive-mzansi-app.appspot.com",
-      messagingSenderId: "1007195133421",
-      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
-      measurementId: "G-WGTMR2MFRY"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(app);
-
-    // Correct answers for the quiz
-    const correctAnswers = {
-      'control-question1': 'C',
-      'control-question2': 'C',
-      'control-question3': 'B',
-      'rule-question1': 'A',
-      'rule-question2': 'C',
-      'rule-question3': 'C',
-      'sign-question1': 'A',
-      'sign-question2': 'B',
-      'sign-question3': 'C'
-    };
-
-    // Function to display results
-    async function displayResults() {
-      // Retrieve user answers from localStorage
-      const userAnswers = JSON.parse(localStorage.getItem('userAnswers')) || {};  // Default to empty object if no answers
-
-      if (Object.keys(userAnswers).length === 0) {
-        // If no answers are found, display an error or return early
-        alert("No answers found in localStorage.");
-        return;
-      }
-
-      let score = 0;
-      const totalQuestions = Object.keys(correctAnswers).length;
-
-      console.log('User Answers:', userAnswers);  // Debugging: Check the user answers
-      console.log('Correct Answers:', correctAnswers);  // Debugging: Check the correct answers
-
-      // Calculate the score based on correct answers
-      for (const question in correctAnswers) {
-        // Extract the correct answer letter from userAnswers (ignoring the extra part after the dash, like "-8")
-        const userAnswer = userAnswers[question] ? userAnswers[question].split('-')[0] : '';  // Safely get the first character (e.g., 'C')
-
-        if (userAnswer === correctAnswers[question]) {
-          score++;
-        }
-      }
-
-      console.log('Score:', score);  // Debugging: Verify the score calculation
-
-      // Calculate percentage
-      const percentage = (score / totalQuestions) * 100;
-      console.log('Percentage:', percentage);  // Debugging: Verify the percentage calculation
-
-      // Display results on the page
-      document.getElementById('score').textContent = `You got ${score} out of ${totalQuestions}.`;
-      document.getElementById('percentage').textContent = `Your score is ${percentage.toFixed(2)}%.`;
-
-      // Save the latest result to Firestore
-      const userId = "currentUserId";  // Replace this with the logged-in user's ID (from Firebase Authentication)
-      const resultsRef = db.collection('testResults').doc(userId);
-
-      // Add the result to Firestore (appending the latest result)
-      try {
-        await resultsRef.update({
-          results: firebase.firestore.FieldValue.arrayUnion({
-            score: score,
-            percentage: percentage,
-            date: new Date().toLocaleDateString()
-          })
+        // Firebase authentication observer to check if the user is logged in
+        firebase.auth().onAuthStateChanged(user => {
+            if (!user) {
+                // If not logged in, redirect to login page
+                alert("You need to be logged in to view the results.");
+                window.location.href = "index.html";
+            } else {
+                // If logged in, display results
+                displayResults();
+            }
         });
-      } catch (error) {
-        console.error("Error saving results:", error);
-      }
-    }
 
-    // Function to restart the quiz
-    function restartQuiz() {
-      localStorage.removeItem('userAnswers'); // Clear saved answers
-      localStorage.removeItem('quizTimeLeft'); // Clear saved time if applicable
-      window.location.href = "home.html"; // Redirect to start
-    }
+        // Function to display the quiz results
+        function displayResults() {
+            const score = localStorage.getItem("quizScore");
+            const percentage = localStorage.getItem("quizPercentage");
 
-    // Event listener for the "Restart Test" button
-    document.getElementById('restart-quiz').addEventListener('click', restartQuiz);
+            // Check if the score and percentage exist in localStorage
+            if (score && percentage !== null) {
+                document.getElementById("score-display").innerHTML = `
+                    <p><strong>Score:</strong> ${score} / 9</p>
+                    <p><strong>Percentage:</strong> ${percentage}%</p>
+                `;
+            } else {
+                document.getElementById("score-display").innerHTML = "<p>No results found. Please complete the quiz first.</p>";
+            }
+        }
 
-    // Call displayResults when the page loads
-    document.addEventListener('DOMContentLoaded', displayResults);
-  </script>
+        // Logout function
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "index.html"; // Redirect to login page
+            }).catch(error => {
+                console.error("Error signing out: ", error);
+            });
+        }
+
+        // Restart the test by clearing localStorage and redirecting to home.html
+        function restartTest() {
+            localStorage.removeItem("quizScore");
+            localStorage.removeItem("quizPercentage");
+            window.location.href = "home.html";  // Redirect to home page to start a new test
+        }
+    </script>
+
+    <!-- Include external JavaScript file if needed -->
+    <script src="public/src/componentes/results.js"></script>
 </body>
 </html>

@@ -1,186 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/style.css"> <!-- Updated path for CSS to match the actual file name -->
-  <style>
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          text-align: center;
-      }
-      header {
-          background-color: #f8f8f8;
-          padding: 20px;
-      }
-      nav {
-          background-color: #333;
-          overflow: hidden;
-      }
-      nav ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-      }
-      nav li {
-          padding: 14px 20px;
-      }
-      nav a {
-          color: white;
-          text-decoration: none;
-      }
-      nav a:hover {
-          background-color: #ddd;
-          color: black;
-      }
-      main {
-          padding: 20px;
-      }
-      footer {
-          background-color: #f8f8f8;
-          padding: 10px;
-      }
-      #start-test-btn, #logout-btn {
-          padding: 10px 20px;
-          font-size: 16px;
-          margin: 10px;
-      }
-      #logout-btn {
-          background-color: #f44336;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-      }
-      #logout-btn:hover {
-          background-color: #d32f2f;
-      }
-      table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-top: 20px;
-      }
-      th, td {
-          border: 1px solid #000;
-          padding: 8px;
-          text-align: left;
-      }
-      th {
-          background-color: #f2f2f2;
-      }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Mzansi - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* General styling for the app */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #user-info {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #question-container {
+            margin: 20px;
+        }
+
+        .question {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question p {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+
+        .question-image {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #nav-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #nav-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #nav-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        #score-display {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #submit-btn {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            display: none;
+        }
+
+        #submit-btn:hover {
+            background-color: #e68900;
+        }
+
+        /* Answer options in a vertical table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        td input {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-  <header>
+    <!-- Navigation bar -->
     <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-      </ul>
+        <ul>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="index.html" id="logout">Logout</a></li>
+            <li><a href="results.html">See Results</a></li>
+        </ul>
     </nav>
-    <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
-  </header>
 
-  <main>
-    <h1>Welcome!</h1>
-    <h4>Take the Test</h4>
-    <p>Note: This computerized test is just like the official K53 Learner’s Test for Light (Code 2) & Heavy Motor Vehicle (Code 3). Click the "Start Test" button to start the test and the “Next” button at the bottom of the page to navigate to the next set of questions.</p>
+    <!-- User Information -->
+    <div id="user-info">
+        <h2>Welcome, <span id="user-name">Joe Doe</span></h2>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timer">
+        <p>Time Remaining: <span id="time-left">10:00</span></p>
+    </div>
+
+    <!-- Dynamic Question Display -->
+    <div id="question-container"></div>
+
+    <!-- Navigation Buttons -->
+    <div id="nav-buttons">
+        <button id="back-btn" onclick="navigate('back')" disabled>Back</button>
+        <button id="next-btn" onclick="navigate('next')">Next</button>
+        <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+    </div>
+
+    <!-- Score Display -->
+    <div id="score-display"></div>
+
+    <script>
+        const sections = {
+            vehicleControls: [
+                { question: "Which control does a vehicle with automatic transmission not have?", options: ["A-1", "B-6", "C-8", "D-11"], answer: "C-8", image: "images/control1.jpg" },
+                { question: "Which control prevents a parked vehicle from moving?", options: ["A-10", "B-5", "C-7", "D-3"], answer: "C-7", image: "images/control2.jpg" },
+                { question: "Which controls are used to select a gear?", options: ["A-9&7", "B-6&8", "C-6&1", "D-8&9"], answer: "B-6&8", image: "images/control3.jpg" }
+            ],
+            roadRules: [
+                { question: "Stop lights must be visible in sunlight at:", options: ["A-30 Meters", "B-50 Meters", "C-40 Meters", "D-35 Meters"], answer: "A-30 Meters", image: "images/rules1.jpg" },
+                { question: "When must a passenger wear a seatbelt?", options: ["A-Old people sitting in the back", "B-Children or adults moving forward", "C-All of the Above", "D-None of the Above"], answer: "C-All of the Above", image: "images/rules2.jpg" },
+                { question: "A driver's license must always be kept:", options: ["A-Inside the Vehicle", "B-With the Driver", "C-All the Above", "D-None of the Above"], answer: "C-All the Above", image: "images/rules3.jpg" }
+            ],
+            roadSigns: [
+                { question: "What does this sign indicate?", options: ["A-Turn right at the next intersection", "B-Turn right immediately", "C-A sharp bend in the road to the right", "D-The road comes to an end to the right"], answer: "A-Turn right at the next intersection", image: "images/sign1.jpg" },
+                { question: "What does this sign indicate?", options: ["A-Fastest speed you may drive", "B-Slowest speed you may drive", "C-Distance to the next offramp", "D-Minimum weight allowance"], answer: "B-Slowest speed you may drive", image: "images/sign2.jpg" },
+                { question: "What does this sign indicate?", options: ["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"], answer: "C-Do not enter", image: "images/sign3.jpg" }
+            ]
+        };
     
-    <!-- Table for Test Information -->
-    <table>
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Number of Questions</th>
-                <th>Required Passing Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Vehicle Controls</td>
-                <td>3</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>Rules of the Road</td>
-                <td>3</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>Road Signs</td>
-                <td>3</td>
-                <td>2</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p>K53 Learner’s test duration: 10 minutes</p>
-
-    <button id="start-test-btn">Start Test</button>
-    <button id="logout-btn">Logout</button>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 Drive Mzansi</p>
-  </footer>
-
-  <!-- Add the React root element -->
-  <div id="root"></div>  <!-- React will render components here -->
-
-  <!-- Firebase SDK and User Authentication Code -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
-    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
-
-    const firebaseConfig = {
-      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
-      authDomain: "drive-mzansi-app.firebaseapp.com",
-      projectId: "drive-mzansi-app",
-      storageBucket: "drive-mzansi-app.appspot.com",
-      messagingSenderId: "1007195133421",
-      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
-    };
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+        let score = 0;
+        let timeLeft = 600; // 10 minutes in seconds
     
-    // Initialize Firebase and Authentication
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            const userData = docSnap.data();
-            document.getElementById('user-name').textContent = `${userData.name} ${userData.surname}`;
-        } else {
-            console.error("No such document!");
-            document.getElementById('user-name').textContent = 'User';
+        // Combine all questions from the 3 sections
+        const allQuestions = [
+            ...sections.vehicleControls,
+            ...sections.roadRules,
+            ...sections.roadSigns
+        ];
+    
+        // Function to display the current question
+        function displayQuestion() {
+            const currentQuestion = allQuestions[currentQuestionIndex];
+            const questionContainer = document.getElementById("question-container");
+            questionContainer.innerHTML = ""; // Clear previous content
+    
+            const questionElement = document.createElement("div");
+            questionElement.classList.add("question");
+    
+            const questionText = document.createElement("p");
+            questionText.textContent = currentQuestion.question;
+            questionElement.appendChild(questionText);
+    
+            // Display image if available
+            if (currentQuestion.image) {
+                const imageElement = document.createElement("img");
+                imageElement.src = currentQuestion.image;
+                imageElement.alt = "Question Image";
+                questionElement.appendChild(imageElement);
+            }
+    
+            const table = document.createElement("table");
+            const tbody = document.createElement("tbody");
+    
+            currentQuestion.options.forEach(option => {
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = `question${currentQuestionIndex}`;
+                input.value = option;
+                input.onclick = () => handleAnswerSelection(option); // Store answer selection
+                cell.appendChild(input);
+                const label = document.createElement("label");
+                label.textContent = option;
+                cell.appendChild(label);
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            });
+    
+            table.appendChild(tbody);
+            questionElement.appendChild(table);
+            questionContainer.appendChild(questionElement);
+    
+            // Update buttons based on progress
+            if (currentQuestionIndex === 8) {
+                document.getElementById("next-btn").style.display = "none"; // Hide next button on last question
+                document.getElementById("submit-btn").style.display = "inline-block"; // Show submit button
+            } else {
+                document.getElementById("next-btn").style.display = "inline-block";
+            }
         }
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('start-test-btn').addEventListener('click', function() {
-        window.location.href = 'controls_question1.html';
-      });
-
-      document.getElementById('logout-btn').addEventListener('click', async function() {
-        try {
-          await signOut(auth);
-          alert('You have been logged out.');
-          window.location.href = 'index.html';
-        } catch (error) {
-          console.error('Sign Out Error', error);
+    
+        // Track selected answers
+        function handleAnswerSelection(answer) {
+            selectedAnswers[currentQuestionIndex] = answer;
         }
-      });
-    });
-  </script>
+    
+        // Timer
+        function startTimer() {
+            const timerElement = document.getElementById("time-left");
+    
+            const interval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    submitQuiz(); // Automatically submit quiz when time is up
+                } else {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                }
+            }, 1000);
+        }
+    
+        // Navigate to the next question
+        function navigate(direction) {
+            if (direction === 'next') {
+                if (currentQuestionIndex < 8) {
+                    currentQuestionIndex++;
+                } else {
+                    submitQuiz(); // If all questions are answered, submit the quiz
+                }
+            }
+    
+            displayQuestion();
+        }
+    
+        // Submit the quiz and calculate the score
+        function submitQuiz() {
+            // Calculate score based on selected answers
+            score = 0;
+            selectedAnswers.forEach((answer, index) => {
+                const question = allQuestions[index];
+                if (answer === question.answer) {
+                    score++;
+                }
+            });
+    
+            const percentage = (score / 9) * 100;
+            document.getElementById("score-display").textContent = `Your score: ${score} out of 9 (${percentage.toFixed(2)}%)`;
+    
+            // Optionally navigate to results page or show results on this page
+        }
+    
+        window.onload = () => {
+            displayQuestion();
+            startTimer();
+        };
+
+           //Redirect to the results page after quiz completion
+           window.location.href= "results.html"
+    </script>
+            
 </body>
 </html>

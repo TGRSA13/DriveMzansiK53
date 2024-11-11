@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -113,6 +113,10 @@
   <main>
     <h2>Your Profile</h2>
     <p>Here you can view your past test results.</p>
+
+    <div id="profile-score">
+      <!--profile.html-->
+    </div>
     
     <div id="results-container">
       <!-- Test results will be dynamically loaded here -->
@@ -130,6 +134,15 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Firestore SDK -->
   
   <script>
+    // Fetch and display past score on profile page
+    if (user) {
+      db.collection('users').doc(user.uid).get().then(doc => {
+        if (doc.exists) {
+          let score =doc.data().score;
+          document.getElementById("profile-score").textContent = `Last score: ${score} out of 9`;
+        }
+      });
+    }
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
@@ -206,3 +219,4 @@
   </script>
 </body>
 </html>
+

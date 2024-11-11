@@ -4,23 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Drive Mzansi</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- Path to your main CSS file -->
     <style>
+        /* Inline styles for consistency with other pages */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            background-color: #f4f4f9;
         }
+
         header {
             background-color: #f8f8f8;
             padding: 20px;
         }
+
         nav {
             background-color: #333;
             overflow: hidden;
         }
+
         nav ul {
             list-style-type: none;
             margin: 0;
@@ -28,61 +31,84 @@
             display: flex;
             justify-content: center;
         }
+
         nav li {
             padding: 14px 20px;
         }
+
         nav a {
             color: white;
             text-decoration: none;
         }
+
         nav a:hover {
             background-color: #ddd;
             color: black;
         }
+
         main {
             padding: 20px;
-            max-width: 400px; /* Reduced width */
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        label {
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 8px;  /* Reduced padding */
-            margin: 8px 0 16px 0;  /* Reduced margin */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px; /* Smaller font size */
-        }
-        button {
-            padding: 8px 16px;  /* Reduced padding */
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px; /* Smaller font size */
-        }
-        button:hover {
-            background-color: #555;
-        }
+
         footer {
             background-color: #f8f8f8;
             padding: 10px;
-            margin-top: 20px;
         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
         p {
-            font-size: 14px; /* Smaller font size */
+            margin-top: 15px;
+        }
+
+        p a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -91,72 +117,75 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="sign-up.html">Sign Up</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </nav>
-        <img src="images/logo.png" alt="Drive Mzansi Logo" width="200" height="200"> <!-- Adjusted logo size -->
+        <img src="images/logo.png" alt="Drive Mzansi Logo" width="300" height="300">
     </header>
-    
+
     <main>
-        <h1>Login</h1>
-        <form id="login-form" style="display: flex; flex-direction: column; align-items: center;">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" aria-label="Email address" required>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" aria-label="Password" required>
-            <button type="submit">Login</button>
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Log In</button>
         </form>
-        <p>Don't have an account? <a href="sign-up.html">Sign up here</a></p>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
     </main>
-    
+
     <footer>
         <p>&copy; 2024 Drive Mzansi</p>
     </footer>
 
-    <!-- Firebase SDK and Authentication Code -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    <!-- Firebase SDK scripts -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
 
+    <!-- Path to the custom login JavaScript file -->
+    <script type="module">
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+
+        // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
             authDomain: "drive-mzansi-app.firebaseapp.com",
             projectId: "drive-mzansi-app",
             storageBucket: "drive-mzansi-app.appspot.com",
             messagingSenderId: "1007195133421",
-            appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
+            appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4",
+            measurementId: "G-WGTMR2MFRY"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    alert("Login successful!");
-                    window.location.href = "home.html";
+                    const user = userCredential.user;
+                    console.log("User logged in:", user);
+
+                    localStorage.setItem('userName', user.displayName || user.email); // Save user name/email to localStorage
+                    window.location.href = "home.html"; // Redirect to home page
                 })
                 .catch((error) => {
                     const errorCode = error.code;
-                    let errorMessage = "Something went wrong, please try again.";
-
-                    // Specific error handling
-                    if (errorCode === 'auth/user-not-found') {
-                        errorMessage = "No user found with this email address.";
-                    } else if (errorCode === 'auth/wrong-password') {
-                        errorMessage = "Incorrect password. Please try again.";
-                    } else if (errorCode === 'auth/invalid-email') {
-                        errorMessage = "Invalid email address format.";
-                    }
-
+                    const errorMessage = error.message;
+                    console.error("Error during login:", errorCode, errorMessage);
                     alert(errorMessage);
                 });
         });
     </script>
 </body>
 </html>
+

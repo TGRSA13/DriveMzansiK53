@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, collection, addDoc } from './firebase';  // Import Firestore functions
 
 const Results = () => {
   const [score, setScore] = useState(null);
   const navigate = useNavigate();
 
-  // Get score from localStorage
+  // Get score from localStorage on component mount
   useEffect(() => {
-    const userScore = localStorage.getItem('userScore');
-    if (userScore) {
+    const userScore = localStorage.getItem('userScore'); // Ensure this key is consistent
+    console.log('Retrieved score from localStorage:', userScore);
+    if (userScore !== null) {
       setScore(parseInt(userScore));
-      saveScoreToFirestore(userScore);  // Save the score to Firestore when it's available
+    } else {
+      console.log('No score found in localStorage');
+      navigate('/'); // Redirect to home if no score is found
     }
-  }, []);
+  }, [navigate]);
 
-  // Save the score to Firestore
-  const saveScoreToFirestore = async (userScore) => {
-    const userId = localStorage.getItem('userId');  // Assuming the userId is stored in localStorage
-    try {
-      const docRef = await addDoc(collection(db, 'scores'), {
-        userId: userId,  // Use userId for identification
-        score: userScore,
-        timestamp: new Date(),
-      });
-      console.log("Score saved with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
+  if (score === null) {
+    return <div>Loading...</div>; // Show loading while score is null
+  }
 
   // Pass/Fail Logic
   const resultMessage = score >= 7 ? 'You Passed!' : 'You Failed.';
