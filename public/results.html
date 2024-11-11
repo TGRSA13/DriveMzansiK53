@@ -56,65 +56,59 @@
     <div class="container" id="results-container">
         <h2>Quiz Results</h2>
         <div class="result-info" id="score-display">
-            <!-- Score and percentage will be displayed here -->
+            <p><strong>User Email:</strong> {{userName}}</p>
+            <p><strong>Score:</strong> {{quizScore}} / 9</p>
+            <p><strong>Percentage:</strong> {{quizPercentage}}%</p>
         </div>
         <button id="logout-btn" onclick="logout()">Logout</button>
         <button id="restart-btn" onclick="restartTest()">Restart Test</button>
     </div>
 
     <script>
-        // Setting a sample score and percentage as an example
-        let score = 7; // Example score, update this dynamically based on answers
-        let percentage = (score / 9) * 100;
-        localStorage.setItem('quizScore', score);
-        localStorage.setItem('quizPercentage', percentage.toFixed(2));
-
-        // Firebase authentication observer to check if the user is logged in
-        firebase.auth().onAuthStateChanged(user => {
-            if (!user) {
-                // If not logged in, redirect to login page
-                alert("You need to be logged in to view the results.");
-                window.location.href = "index.html";
-            } else {
-                // If logged in, display results
-                displayResults();
+        // Check if Firebase auth is in use and if the user is logged in
+        function checkAuth() {
+            if (typeof firebase !== "undefined") {
+                firebase.auth().onAuthStateChanged(user => {
+                    if (!user) {
+                        alert("You need to be logged in to view the results.");
+                        window.location.href = "index.html";
+                    }
+                });
             }
-        });
+        }
+        checkAuth();
 
-        // Function to display the quiz results
+        // Display data provided by server placeholders
         function displayResults() {
-            const score = localStorage.getItem("quizScore");
-            const percentage = localStorage.getItem("quizPercentage");
+            document.getElementById("score-display").innerHTML = `
+                <p><strong>User Email:</strong> ${'{{userName}}'}</p>
+                <p><strong>Score:</strong> ${'{{quizScore}}'} / 9</p>
+                <p><strong>Percentage:</strong> ${'{{quizPercentage}}'}%</p>
+            `;
+        }
+        displayResults();
 
-            // Check if the score and percentage exist in localStorage
-            if (score && percentage !== null) {
-                document.getElementById("score-display").innerHTML = `
-                    <p><strong>Score:</strong> ${score} / 9</p>
-                    <p><strong>Percentage:</strong> ${percentage}%</p>
-                `;
+        // Logout function, if using Firebase
+        function logout() {
+            if (typeof firebase !== "undefined") {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "index.html";
+                }).catch(error => {
+                    console.error("Error signing out: ", error);
+                });
             } else {
-                document.getElementById("score-display").innerHTML = "<p>No results found. Please complete the quiz first.</p>";
+                alert("No authentication service connected.");
             }
         }
 
-        // Logout function
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "index.html"; // Redirect to login page
-            }).catch(error => {
-                console.error("Error signing out: ", error);
-            });
-        }
-
-        // Restart the test by clearing localStorage and redirecting to home.html
+        // Restart test function - clears data and redirects
         function restartTest() {
-            localStorage.removeItem("quizScore");
-            localStorage.removeItem("quizPercentage");
-            window.location.href = "home.html";  // Redirect to home page to start a new test
+            window.location.href = "home.html";
         }
     </script>
 
     <!-- Include external JavaScript file if needed -->
-    <script src="public/src/componentes/results.js"></script>
+    <script src="public/src/components/results.js"></script>
 </body>
 </html>
+

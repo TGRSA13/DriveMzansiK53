@@ -13,38 +13,31 @@
             margin: 0;
             padding: 0;
         }
-
         nav {
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
         }
-
         nav ul {
             list-style: none;
             padding: 0;
         }
-
         nav ul li {
             display: inline;
             margin: 0 10px;
         }
-
         nav ul li a {
             color: #fff;
             text-decoration: none;
         }
-
-        #user-info {
+        #user-info, #timer, #score-display {
             text-align: center;
             margin: 20px;
         }
-
         #question-container {
             margin: 20px;
         }
-
         .question {
             background-color: #fff;
             padding: 10px;
@@ -52,30 +45,12 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .question p {
-            font-size: 18px;
-            margin: 0 0 10px;
-        }
-
         .question-image {
             width: 300px;
             height: 300px;
             object-fit: contain;
             margin-bottom: 10px;
         }
-
-        #timer {
-            text-align: center;
-            font-size: 24px;
-            margin-top: 20px;
-        }
-
-        #nav-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-
         #nav-buttons button {
             background-color: #4CAF50;
             color: white;
@@ -84,18 +59,9 @@
             cursor: pointer;
             font-size: 16px;
         }
-
         #nav-buttons button:hover {
             background-color: #45a049;
         }
-
-        #score-display {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
         #submit-btn {
             background-color: #ff9800;
             color: white;
@@ -104,27 +70,22 @@
             font-size: 16px;
             display: none;
         }
-
         #submit-btn:hover {
             background-color: #e68900;
         }
-
         /* Answer options in a vertical table */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
-
         table, th, td {
             border: 1px solid #ddd;
         }
-
         th, td {
             padding: 10px;
             text-align: left;
         }
-
         td input {
             margin-right: 10px;
         }
@@ -166,58 +127,59 @@
     <script>
         const sections = {
             vehicleControls: [
-                { question: "Which control does a vehicle with automatic transmission not have?", options: ["A-1", "B-6", "C-8", "D-11"], answer: "C-8", image: "images/control1.jpg" },
-                { question: "Which control prevents a parked vehicle from moving?", options: ["A-10", "B-5", "C-7", "D-3"], answer: "C-7", image: "images/control2.jpg" },
-                { question: "Which controls are used to select a gear?", options: ["A-9&7", "B-6&8", "C-6&1", "D-8&9"], answer: "B-6&8", image: "images/control3.jpg" }
+                { question: "Which control does a vehicle with automatic transmission not have?", options: ["A-1", "B-6", "C-8", "D-11"], answer: "C-8", image: "images/controls.png" },
+                { question: "Which control prevents a parked vehicle from moving?", options: ["A-10", "B-5", "C-7", "D-3"], answer: "C-7", image: "images/controls.png" },
+                { question: "Which controls are used to select a gear?", options: ["A-9&7", "B-6&8", "C-6&1", "D-8&9"], answer: "B-6&8", image: "images/controls.png" }
             ],
             roadRules: [
-                { question: "Stop lights must be visible in sunlight at:", options: ["A-30 Meters", "B-50 Meters", "C-40 Meters", "D-35 Meters"], answer: "A-30 Meters", image: "images/rules1.jpg" },
-                { question: "When must a passenger wear a seatbelt?", options: ["A-Old people sitting in the back", "B-Children or adults moving forward", "C-All of the Above", "D-None of the Above"], answer: "C-All of the Above", image: "images/rules2.jpg" },
-                { question: "A driver's license must always be kept:", options: ["A-Inside the Vehicle", "B-With the Driver", "C-All the Above", "D-None of the Above"], answer: "C-All the Above", image: "images/rules3.jpg" }
+                { question: "Stop lights must be visible in sunlight at:", options: ["A-30 Meters", "B-50 Meters", "C-40 Meters", "D-35 Meters"], answer: "A-30 Meters", image: "images/rules.jpg" },
+                { question: "When must a passenger wear a seatbelt?", options: ["A-Old people sitting in the back", "B-Children or adults moving forward", "C-All of the Above", "D-None of the Above"], answer: "C-All of the Above", image: "images/rules.jpg" },
+                { question: "A driver's license must always be kept:", options: ["A-Inside the Vehicle", "B-With the Driver", "C-All of the Above", "D-None of the Above"], answer: "C-All of the Above", image: "images/rules.jpg" }
             ],
             roadSigns: [
-                { question: "What does this sign indicate?", options: ["A-Turn right at the next intersection", "B-Turn right immediately", "C-A sharp bend in the road to the right", "D-The road comes to an end to the right"], answer: "A-Turn right at the next intersection", image: "images/sign1.jpg" },
-                { question: "What does this sign indicate?", options: ["A-Fastest speed you may drive", "B-Slowest speed you may drive", "C-Distance to the next offramp", "D-Minimum weight allowance"], answer: "B-Slowest speed you may drive", image: "images/sign2.jpg" },
-                { question: "What does this sign indicate?", options: ["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"], answer: "C-Do not enter", image: "images/sign3.jpg" }
+                { question: "What does this sign indicate?", options: ["A-Turn right at the next intersection", "B-Turn right immediately", "C-A sharp bend in the road to the right", "D-The road comes to an end to the right"], answer: "A-Turn right at the next intersection", image: "images/sign1.png" },
+                { question: "What does this sign indicate?", options: ["A-Fastest speed you may drive", "B-Slowest speed you may drive", "C-Distance to the next offramp", "D-Minimum weight allowance"], answer: "B-Slowest speed you may drive", image: "images/sign2.png" },
+                { question: "What does this sign indicate?", options: ["A-Dead end ahead", "B-Turn only left or right", "C-Do not enter", "D-Line on the road"], answer: "C-Do not enter", image: "images/sign3.png" }
             ]
         };
-    
+
         let currentQuestionIndex = 0;
         let selectedAnswers = [];
         let score = 0;
         let timeLeft = 600; // 10 minutes in seconds
-    
+
         // Combine all questions from the 3 sections
         const allQuestions = [
             ...sections.vehicleControls,
             ...sections.roadRules,
             ...sections.roadSigns
         ];
-    
+
         // Function to display the current question
         function displayQuestion() {
             const currentQuestion = allQuestions[currentQuestionIndex];
             const questionContainer = document.getElementById("question-container");
             questionContainer.innerHTML = ""; // Clear previous content
-    
+
             const questionElement = document.createElement("div");
             questionElement.classList.add("question");
-    
+
             const questionText = document.createElement("p");
             questionText.textContent = currentQuestion.question;
             questionElement.appendChild(questionText);
-    
+
             // Display image if available
             if (currentQuestion.image) {
                 const imageElement = document.createElement("img");
                 imageElement.src = currentQuestion.image;
                 imageElement.alt = "Question Image";
+                imageElement.classList.add("question-image");
                 questionElement.appendChild(imageElement);
             }
-    
+
             const table = document.createElement("table");
             const tbody = document.createElement("tbody");
-    
+
             currentQuestion.options.forEach(option => {
                 const row = document.createElement("tr");
                 const cell = document.createElement("td");
@@ -233,29 +195,26 @@
                 row.appendChild(cell);
                 tbody.appendChild(row);
             });
-    
+
             table.appendChild(tbody);
             questionElement.appendChild(table);
             questionContainer.appendChild(questionElement);
-    
-            // Update buttons based on progress
-            if (currentQuestionIndex === 8) {
-                document.getElementById("next-btn").style.display = "none"; // Hide next button on last question
-                document.getElementById("submit-btn").style.display = "inline-block"; // Show submit button
-            } else {
-                document.getElementById("next-btn").style.display = "inline-block";
-            }
+
+            // Update navigation buttons based on progress
+            document.getElementById("back-btn").disabled = currentQuestionIndex === 0;
+            document.getElementById("next-btn").style.display = currentQuestionIndex < allQuestions.length - 1 ? "inline-block" : "none";
+            document.getElementById("submit-btn").style.display = currentQuestionIndex === allQuestions.length - 1 ? "inline-block" : "none";
         }
-    
+
         // Track selected answers
         function handleAnswerSelection(answer) {
             selectedAnswers[currentQuestionIndex] = answer;
         }
-    
+
         // Timer
         function startTimer() {
             const timerElement = document.getElementById("time-left");
-    
+
             const interval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(interval);
@@ -268,23 +227,19 @@
                 }
             }, 1000);
         }
-    
-        // Navigate to the next question
+
+        // Navigate to the next or previous question
         function navigate(direction) {
-            if (direction === 'next') {
-                if (currentQuestionIndex < 8) {
-                    currentQuestionIndex++;
-                } else {
-                    submitQuiz(); // If all questions are answered, submit the quiz
-                }
+            if (direction === 'next' && currentQuestionIndex < allQuestions.length - 1) {
+                currentQuestionIndex++;
+            } else if (direction === 'back' && currentQuestionIndex > 0) {
+                currentQuestionIndex--;
             }
-    
             displayQuestion();
         }
-    
+
         // Submit the quiz and calculate the score
         function submitQuiz() {
-            // Calculate score based on selected answers
             score = 0;
             selectedAnswers.forEach((answer, index) => {
                 const question = allQuestions[index];
@@ -292,21 +247,18 @@
                     score++;
                 }
             });
-    
-            const percentage = (score / 9) * 100;
-            document.getElementById("score-display").textContent = `Your score: ${score} out of 9 (${percentage.toFixed(2)}%)`;
-    
-            // Optionally navigate to results page or show results on this page
+
+            // Save score to localStorage for access on the results page
+            localStorage.setItem("userScore", score);
+
+            // Redirect to the results page
+            window.location.href = "results.html";
         }
-    
+
         window.onload = () => {
             displayQuestion();
             startTimer();
         };
-
-           //Redirect to the results page after quiz completion
-           window.location.href= "results.html"
     </script>
-            
 </body>
 </html>
