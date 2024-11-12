@@ -4,37 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile - Drive Mzansi</title>
-  <link rel="stylesheet" href="css/style.css"> <!-- Link to your main stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Centering and layout styles */
+    /* Layout Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       text-align: center;
+      background-color: #f4f4f4;
     }
 
     header {
       background-color: #333;
-      padding: 10px 0; /* Reduced padding for a smaller nav bar */
     }
 
     nav ul {
       list-style-type: none;
       margin: 0;
-      padding: 0;
+      padding: 10px 0; /* Reduced padding for a smaller navbar */
       display: flex;
-      justify-content: center; /* Center the nav items */
+      justify-content: center;
     }
 
     nav li {
-      padding: 10px 15px; /* Adjusted padding to make it smaller */
+      padding: 8px 15px; /* Smaller padding to reduce navbar size */
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      font-size: 16px; /* Adjusted font size for consistency */
+      font-size: 16px;
     }
 
     nav a:hover {
@@ -62,15 +62,21 @@
       margin-top: 20px;
     }
 
+    #profile-score {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
     #results-container {
       margin-top: 20px;
-      text-align: left;
-      max-width: 800px;
+      max-width: 600px;
       margin: auto;
       border: 1px solid #333;
       padding: 15px;
       background-color: #f8f8f8;
       border-radius: 8px;
+      text-align: center;
     }
 
     table {
@@ -79,12 +85,9 @@
       margin: 20px 0;
     }
 
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-
     th, td {
       padding: 12px;
+      border: 1px solid #ddd;
       text-align: center;
     }
 
@@ -99,15 +102,12 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="sign-up.html">Sign Up</a></li>
-        <li><a href="home.html">Take the Test</a></li>
-        <!-- Logout button -->
+        <li><a href="landing.html">Take the Test</a></li>
+        <li><a href="results.html">Results</a></li>
         <li><a href="#" class="logout" id="logout-btn">Logout</a></li>
       </ul>
     </nav>
-    <img src="images/Greencarlogo2.png" alt="Drive Mzansi Logo" width="300" height="300">
+    <img src="images/Greencarlogo2.png" alt="Drive Mzansi Logo" width="200" height="200">
   </header>
   
   <main>
@@ -115,24 +115,23 @@
     <p>Here you can view your past test results.</p>
 
     <div id="profile-score">
-      <!-- Will be dynamically updated with the user's last score -->
+      <!-- Last score will be dynamically displayed here -->
     </div>
     
     <div id="results-container">
-      <!-- Test results will be dynamically loaded here -->
+      <!-- Score history table will load here -->
     </div>
 
-    <p>When you are confident that you are fully prepared for the exam, you can book online 
-      for your K53 Learner’s Test date on the official <a href="https://online.natis.gov.za/#/" target="_blank">NATIS</a> website. </p>
+    <p>When you are confident in your preparation, you can book online for your K53 Learner’s Test date on the official <a href="https://online.natis.gov.za/#/" target="_blank">NATIS</a> website.</p>
   </main>
 
   <footer>&copy; 2024 Drive Mzansi</footer>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script> <!-- Firestore SDK -->
-  
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script>
+
   <script>
     // Firebase configuration
     const firebaseConfig = {
@@ -147,56 +146,58 @@
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
-    // Get Firestore reference
+    const auth = firebase.auth();
     const db = firebase.firestore();
 
     document.addEventListener('DOMContentLoaded', function () {
         const resultsContainer = document.getElementById('results-container');
         const profileScoreContainer = document.getElementById('profile-score');
         
-        // Get current user's UID from Firebase Authentication
-        const user = firebase.auth().currentUser;
-        if (user) {
+        // Check user authentication and retrieve data
+        auth.onAuthStateChanged((user) => {
+          if (user) {
             const userId = user.uid;
 
-            // Fetch user's last score and display it on the profile page
+            // Fetch last score
             db.collection('users').doc(userId).get().then(doc => {
-                if (doc.exists) {
-                    const score = doc.data().score;
-                    profileScoreContainer.textContent = `Last score: ${score} out of 9`;
-                } else {
-                    profileScoreContainer.textContent = 'No score found for this user.';
-                }
+              if (doc.exists && doc.data().score !== undefined) {
+                profileScoreContainer.textContent = `Last score: ${doc.data().score} out of 9`;
+              } else {
+                profileScoreContainer.textContent = 'No score found for this user.';
+              }
             });
 
-            // Fetch past results from Firestore for the current user
-            db.collection('testResults').where('userId', '==', userId)
+            // Fetch last 3 test results from Firestore
+            db.collection('testResults')
+              .where('userId', '==', userId)
+              .orderBy('date', 'desc')
+              .limit(3) // Limit to the last 3 results
               .get()
               .then((querySnapshot) => {
                 if (querySnapshot.empty) {
-                    resultsContainer.innerHTML = "<p>No test results available.</p>";
-                    return;
+                  resultsContainer.innerHTML = "<p>No test results available.</p>";
+                  return;
                 }
 
                 let tableHTML = `
                   <table>
-                      <tr>
-                          <th>Test Number</th>
-                          <th>Score</th>
-                          <th>Percentage</th>
-                      </tr>
+                    <tr>
+                      <th>Test Date</th>
+                      <th>Score</th>
+                      <th>Percentage</th>
+                    </tr>
                 `;
 
-                querySnapshot.forEach((doc, index) => {
-                    const result = doc.data();
-                    tableHTML += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${result.score} / 9</td>
-                            <td>${result.percentage.toFixed(2)}%</td>
-                        </tr>
-                    `;
+                querySnapshot.forEach((doc) => {
+                  const result = doc.data();
+                  const testDate = new Date(result.date.seconds * 1000).toLocaleDateString();
+                  tableHTML += `
+                    <tr>
+                      <td>${testDate}</td>
+                      <td>${result.score} / 9</td>
+                      <td>${result.percentage.toFixed(2)}%</td>
+                    </tr>
+                  `;
                 });
 
                 tableHTML += `</table>`;
@@ -205,17 +206,18 @@
               .catch((error) => {
                 console.error("Error fetching results: ", error);
               });
-        } else {
+          } else {
             resultsContainer.innerHTML = "<p>You need to be logged in to view your results.</p>";
-        }
+          }
+        });
 
         // Logout functionality
         const logoutBtn = document.getElementById('logout-btn');
         logoutBtn.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link behavior
-            firebase.auth().signOut().then(() => {
-                window.location.href = 'login.html'; // Redirect to login page after logout
-            });
+          event.preventDefault();
+          auth.signOut().then(() => {
+            window.location.href = 'login.html';
+          });
         });
     });
   </script>
