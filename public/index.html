@@ -94,6 +94,7 @@
         
         <!-- Start Test Button (Initially Disabled) -->
         <button id="startTestBtn" disabled>Start Test</button>
+        <p id="loginPrompt" style="display:none;">Please log in to start the test.</p>
     </main>
     
     <footer>
@@ -106,20 +107,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const startTestBtn = document.getElementById('startTestBtn');
+            const loginPrompt = document.getElementById('loginPrompt');
             const userName = localStorage.getItem('userName');  // Check if user is logged in
 
             // Enable the Start Test button if the user is logged in
             if (userName) {
                 startTestBtn.disabled = false;
+                loginPrompt.style.display = 'none';
             } else {
                 startTestBtn.disabled = true;
+                loginPrompt.style.display = 'block'; // Show login prompt if not logged in
             }
 
             // Optional: You can also add a click event to redirect to the login page if not logged in
             startTestBtn.addEventListener('click', function () {
-                if (userName) {
-                    window.location.href = 'quiz.html'; // Redirect to quiz page after login
-                } else {
+                if (!userName) {
                     window.location.href = 'login.html'; // Redirect to login page if not logged in
                 }
             });
@@ -127,4 +129,3 @@
     </script>
 </body>
 </html>
-
