@@ -12,8 +12,6 @@
             margin: 0;
             padding: 0;
         }
-
-        /* Navbar styling */
         .navbar {
             background-color: #333;
             overflow: hidden;
@@ -21,18 +19,15 @@
             justify-content: center;
             padding: 10px 0;
         }
-
         .navbar a {
             color: white;
             padding: 14px 20px;
             text-decoration: none;
             text-align: center;
         }
-
         .navbar a:hover {
             background-color: #444;
         }
-
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -41,20 +36,16 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
         h2 {
             text-align: center;
         }
-
         .result-info {
             font-size: 20px;
             margin-bottom: 20px;
         }
-
         .result-info p {
             font-size: 18px;
         }
-
         #logout-btn, #restart-btn {
             display: block;
             text-align: center;
@@ -66,17 +57,13 @@
             cursor: pointer;
             width: 100%;
         }
-
         #logout-btn:hover, #restart-btn:hover {
             background-color: #444;
         }
-
-        /* Pass/Fail Styling */
         .pass {
             color: green;
             font-weight: bold;
         }
-
         .fail {
             color: red;
             font-weight: bold;
@@ -89,14 +76,11 @@
             <ul>
                 <div class="navbar">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="profile.html">Profile</a></li>
                     <li><a href="results.html">Results</a></li>
                 </div>
             </ul>      
         </nav>     
     </header>
-    <!-- Navigation bar -->
-    
 
     <div class="container" id="results-container">
         <h2>Test Results</h2>
@@ -106,6 +90,12 @@
         <button id="logout-btn" onclick="logout()">Logout</button>
         <button id="restart-btn" onclick="restartTest()">Restart Test</button>
     </div>
+
+    <!-- Informational paragraph below the results table and buttons -->
+    <p style="text-align: center; margin-top: 20px;">
+        When you are confident in your preparation, you can book online for your K53 Learner’s Test date on the official 
+        <a href="https://online.natis.gov.za/#/" target="_blank">NATIS</a> website.
+    </p>
 
     <script>
         // Retrieve the stored data from localStorage
@@ -135,8 +125,5 @@
             window.location.href = "home.html";
         }
     </script>
-
-    <!-- Include the external JavaScript file if needed -->
-    <script src="src/components/results.js"></script>
 </body>
 </html>

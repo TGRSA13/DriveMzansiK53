@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,7 @@
           margin: auto;
           padding: 20px;
           text-align: center;
+          position: relative;
       }
       .about-section h2 {
           font-size: 2em;
@@ -32,6 +33,25 @@
       .about-section ul li {
           margin: 10px 0;
           line-height: 1.4;
+      }
+
+      /* Specific styling for each image position */
+      .image-top-right {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 150px; /* Increased width */
+      }
+      .image-middle-left {
+          position: absolute;
+          top: 300px;
+          left: -180px; /* Further left */
+          width: 180px; /* Increased width */
+      }
+      .image-bottom-center {
+          display: block;
+          margin: 40px auto 0;
+          width: 150px; /* Increased width */
       }
   </style>
 </head>
@@ -74,6 +94,13 @@
       <h3>Preparing for Your Test with Drive Mzansi</h3>
       <p>Our platform helps you gain the confidence you need to pass the K53 test. With a friendly and easy-to-use interface, Drive Mzansi provides you with the tools to become a safe and knowledgeable driver.</p>
       <p>Ready to start your journey? Head to the <a href="login.html">Take the Test</a> page to begin practicing.</p>
+      
+      <!-- Image Gallery Section with Specific Placement -->
+      <div>
+          <img src="images/K53books.jpg" alt="K53 Study Materials" class="image-top-right">
+          <img src="images/drivingschool.png" alt="Driving School" class="image-middle-left">
+          <img src="images/drivinglicense.png" alt="Driving License" class="image-bottom-center">
+      </div>
     </section>
   </main>
 
