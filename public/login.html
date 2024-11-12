@@ -176,7 +176,7 @@
                     console.log("User logged in:", user);
 
                     localStorage.setItem('userName', user.displayName || user.email); // Save user name/email to localStorage
-                    window.location.href = "home.html"; // Redirect to home page
+                    window.location.href = "landing.html"; // Redirect to landing page
                 })
                 .catch((error) => {
                     const errorCode = error.code;

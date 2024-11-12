@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Drive Mzansi</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+      /* Additional specific styles if needed for landing page */
+      #start-test-btn, #logout-btn {
+          padding: 12px 24px;
+          font-size: 16px;
+          margin: 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      #start-test-btn {
+          background-color: #4CAF50; /* Consistent start button color */
+          color: white;
+      }
+
+      #start-test-btn:hover {
+          background-color: #45a049;
+      }
+
+      #logout-btn {
+          background-color: #f44336; /* Consistent logout button color */
+          color: white;
+      }
+
+      #logout-btn:hover {
+          background-color: #d32f2f;
+      }
+
+      /* Style for the table */
+      table {
+          width: 100%;
+          max-width: 600px;
+          margin: 20px auto;
+          border-collapse: collapse;
+      }
+
+      th, td {
+          padding: 12px;
+          border: 1px solid #ddd;
+          text-align: left;
+      }
+
+      th {
+          background-color: #f4f4f4;
+          font-weight: bold;
+      }
+  </style>
+</head>
+<body>
+  <!-- Header Section with Consistent Navigation -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="results.html">Results</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main>
+    <section class="welcome-section" style="text-align: center;">
+      <img src="images/logo.png" alt="Drive Mzansi Logo" width="150" height="150" style="margin-top: 20px;">
+      <h1>Welcome to Drive Mzansi!</h1>
+      <p>Get ready to take the K53 Learner’s Test for Light (Code 2) & Heavy Motor Vehicle (Code 3). Click "Start Test" when you’re ready to begin.</p>
+
+      <!-- Info Table Section -->
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Number of Questions</th>
+            <th>Passing Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vehicle Controls</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Rules of the Road</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Road Signs</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Test duration: 10 minutes</p>
+
+      <!-- Action Buttons -->
+      <div>
+        <button id="start-test-btn">Start Test</button>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Drive Mzansi. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase Authentication Script -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+
+    // Firebase configuration details
+    const firebaseConfig = {
+      apiKey: "AiZaSyCglZk-B-Phojvp31xGxxxACfyO4w6lges",
+      authDomain: "drive-mzansi-app.firebaseapp.com",
+      projectId: "drive-mzansi-app",
+      storageBucket: "drive-mzansi-app.appspot.com",
+      messagingSenderId: "1007195133421",
+      appId: "1:1007195133421:web:1b7ec3cd063a31c05543e4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Start Test Button - Redirects to quiz page
+    document.getElementById('start-test-btn').addEventListener('click', () => {
+      window.location.href = 'home.html';
+    });
+
+    // Logout Button
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        alert('You have been logged out.');
+        window.location.href = 'index.html';
+      } catch (error) {
+        console.error('Sign Out Error', error);
+      }
+    });
+  </script>
+</body>
+</html>
+
