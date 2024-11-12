@@ -70,6 +70,17 @@
         #logout-btn:hover, #restart-btn:hover {
             background-color: #444;
         }
+
+        /* Pass/Fail Styling */
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +99,7 @@
     
 
     <div class="container" id="results-container">
-        <h2>Quiz Results</h2>
+        <h2>Test Results</h2>
         <div class="result-info" id="score-display">
             <!-- Dynamic content will be inserted here -->
         </div>
@@ -98,15 +109,19 @@
 
     <script>
         // Retrieve the stored data from localStorage
-        const score = localStorage.getItem('userScore');
+        const score = parseInt(localStorage.getItem('userScore'), 10);
         const percentage = localStorage.getItem('quizPercentage');
         const userName = localStorage.getItem('userName');
 
-        // Update the result info dynamically with the stored values
+        // Determine pass or fail
+        const passOrFail = score >= 6 ? "Pass" : "Fail";
+        const passOrFailClass = score >= 6 ? "pass" : "fail";
+
+        // Update the result info dynamically with the stored values and pass/fail status
         document.getElementById("score-display").innerHTML = `
-            <p><strong>User Email:</strong> ${userName}</p>
+            <p><strong>User:</strong> ${userName}</p>
             <p><strong>Score:</strong> ${score} / 9</p>
-            <p><strong>Percentage:</strong> ${percentage}%</p>
+            <p><strong>Status:</strong> <span class="${passOrFailClass}">${passOrFail}</span></p>
         `;
         
         // Logout function
